@@ -1,0 +1,39 @@
+name: Verify initial research snapshot
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/verify-snapshot.yml"
+      - "PROVENANCE.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Snapshot SHA-256 verification
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout source color-d commit
+        uses: actions/checkout@v7
+        with:
+          repository: alex-1974/color-d
+          ref: f5ff3dab97c65e6f45e4c0ed192c3143a946c6bc
+          path: source
+
+      - name: Checkout exact research snapshot
+        uses: actions/checkout@v7
+        with:
+          repository: alex-1974/color-d-research
+          ref: 5296ffb16d1a619b658c1296f9d8bd0d1d597c83
+          path: destination
+
+      - name: Verify path, size, and SHA-256 manifest
+        run: |
+          python3 source/.github/scripts/verify-research-migration.py verify \
+              --source-root source \
+              --destination-root destination
