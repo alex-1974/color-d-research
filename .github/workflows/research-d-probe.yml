@@ -1,0 +1,76 @@
+name: Research D probes
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch, tag, or commit containing the experiment"
+        required: true
+        default: "main"
+      experiment:
+        description: "Experiment directory below experiments/"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    name: Probe / ${{ matrix.compiler }}
+    runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - dmd-2.113.0
+          - ldc-1.43.0
+
+    steps:
+      - name: Checkout requested research state
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Validate experiment path
+        shell: bash
+        env:
+          EXPERIMENT: ${{ inputs.experiment }}
+        run: |
+          set -euo pipefail
+          case "$EXPERIMENT" in
+            ""|/*|*".."*)
+              echo "invalid experiment path: $EXPERIMENT" >&2
+              exit 2
+              ;;
+          esac
+
+          test -d "experiments/$EXPERIMENT"
+          test -f "experiments/$EXPERIMENT/dub.sdl"
+
+      - name: Install D toolchain
+        uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+
+      - name: Toolchain versions
+        run: |
+          "$DC" --version
+          dub --version
+
+      - name: Run experiment
+        shell: bash
+        env:
+          EXPERIMENT: ${{ inputs.experiment }}
+        run: |
+          set -euo pipefail
+          cd "experiments/$EXPERIMENT"
+          dub run --compiler="$DC" --build=release --force | tee research-output.txt
+
+      - name: Preserve experiment output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-${{ inputs.experiment }}-${{ matrix.compiler }}
+          path: experiments/${{ inputs.experiment }}/research-output.txt
+          if-no-files-found: warn
