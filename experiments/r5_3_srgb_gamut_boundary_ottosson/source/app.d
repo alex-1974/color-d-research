@@ -78,9 +78,10 @@ T ottossonCmax(T)(T L,T a,T b)
 {
     const cp=cusp(a,b);
     T t;
-    if ((L-cp.L) >= 0) {
-        t=cp.C*(L-1)/(cp.C*(L-1)); // triangle seed simplifies to 1; replaced below
-        t=cp.C*(L-1)/(cp.L-1);     // C1=1, L0=L1=L
+    if (L > cp.L) {
+        // Upper half. With L1 == L0 == L and C1 == 1, Ottosson's
+        // triangle seed reduces to this expression.
+        t=cp.C*(L-1)/(cp.L-1);
         const kl=cast(T).3963377774*a+cast(T).2158037573*b;
         const km=cast(T)-.1055613458*a-cast(T).0638541728*b;
         const ks=cast(T)-.0894841775*a-cast(T)1.2914855480*b;
@@ -102,7 +103,8 @@ T ottossonCmax(T)(T L,T a,T b)
         const tr=ur>=0 ? -rr*ur : T.max, tg=ug>=0 ? -gg*ug : T.max, tb=ub>=0 ? -bb*ub : T.max;
         t+=min(tr,min(tg,tb));
     } else {
-        t=cp.C*L/cp.L; // exact lower straight edge
+        // Lower half. This edge is exactly straight through (0, 0).
+        t=cp.C*L/cp.L;
     }
     return t;
 }
