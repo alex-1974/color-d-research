@@ -1,0 +1,4 @@
+name "r5-1-srgb-gamut-boundary"
+description "Research probe for color-d #161 sRGB gamut-boundary queries"
+targetType "executable"
+sourcePaths "source"
