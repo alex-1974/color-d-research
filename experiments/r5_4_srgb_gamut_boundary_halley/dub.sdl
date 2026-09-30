@@ -1,0 +1,4 @@
+name "r5-4-srgb-gamut-boundary-halley"
+description "Compare 1/2/3 cusp Halley refinements against binary oracle for color-d #161"
+targetType "executable"
+sourcePaths "source"
