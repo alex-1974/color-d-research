@@ -1,0 +1,57 @@
+name: R5.1 sRGB gamut-boundary probe
+
+on:
+  push:
+    branches:
+      - research/161-srgb-gamut-boundary
+    paths:
+      - ".github/workflows/r5-1-srgb-gamut-boundary.yml"
+      - "experiments/r5_1_srgb_gamut_boundary/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: r5-1-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    name: Probe / ${{ matrix.compiler }}
+    runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - dmd-2.113.0
+          - ldc-1.43.0
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install D toolchain
+        uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+
+      - name: Toolchain versions
+        run: |
+          "$DC" --version
+          dub --version
+
+      - name: Run boundary probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd experiments/r5_1_srgb_gamut_boundary
+          dub run --compiler="$DC" --build=release --force | tee boundary-results.txt
+
+      - name: Preserve numerical output
+        uses: actions/upload-artifact@v4
+        with:
+          name: r5-1-boundary-${{ matrix.compiler }}
+          path: experiments/r5_1_srgb_gamut_boundary/boundary-results.txt
+          if-no-files-found: error
