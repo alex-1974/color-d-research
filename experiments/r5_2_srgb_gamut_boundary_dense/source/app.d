@@ -64,8 +64,9 @@ void main()
 {
     size_t samples;
     size_t maxDoubleBisect, maxFloatBisect, maxGrowth;
-    double maxFloatAbsError, maxFloatRelError;
-    double worstL, worstH, worstDouble, worstFloat;
+    double maxFloatAbsError = 0.0;
+    double maxFloatRelError = 0.0;
+    double worstL = 0.0, worstH = 0.0, worstDouble = 0.0, worstFloat = 0.0;
 
     // 99 lightness slices x 360 integer-degree hues = 35,640 samples.
     foreach (li; 1 .. 100)
