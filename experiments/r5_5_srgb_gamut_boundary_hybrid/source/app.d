@@ -11,7 +11,8 @@ import std.stdio : writefln;
 
 struct Rgb(T) { T r; T g; T b; }
 struct LC(T) { T L; T C; }
-struct Boundary(T) { T inside; T outside; }\nstruct Hybrid(T) { T inside; size_t evaluations; size_t bisections; }
+struct Boundary(T) { T inside; T outside; }
+struct Hybrid(T) { T inside; size_t evaluations; size_t bisections; }
 
 Rgb!T toRgb(T)(T L, T C, T aDir, T bDir)
 {
