@@ -10,6 +10,13 @@ struct Matrix3(T)
     T m20; T m21; T m22;
 }
 
+Rgb!T castRgb(T)(Rgb!double v)
+@safe pure nothrow @nogc
+if (is(T == float) || is(T == double))
+{
+    return Rgb!T(cast(T)v.r, cast(T)v.g, cast(T)v.b);
+}
+
 Rgb!T apply(T)(Matrix3!T m, Rgb!T v)
 @safe pure nothrow @nogc
 {
@@ -141,7 +148,6 @@ void errorEnvelope()
     ];
 
     double maxAbs;
-    string maxCase;
     foreach(si; 0 .. 11)
     foreach(pi; 0 .. points.length)
     {
@@ -149,13 +155,13 @@ void errorEnvelope()
         {
             const md = matrixAtSeverity(table, cast(double)si / 10.0);
             const mf = castMatrix!float(md);
-            const vf = apply(mf, cast(Rgb!float)points[pi]);
+            const vf = apply(mf, castRgb!float(points[pi]));
             const vd = apply(md, points[pi]);
             const e0 = abs(vf.r - cast(float)vd.r);
             const e1 = abs(vf.g - cast(float)vd.g);
             const e2 = abs(vf.b - cast(float)vd.b);
-            const e = max(e0, max(e1,e2));
-            if (e > maxAbs) { maxAbs=e; maxCase=si==si ? "machado" : "machado"; }
+            const e = e0 > e1 ? (e0 > e2 ? e0 : e2) : (e1 > e2 ? e1 : e2);
+            if (e > maxAbs) { maxAbs=e; }
         }
     }
     assert(maxAbs < 2e-6);
