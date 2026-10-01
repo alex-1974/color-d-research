@@ -109,3 +109,10 @@ Source of validation data:
 - Sharma, Wu & Dalal supplementary CIEDE2000 test data, University of Rochester.
 
 The research source explicitly treats the published dataset as validation evidence rather than as an official CIE implementation. The authors state that their data/programs are provided for implementation verification and document potential implementation errors and mathematical discontinuities.
+
+
+## R6.5 edge-case plan
+
+R6.5 is an invariant probe for the CIEDE2000 implementation rather than another reference-vector suite. It covers identical colors, zero-chroma hue singularities, hue-wrap symmetry around the 0°/360° boundary, non-negative finite-domain results, and CTFE evaluation.
+
+The probe is intended to expose branch and singularity errors before any public API promotion. It does not define user-facing perceptual thresholds or select a preferred Delta-E algorithm.
