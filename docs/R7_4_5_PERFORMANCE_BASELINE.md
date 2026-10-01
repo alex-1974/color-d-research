@@ -39,7 +39,7 @@ batch calls; outputs are sampled into observable double checksums. Timing
 includes one input mutation and one checksum read per RGB batch.
 C++ uses GCC -O3 -ffp-contract=off -fno-fast-math.
 DMD uses -O -inline -release -boundscheck=on.
-LDC uses -O3 -ffp-contract=off -release -boundscheck=on.
+LDC uses -O3 -fp-contract=off -release -boundscheck=on.
 
 Before optimized timing, an assertion-enabled D Debug build invokes the existing
 fixed-vector and attribute probes and runs the batch harness. The summary
