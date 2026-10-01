@@ -1,0 +1,76 @@
+name: R7.4.5 CVD performance baseline
+
+on:
+  push:
+    branches: [research/163-cvd-transformations]
+    paths:
+      - experiments/r7_4_5_cvd_performance/**
+      - experiments/r7_2_brettel_vienot_reference/**
+      - experiments/r7_3_machado_2009_reference/**
+      - .github/workflows/r7-4-5-performance.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [dmd-2.111.0, ldc-1.41.0, dmd-2.113.0, ldc-1.43.0]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+      - name: Prepare shared source and record platform
+        working-directory: experiments/r7_4_5_cvd_performance
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            git rev-parse HEAD
+            "$DC" --version
+            g++ --version
+            uname -a
+            lscpu
+            python3 prepare.py
+          } | tee metadata.txt
+      - name: Debug preflight and optimized builds
+        working-directory: experiments/r7_4_5_cvd_performance
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$DC" in
+            *ldc2*) version_flag=-d-version=Preflight; optimize=(-O3 -ffp-contract=off) ;;
+            *) version_flag=-version=Preflight; optimize=(-O -inline) ;;
+          esac
+          set -x
+          "$DC" -g -boundscheck=on "$version_flag" -of=preflight bench.d _generated/bv.d _generated/ma.d
+          ./preflight 32 > preflight.txt
+          "$DC" "${optimize[@]}" -release -boundscheck=on -of=benchmark bench.d _generated/bv.d _generated/ma.d
+          g++ -std=c++17 -O3 -ffp-contract=off -fno-fast-math reference.cpp -o cpp-benchmark
+          sha256sum benchmark cpp-benchmark > binaries.sha256
+      - name: Balanced paired measurement on one allowed CPU
+        working-directory: experiments/r7_4_5_cvd_performance
+        shell: bash
+        run: |
+          set -euo pipefail
+          BENCH_CPU=$(python3 -c 'import os; print(min(os.sched_getaffinity(0)))')
+          echo "affinity_cpu=$BENCH_CPU; workload=65536; turbo/frequency/SMT=uncontrolled shared runner" | tee -a metadata.txt
+          taskset -c "$BENCH_CPU" ./benchmark 65536 > d-forward.csv
+          taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 > cpp-forward.csv
+          taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 reverse > cpp-reverse.csv
+          taskset -c "$BENCH_CPU" ./benchmark 65536 reverse > d-reverse.csv
+          python3 summarize.py | tee summary.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r7-4-5-${{ matrix.compiler }}
+          path: |
+            experiments/r7_4_5_cvd_performance/*.csv
+            experiments/r7_4_5_cvd_performance/*.txt
+            experiments/r7_4_5_cvd_performance/*.sha256
+            experiments/r7_4_5_cvd_performance/_generated/**
