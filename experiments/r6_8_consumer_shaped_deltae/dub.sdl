@@ -1,0 +1,4 @@
+name "r6-8-consumer-shaped-deltae"
+description "Validate generic Delta-E consumer boundary for color-d #162"
+targetType "executable"
+sourcePaths "source"
