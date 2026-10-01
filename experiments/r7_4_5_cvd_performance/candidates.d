@@ -85,7 +85,7 @@ void directBrettel(T, bool splitSelection)(ref bv.Rgb!T output,
 }
 
 // Value-returning wrapper is used only by semantic/CTFE validation.
-bv.Rgb!T directColor(T, bool splitSelection)(const ref BrettelPlan!T plan, bv.Rgb!T p)
+bv.Rgb!T directColor(T, bool splitSelection)(BrettelPlan!T plan, bv.Rgb!T p)
 @safe pure nothrow @nogc
 {
     bv.Rgb!T output;
