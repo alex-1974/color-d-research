@@ -99,9 +99,20 @@ A generic CVD deficiency enum may still be useful at a higher layer, but model-s
 - [x] independent reference identified
 - [x] tritan limitation documented
 - [x] endpoint severity interpolation represented by probe
-- [ ] numerical cross-check
+- [x] cross-source matrix-table comparison: DaltonLens and Colour Science
 - [ ] float/double error envelope
 - [ ] CTFE/runtime equivalence
 - [ ] production API decision
 
 R7.3 therefore remains a research reference until its executable validation is complete.
+
+
+## Complete table cross-source verification
+
+The complete 11-point matrices for Protanomaly, Deuteranomaly and Tritanomaly were compared coefficient-for-coefficient between the DaltonLens Python reference and the Colour Science dataset. All 33 matrices (297 coefficients) agree at the published six-decimal representation.
+
+This establishes source-table agreement. It does not independently validate the underlying physiological model.
+
+A critical observation is that intermediate severity matrices are not obtained by linear interpolation between the identity matrix and the severity-1 endpoint. The Tritanomaly sequence is visibly non-linear. A production implementation must therefore retain the published severity table, or use an explicitly justified equivalent model, rather than replacing it with endpoint interpolation.
+
+R7.3 now has a cross-source validated reference table. Float/double error analysis and CTFE/runtime equivalence remain separate tasks.
