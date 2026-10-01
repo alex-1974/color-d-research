@@ -75,3 +75,22 @@ The answer must be driven by concrete use and interoperability rather than API b
 The standards establish that CIELAB and Delta E 1976 are distinct standardized capabilities, while CIEDE2000 is a named CIELAB-based formula with defined reference conditions. That establishes generic legitimacy but does **not** yet establish that every component belongs in color-d.
 
 Promotion remains evidence-gated.
+
+
+## R6.1 result direction
+
+Current external specification evidence identifies a meaningful boundary between the existing color-d XYZ D65 core and CIELAB workflows: current CSS Color 4 conversion guidance uses D50 for Lab and an explicit linear-Bradford adaptation from D65. The adaptation must therefore be visible in the architecture rather than silently treating XYZ D65 coordinates as Lab-relative-to-D50 coordinates.
+
+R6.1 probe:
+- D65 → D50 white mapping
+- D50 → D65 round-trip
+- CTFE execution
+
+R6.2 probe:
+- CIELAB forward conversion using the standard epsilon/kappa formulation
+- reverse conversion
+- reference-vector envelope
+- explicit D65/D50 distinction
+- CTFE execution
+
+The CIELAB probes use a local CTFE-safe signed cube-root implementation for research purposes; this is not evidence that the production implementation should copy that helper. Production code must reuse the established color-d CTFE strategy after the API is settled.
