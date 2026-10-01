@@ -1,11 +1,12 @@
 // R6.2 research probe for color-d #162.
 // CIELAB forward/reverse reference-vector feasibility and CTFE.
 
-import std.math : cbrt, pow;
 import std.stdio : writeln;
 
 struct Xyz(T){T x;T y;T z;}
 struct Lab(T){T l;T a;T b;}
+
+T cbrtCtfe(T)(T x) @safe pure nothrow @nogc { if (x == cast(T)0) return x; const bool neg=x<0; T a=neg?-x:x; T y=a>cast(T)1?a:cast(T)1; foreach(_;0..32) y=(cast(T)2*y+a/(y*y))/cast(T)3; return neg?-y:y; }
 
 Lab!T xyzD50ToLab(T)(Xyz!T xyz)
 @safe pure nothrow @nogc
@@ -17,7 +18,7 @@ Lab!T xyzD50ToLab(T)(Xyz!T xyz)
     enum T wz = cast(T)0.82521;
 
     T f(T v) {
-        return v > e ? cbrt(v) : (k*v + cast(T)16)/cast(T)116;
+        return v > e ? cbrtCtfe(v) : (k*v + cast(T)16)/cast(T)116;
     }
 
     const T fx=f(xyz.x/wx), fy=f(xyz.y/wy), fz=f(xyz.z/wz);
