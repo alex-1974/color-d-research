@@ -94,3 +94,8 @@ R6.2 probe:
 - CTFE execution
 
 The CIELAB probes use a local CTFE-safe signed cube-root implementation for research purposes; this is not evidence that the production implementation should copy that helper. Production code must reuse the established color-d CTFE strategy after the API is settled.
+
+
+## R6.3 result
+
+R6.3 adds an executable Delta E 1976 baseline. The probe verifies the Euclidean CIELAB difference against the standard Sharma/Wu/Dalal supplementary pair, plus zero-distance, symmetry, and CTFE. This establishes Delta E 1976 as a simple generic metric candidate; it does not yet establish that CIELAB itself must become a broad public color model in color-d.
