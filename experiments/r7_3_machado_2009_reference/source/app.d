@@ -196,12 +196,38 @@ void validateNonFiniteAndGamut()
     writeln("Out-of-gamut values preserved: PASS");
 }
 
+Matrix3!double attributeMatrixProbe()
+@safe pure nothrow @nogc
+{
+    return matrixAtSeverity(protanTable[], 0.35);
+}
+
+Rgb!double attributeApplyProbe()
+@safe pure nothrow @nogc
+{
+    return apply(matrixAtSeverity(deutanTable[], 0.65), Rgb!double(0.2, 0.4, 0.7));
+}
+
+void validateAttributes()
+@safe
+{
+    enum m = attributeMatrixProbe();
+    enum c = attributeApplyProbe();
+
+    static assert(m.m00 > 0.0);
+    static assert(c.r == c.r);
+    writeln("R7.4.4 PASS");
+    writeln("@safe/pure/nothrow/@nogc matrix path: PASS");
+    writeln("@safe/pure/nothrow/@nogc color application: PASS");
+}
+
 void main()
 @safe
 {
     validateTable();
     errorEnvelope();
     validateNonFiniteAndGamut();
+    validateAttributes();
 
     enum pCtfe = matrixAtSeverity(protanTable[], 0.35);
     enum dCtfe = matrixAtSeverity(deutanTable[], 0.65);
