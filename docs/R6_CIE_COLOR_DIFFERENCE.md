@@ -116,3 +116,10 @@ The research source explicitly treats the published dataset as validation eviden
 R6.5 is an invariant probe for the CIEDE2000 implementation rather than another reference-vector suite. It covers identical colors, zero-chroma hue singularities, hue-wrap symmetry around the 0°/360° boundary, non-negative finite-domain results, and CTFE evaluation.
 
 The probe is intended to expose branch and singularity errors before any public API promotion. It does not define user-facing perceptual thresholds or select a preferred Delta-E algorithm.
+
+
+## R6.6 plan
+
+R6.6 establishes an explicit research baseline for non-finite and extended CIELAB inputs. NaN and infinity are injected independently into L*, a*, and b* and the probe checks that they are not silently clamped into an apparently valid perceptual distance. Large finite coordinates are observed separately because they are not equivalent to non-finite input.
+
+The production contract remains undecided until R6.6 and R6.7 are complete. In particular, the research does not assume that a public API should propagate IEEE non-finite values, reject them through a result carrier, or define a bounded CIELAB domain.
