@@ -123,3 +123,10 @@ The probe is intended to expose branch and singularity errors before any public 
 R6.6 establishes an explicit research baseline for non-finite and extended CIELAB inputs. NaN and infinity are injected independently into L*, a*, and b* and the probe checks that they are not silently clamped into an apparently valid perceptual distance. Large finite coordinates are observed separately because they are not equivalent to non-finite input.
 
 The production contract remains undecided until R6.6 and R6.7 are complete. In particular, the research does not assume that a public API should propagate IEEE non-finite values, reject them through a result carrier, or define a bounded CIELAB domain.
+
+
+## R6.7 plan
+
+R6.7 compares `float` and `double` CIEDE2000 evaluation and requires CTFE and runtime results to agree for the same scalar type. The probe also checks both scalar types against the reference-value envelope.
+
+This is a capability and numerical-stability check. It does not establish a required tolerance for a future public API; tolerances must be derived from the intended scalar contract and reference evidence.
