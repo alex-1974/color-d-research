@@ -31,7 +31,7 @@ void batch(T, Mode mode)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
         const matrix = prepareVienot!T(deficiency);
         foreach (i, p; input)
         {
-            static if (candidateMode == 2) output[i] = inlineApply(matrix,p);
+            static if (candidateMode == 2) output[i] = inlineApply!T(matrix,p);
             else output[i] = matrix.apply(p);
         }
         return;

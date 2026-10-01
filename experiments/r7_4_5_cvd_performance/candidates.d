@@ -51,7 +51,7 @@ bv.Rgb!T applyBrettel(T, bool explicitArithmetic)(BrettelPlan!T plan, bv.Rgb!T p
     const matrix = p.r*plan.nr + p.g*plan.ng + p.b*plan.nb >= 0
         ? plan.first : plan.second;
     static if (explicitArithmetic)
-        return inlineApply(matrix, p);
+        return inlineApply!T(matrix, p);
     else
         return matrix.apply(p);
 }
@@ -80,14 +80,14 @@ void compareInput(T)(bv.Rgb!T input)
     {
         const plan = prepareBrettel!T(deficiency);
         const reference = bv.brettelProbe(input, deficiency);
-        compareColor(applyBrettel!(T, false)(plan, input), reference);
-        compareColor(applyBrettel!(T, true)(plan, input), reference);
+        compareColor!T(applyBrettel!(T, false)(plan, input), reference);
+        compareColor!T(applyBrettel!(T, true)(plan, input), reference);
         if (deficiency < 2)
         {
             const matrix = prepareVienot!T(deficiency);
             const vienotReference = bv.vienotProbe(input, deficiency == 1);
-            compareColor(matrix.apply(input), vienotReference);
-            compareColor(inlineApply(matrix, input), vienotReference);
+            compareColor!T(matrix.apply(input), vienotReference);
+            compareColor!T(inlineApply!T(matrix, input), vienotReference);
         }
     }
 }
@@ -102,14 +102,14 @@ void validateCandidates(T)()
         state=state*1664525u+1013904223u; p.r=cast(T)((state>>8)&65535)/cast(T)65535;
         state=state*1664525u+1013904223u; p.g=cast(T)((state>>8)&65535)/cast(T)65535;
         state=state*1664525u+1013904223u; p.b=cast(T)((state>>8)&65535)/cast(T)65535;
-        compareInput(p);
+        compareInput!T(p);
     }
     const bv.Rgb!T[10] edges = [
         bv.Rgb!T(0,0,0), bv.Rgb!T(1,1,1), bv.Rgb!T(1,0,0),
         bv.Rgb!T(0,1,0), bv.Rgb!T(0,0,1), bv.Rgb!T(-0.25,1.25,2),
         bv.Rgb!T(T.nan,0.25,0.75), bv.Rgb!T(T.infinity,0.25,0.75),
         bv.Rgb!T(-T.infinity,T.infinity,0), bv.Rgb!T(-cast(T)0,cast(T)0,-cast(T)0)];
-    foreach (p; edges) compareInput(p);
+    foreach (p; edges) compareInput!T(p);
     // Construct inputs near each stored separation plane, including its equality case.
     foreach (deficiency; 0u .. 3u)
     {
@@ -118,7 +118,7 @@ void validateCandidates(T)()
         const T b=-(r*plan.nr+g*plan.ng)/plan.nb;
         const T[3] offsets = [-cast(T)1e-6, cast(T)0, cast(T)1e-6];
         foreach (offset; offsets)
-            compareInput(bv.Rgb!T(r,g,b+offset));
+            compareInput!T(bv.Rgb!T(r,g,b+offset));
     }
     static foreach (deficiency; 0u .. 3u)
     {{
