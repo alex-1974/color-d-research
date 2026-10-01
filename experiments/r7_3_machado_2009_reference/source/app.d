@@ -208,15 +208,60 @@ Rgb!double attributeApplyProbe()
     return apply(matrixAtSeverity(deutanTable[], 0.65), Rgb!double(0.2, 0.4, 0.7));
 }
 
+
+Matrix3!T[11] precisionTable(T)(const Matrix3!double[11] source)
+@safe pure nothrow @nogc
+{
+    Matrix3!T[11] result;
+    foreach (i; 0 .. 11)
+        result[i] = castMatrix!T(source[i]);
+    return result;
+}
+
+Rgb!T machadoAttributeProbe(T)(const Matrix3!T[] table, T severity, Rgb!T input)
+@safe pure nothrow @nogc
+{
+    return apply(matrixAtSeverity(table, severity), input);
+}
+
+void qualifyAttributes(T)()
+@safe pure nothrow @nogc
+{
+    enum sample = Rgb!T(cast(T)0.2, cast(T)0.4, cast(T)0.7);
+    enum T tolerance = is(T == float) ? cast(T)2e-6 : cast(T)1e-12;
+    static foreach (source; [protanTable, deutanTable, tritanTable])
+    {{
+        enum table = precisionTable!T(source);
+        static foreach (severity; [cast(T)0, cast(T)0.35, cast(T)0.65, cast(T)0.85, cast(T)1])
+        {{
+            enum expected = machadoAttributeProbe(table[], severity, sample);
+            const actual = machadoAttributeProbe(table[], severity, sample);
+            assert(abs(actual.r-expected.r) <= tolerance);
+            assert(abs(actual.g-expected.g) <= tolerance);
+            assert(abs(actual.b-expected.b) <= tolerance);
+        }}
+        foreach (i; 0 .. 11)
+        {
+            const actual = machadoAttributeProbe(table[], cast(T)i/cast(T)10, sample);
+            assert(!isNaN(actual.r) && !isInfinity(actual.r));
+            assert(!isNaN(actual.g) && !isInfinity(actual.g));
+            assert(!isNaN(actual.b) && !isInfinity(actual.b));
+        }
+    }}
+}
+
 void validateAttributes()
 @safe
 {
+    qualifyAttributes!float();
+    qualifyAttributes!double();
     enum m = attributeMatrixProbe();
     enum c = attributeApplyProbe();
 
     static assert(m.m00 > 0.0);
     static assert(c.r == c.r);
     writeln("R7.4.4 PASS");
+    writeln("Machado all deficiencies float/double attributed runtime + CTFE: PASS");
     writeln("@safe/pure/nothrow/@nogc matrix path: PASS");
     writeln("@safe/pure/nothrow/@nogc color application: PASS");
 }
