@@ -186,3 +186,10 @@ a large DMD 2.111.0 candidate regression. Combined application has different
 trade-offs. Release validation now also checks every generated Machado matrix
 and RGB result before timing. No universal production replacement is accepted;
 controlled consumer-machine replay and the existing open gates remain.
+
+## Consumer-machine replay driver
+
+The [XPS replay protocol](R7_4_5_XPS_REPLAY.md) provides an isolated, pinned
+runner for eight source forms, several batch sizes and repeated balanced blocks.
+Its two-block smoke passes all four compiler jobs. Actual XPS measurements and
+performance interpretation remain pending; no production gate is closed.

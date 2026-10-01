@@ -1,0 +1,72 @@
+{
+  "run_id": 36920078378,
+  "source": "f5b4428af90b02f38902776d87259e5096155e0a",
+  "url": "https://github.com/alex-1974/color-d-research/actions/runs/36920078378",
+  "purpose": "functional consumer replay smoke; not XPS performance qualification",
+  "variants": 8,
+  "sizes": [
+    64,
+    1024
+  ],
+  "blocks": 2,
+  "expected_pooled_rows_per_job": 448,
+  "samples_per_language_case": 36,
+  "jobs": [
+    {
+      "id": 110563636486,
+      "name": "replay (dmd-2.111.0)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 110563636542,
+      "name": "replay (dmd-2.113.0)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 110563636568,
+      "name": "replay (ldc-1.43.0)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 110563636746,
+      "name": "replay (ldc-1.41.0)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "artifact_archive_inspection": {
+    "compiler": "ldc-1.41.0",
+    "pooled_rows": 448,
+    "successful_commands": 173,
+    "manifest": "every files.sha256 entry verified without extraction"
+  },
+  "artifacts": [
+    {
+      "id": 11191915333,
+      "name": "cvd-replay-dmd-2.113.0",
+      "size": 6984323,
+      "digest": "sha256:459fc89fb9dd4ba14a34bbbc4a203dcca9869cad1fe4ef497f7bc42a00a72b32"
+    },
+    {
+      "id": 11191373325,
+      "name": "cvd-replay-ldc-1.43.0",
+      "size": 6364930,
+      "digest": "sha256:9630731f23a87768671897f4e1c0cc207db7597e31d4424e30a6a0db4aed18bb"
+    },
+    {
+      "id": 11191298502,
+      "name": "cvd-replay-ldc-1.41.0",
+      "size": 5849010,
+      "digest": "sha256:7c070cff5ee930f3b1ca43e37698ec27557be33b2dd83a658b2fcdf54a291efe"
+    },
+    {
+      "id": 11191058787,
+      "name": "cvd-replay-dmd-2.111.0",
+      "size": 7175039,
+      "digest": "sha256:c9086c4c5938e8e859f41640af07dc8426765d5acbae6903146172ef6efa2fad"
+    }
+  ]
+}
