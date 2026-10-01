@@ -177,3 +177,12 @@ The [direct-store investigation](R7_4_5_DIRECT_STORES.md) records a large
 portable float improvement under both LDC and DMD. Release binaries now also
 check full finite Brettel/Viénot batch components before timing. Residual C++
 gaps and LDC Viénot double trade-offs remain; no production gate is closed.
+
+## Follow-up: Machado table representation
+
+[Fixed tables and bounded indices](R7_4_5_MACHADO_TABLES.md) are measured and
+archived. Fixed tables improve LDC pure lookup; a bounded signed index removes
+a large DMD 2.111.0 candidate regression. Combined application has different
+trade-offs. Release validation now also checks every generated Machado matrix
+and RGB result before timing. No universal production replacement is accepted;
+controlled consumer-machine replay and the existing open gates remain.
