@@ -1,0 +1,3 @@
+name "r5_9_srgb_gamut_boundary_contract"
+description "R5.9 final contract probe for color-d #161"
+targetType "executable"
