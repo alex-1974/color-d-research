@@ -6,15 +6,15 @@ R7.2 records the concrete linear-light RGB transforms used by an independent ref
 
 ## Primary literature
 
-Brettel, Viénot & Mollon (1997) describe dichromat simulation in LMS space as projection onto a reduced stimulus surface. For protan and deutan the defining monochromatic anchors are 575 nm and 475 nm; for tritan they are 660 nm and 485 nm. citeturn0search0
+Brettel, Viénot & Mollon (1997) describe dichromat simulation in LMS space as projection onto a reduced stimulus surface. For protan and deutan the defining monochromatic anchors are 575 nm and 475 nm; for tritan they are 660 nm and 485 nm.
 
-Viénot, Brettel & Mollon (1999) describe replacement colourmaps for protanopes and deuteranopes based on LMS specifications of standard video-monitor primaries. The published scope is display checking for protan and deutan. citeturn0search1turn0search36
+Viénot, Brettel & Mollon (1999) describe replacement colourmaps for protanopes and deuteranopes based on LMS specifications of standard video-monitor primaries. The published scope is display checking for protan and deutan.
 
 ## Independent reference
 
-DaltonLens/libDaltonLens provides a public-domain C implementation and states that its Brettel implementation uses the sRGB standard for linear RGB and the Smith & Pokorny 1975 LMS model, with two projection planes and a separation-plane normal. It provides precomputed linear-RGB matrices for protan, deutan and tritan. citeturn1search0
+DaltonLens/libDaltonLens provides a public-domain C implementation and states that its Brettel implementation uses the sRGB standard for linear RGB and the Smith & Pokorny 1975 LMS model, with two projection planes and a separation-plane normal. It provides precomputed linear-RGB matrices for protan, deutan and tritan.
 
-The same reference provides single 3×3 linear-RGB matrices for Viénot 1999 protan and deutan and explicitly warns that its Viénot tritan matrix is not accurate for tritanopia; it uses Brettel for tritan instead. citeturn1search0turn1search2
+The same reference provides single 3×3 linear-RGB matrices for Viénot 1999 protan and deutan and explicitly warns that its Viénot tritan matrix is not accurate for tritanopia; it uses Brettel for tritan instead.
 
 ## Brettel precomputed transforms
 
@@ -92,7 +92,7 @@ Separation-plane normal:
 [ 0.03901 -0.02788 -0.01113 ]
 ```
 
-These values are **implementation-reference values**, not claimed here to be literal coefficient tables copied from the 1997 paper. The reference implementation explains how they are generated from its chosen LMS model, modern sRGB primaries, and RGB white as the neutral element. citeturn1search0
+These values are **implementation-reference values**, not claimed here to be literal coefficient tables copied from the 1997 paper. The reference implementation explains how they are generated from its chosen LMS model, modern sRGB primaries, and RGB white as the neutral element.
 
 ## Viénot 1999
 
@@ -114,13 +114,13 @@ Deutan:
 [-0.02234  0.02234  1.00000 ]
 ```
 
-The matrices operate on **linear RGB**. The independent reference performs sRGB decoding before the transform and sRGB encoding afterwards. citeturn1search0turn1search2
+The matrices operate on **linear RGB**. The independent reference performs sRGB decoding before the transform and sRGB encoding afterwards.
 
-No Viénot-1999 tritan production candidate is accepted by R7.2. The reference explicitly identifies its single-matrix tritan approximation as inaccurate and uses Brettel 1997 for tritan instead. citeturn1search0
+No Viénot-1999 tritan production candidate is accepted by R7.2. The reference explicitly identifies its single-matrix tritan approximation as inaccurate and uses Brettel 1997 for tritan instead.
 
 ## Severity
 
-Brettel and Viénot transforms in this reference are full-deficiency transforms. The reference applies severity by linear interpolation between the original linear-RGB vector and the simulated result. This is a **consumer/model parameterization**, not evidence that severity is a universal CVD API parameter. citeturn1search0
+Brettel and Viénot transforms in this reference are full-deficiency transforms. The reference applies severity by linear interpolation between the original linear-RGB vector and the simulated result. This is a **consumer/model parameterization**, not evidence that severity is a universal CVD API parameter.
 
 Machado severity remains a separate R7.3 research topic.
 
