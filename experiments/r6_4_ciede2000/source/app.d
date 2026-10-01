@@ -1,7 +1,7 @@
 // R6.4 research probe for color-d #162.
 // CIEDE2000 validation against Sharma/Wu/Dalal supplementary test data.
 
-import std.math : abs, atan2, cos, sin, sqrt, PI;
+import std.math : abs, atan2, cos, sin, sqrt, exp2, PI;
 import std.stdio : writeln;
 
 struct Lab(T){T l;T a;T b;}
