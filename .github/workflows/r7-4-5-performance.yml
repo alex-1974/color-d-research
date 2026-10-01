@@ -44,7 +44,7 @@ jobs:
         run: |
           set -euo pipefail
           case "$DC" in
-            *ldc2*) version_flag=-d-version=Preflight; optimize=(-O3 -ffp-contract=off) ;;
+            *ldc2*) version_flag=-d-version=Preflight; optimize=(-O3 -fp-contract=off) ;;
             *) version_flag=-version=Preflight; optimize=(-O -inline) ;;
           esac
           set -x
