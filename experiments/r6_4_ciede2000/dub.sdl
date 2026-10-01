@@ -1,0 +1,4 @@
+name "r6-4-ciede2000"
+description "Validate CIEDE2000 against Sharma Wu Dalal supplementary data"
+targetType "executable"
+sourcePaths "source"
