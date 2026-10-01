@@ -99,3 +99,13 @@ The CIELAB probes use a local CTFE-safe signed cube-root implementation for rese
 ## R6.3 result
 
 R6.3 adds an executable Delta E 1976 baseline. The probe verifies the Euclidean CIELAB difference against the standard Sharma/Wu/Dalal supplementary pair, plus zero-distance, symmetry, and CTFE. This establishes Delta E 1976 as a simple generic metric candidate; it does not yet establish that CIELAB itself must become a broad public color model in color-d.
+
+
+## R6.4 result
+
+R6.4 implements an independent research-only CIEDE2000 calculation and validates all 34 rows of the Sharma/Wu/Dalal supplementary plain-text test data. The dataset defines six CIELAB inputs plus the expected CIEDE2000 result for each row. The probe also requires non-negative results and evaluates the reference cases during CTFE.
+
+Source of validation data:
+- Sharma, Wu & Dalal supplementary CIEDE2000 test data, University of Rochester.
+
+The research source explicitly treats the published dataset as validation evidence rather than as an official CIE implementation. The authors state that their data/programs are provided for implementation verification and document potential implementation errors and mathematical discontinuities.
