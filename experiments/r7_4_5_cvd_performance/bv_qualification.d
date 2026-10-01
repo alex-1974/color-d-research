@@ -25,8 +25,8 @@ bool qualifyInput(T)(bv.Rgb!T input)
         directBrettel!(T,false)(direct,plan,input.r,input.g,input.b);
         auto inPlace = input;
         directBrettel!(T,true)(inPlace,plan,inPlace.r,inPlace.g,inPlace.b);
-        if (!colorsMatch(split,expected) || !colorsMatch(direct,expected)
-            || !colorsMatch(inPlace,expected)) return false;
+        if (!colorsMatch!T(split,expected) || !colorsMatch!T(direct,expected)
+            || !colorsMatch!T(inPlace,expected)) return false;
         if (deficiency < 2)
         {
             const matrix = prepareVienot!T(deficiency);
@@ -34,8 +34,8 @@ bool qualifyInput(T)(bv.Rgb!T input)
             directWrite!T(direct,matrix,input.r,input.g,input.b);
             inPlace = input;
             directWrite!T(inPlace,matrix,inPlace.r,inPlace.g,inPlace.b);
-            if (!colorsMatch(direct,vienotExpected)
-                || !colorsMatch(inPlace,vienotExpected)) return false;
+            if (!colorsMatch!T(direct,vienotExpected)
+                || !colorsMatch!T(inPlace,vienotExpected)) return false;
         }
     }
     return true;
@@ -55,11 +55,11 @@ bool qualifySelection(T)()
     directBrettel!(T,true)(result,plan,-T(0),T(1),T(0));
     if (result.g != T(2)) return false;
     directBrettel!(T,true)(result,plan,T(-1),T(1),T(0));
-    if (!colorsMatch(result,plan.second.apply(bv.Rgb!T(-1,1,0)))) return false;
+    if (!colorsMatch!T(result,plan.second.apply(bv.Rgb!T(-1,1,0)))) return false;
     directBrettel!(T,true)(result,plan,T(1),T(1),T(0));
-    if (!colorsMatch(result,plan.first.apply(bv.Rgb!T(1,1,0)))) return false;
+    if (!colorsMatch!T(result,plan.first.apply(bv.Rgb!T(1,1,0)))) return false;
     directBrettel!(T,true)(result,plan,T.nan,T(1),T(0));
-    if (!colorsMatch(result,plan.second.apply(bv.Rgb!T(T.nan,1,0)))) return false;
+    if (!colorsMatch!T(result,plan.second.apply(bv.Rgb!T(T.nan,1,0)))) return false;
     return true;
 }
 
