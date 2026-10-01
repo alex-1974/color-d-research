@@ -1,0 +1,12 @@
+{
+  "compiler": "dmd-2.113.0",
+  "kernel": "float Vienot batch",
+  "binary_variants": [
+    "bv_direct",
+    "bv_split"
+  ],
+  "instruction_count": 137,
+  "normalized_instruction_sha256": "e42b395b3faf04b486773de2de19b6c530993ab370a13278d009527abfcfe84f",
+  "equal_after_normalizing_absolute_symbol_addresses_comments_and_RIP_displacements": true,
+  "limitation": "No claim of identical binary layout or explained timing cause. RIP-relative constant references resolve to the same addresses in the retained disassembly."
+}

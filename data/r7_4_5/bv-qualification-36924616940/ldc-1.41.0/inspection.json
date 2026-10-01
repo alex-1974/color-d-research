@@ -1,0 +1,147 @@
+{
+  "archive_sha256": "a30415d4af9677668d13b4df414478a1b7341c4ff55d3b51c923c87991da8cc8",
+  "archive_bytes": 3814858,
+  "manifest_entries": 477,
+  "commands": 189,
+  "raw_sample_rows": 36288,
+  "checksum_max_abs": {
+    "float": 0.0,
+    "double": 0.0
+  },
+  "metadata": {
+    "revision": "2a896ea470d7aacfe5791e7239605ac4435d5332",
+    "cpu": 0,
+    "sizes": [
+      1024,
+      8191,
+      65536
+    ],
+    "blocks": 3,
+    "variants": [
+      "default",
+      "prepared",
+      "bv_direct",
+      "bv_split"
+    ],
+    "notes": "Combined BV qualification; shared CI clocks/thermals/SMT uncontrolled",
+    "compilers": [
+      {
+        "executable": "/opt/hostedtoolcache/ldc2/1.41.0/x64/ldc2-1.41.0-linux-x86_64/bin/ldc2",
+        "family": "ldc",
+        "version": "LDC - the LLVM D compiler (1.41.0):\n  based on DMD v2.111.0 and LLVM 20.1.5\n  built with LDC - the LLVM D compiler (1.41.0)\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: znver3\n  http://dlang.org - http://wiki.dlang.org/LDC\n\n\n  Registered Targets:\n    aarch64     - AArch64 (little endian)\n    aarch64_32  - AArch64 (little endian ILP32)\n    aarch64_be  - AArch64 (big endian)\n    amdgcn      - AMD GCN GPUs\n    arm         - ARM\n    arm64       - ARM64 (little endian)\n    arm64_32    - ARM64 (little endian ILP32)\n    armeb       - ARM (big endian)\n    avr         - Atmel AVR Microcontroller\n    bpf         - BPF (host endian)\n    bpfeb       - BPF (big endian)\n    bpfel       - BPF (little endian)\n    hexagon     - Hexagon\n    lanai       - Lanai\n    loongarch32 - 32-bit LoongArch\n    loongarch64 - 64-bit LoongArch\n    mips        - MIPS (32-bit big endian)\n    mips64      - MIPS (64-bit big endian)\n    mips64el    - MIPS (64-bit little endian)\n    mipsel      - MIPS (32-bit little endian)\n    msp430      - MSP430 [experimental]\n    nvptx       - NVIDIA PTX 32-bit\n    nvptx64     - NVIDIA PTX 64-bit\n    ppc32       - PowerPC 32\n    ppc32le     - PowerPC 32 LE\n    ppc64       - PowerPC 64\n    ppc64le     - PowerPC 64 LE\n    r600        - AMD GPUs HD2XXX-HD6XXX\n    riscv32     - 32-bit RISC-V\n    riscv64     - 64-bit RISC-V\n    sparc       - Sparc\n    sparcel     - Sparc LE\n    sparcv9     - Sparc V9\n    spirv       - SPIR-V Logical\n    spirv32     - SPIR-V 32-bit\n    spirv64     - SPIR-V 64-bit\n    systemz     - SystemZ\n    thumb       - Thumb\n    thumbeb     - Thumb (big endian)\n    ve          - VE\n    wasm32      - WebAssembly 32-bit\n    wasm64      - WebAssembly 64-bit\n    x86         - 32-bit X86: Pentium-Pro and above\n    x86-64      - 64-bit X86: EM64T and AMD64\n    xcore       - XCore\n    xtensa      - Xtensa 32\n"
+      }
+    ],
+    "gcc_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "uname": [
+      "Linux",
+      "runnervm8df0l",
+      "6.17.0-1022-azure",
+      "#22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026",
+      "x86_64"
+    ],
+    "controls": "CPU affinity applied; frequency/turbo/SMT/thermals observed, not changed",
+    "observations": [
+      {
+        "time_utc": "2026-10-01T20:51:37.382360+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-01T20:51:57.224081+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-01T20:52:24.794666+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-01T20:52:24.794955+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-01T20:52:52.262346+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-01T20:52:52.262585+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-01T20:53:19.760059+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      }
+    ],
+    "status": "passed",
+    "interpretation": "Replay checks passed; performance acceptance and independent model qualification remain separate."
+  },
+  "source_hashes": {
+    "source/experiments/r7_2_brettel_vienot_reference/source/app.d": "1ebbd9e9227a20fee096f5d13bf80efe84198c24d158441a203960927e9e3a79",
+    "source/experiments/r7_3_machado_2009_reference/source/app.d": "f2e714358502fbb4265a8866f1dbec57f0c4c69b9b4da437d04ee8dfe0f79b04",
+    "source/experiments/r7_4_5_cvd_performance/_generated/bv.d": "9da462fb72982c5b8c55614e2441a19bfc6490675c388d71196fbd5a29ec0827",
+    "source/experiments/r7_4_5_cvd_performance/_generated/coefficients.hpp": "05f1b86646323adc0241426f4dc68de45a1b02435adde632b6cbd6af7ae621b0",
+    "source/experiments/r7_4_5_cvd_performance/_generated/ma.d": "160c98aca44d3facf6dd3ab4722d0229e5c78f34c27196b19ceaab5825531918",
+    "source/experiments/r7_4_5_cvd_performance/bench.d": "0f6039e0e696ab7ea0848b459451957b4f7f61c1dcf082f3b645f60b1b305d8d",
+    "source/experiments/r7_4_5_cvd_performance/candidates.d": "9616d8d7c0a26ffb09212e341e774d2d1dd245909ff2f914f073f19676525e3b",
+    "source/experiments/r7_4_5_cvd_performance/machado_candidates.d": "8cc646a5950d862dfbacfc83f286db95eee1d4aca1074c2bac46ceae905233d0",
+    "source/experiments/r7_4_5_cvd_performance/prepare.py": "265bcedede07f7a599f83cc85a00fe016fd5b2fd26365bf0b63c8a6d74890659",
+    "source/experiments/r7_4_5_cvd_performance/reference.cpp": "62464ad880c1569edcc1739f84886a60e1b8ddab6374cdebf5d537a9f5df0cf2",
+    "source/experiments/r7_4_5_cvd_performance/replay.py": "f137260ade58d08b370d74ae24961d40483ce6c934f0756f0b93859460465828",
+    "source/experiments/r7_4_5_cvd_performance/summarize.py": "4d2968c60818ebf468b36ad037cc16f6ec779ac28c415e6fc0d94e11141b13c8"
+  },
+  "binary_hashes": {
+    "compiler-0-ldc/benchmark-bv_direct": "e67b5f0e9caf73c64f0c388288fbef1ab7f90a421c41509d282bddf5ff0d06de",
+    "compiler-0-ldc/benchmark-bv_split": "2cbd29f887cf01a0a2ae5f35514ca47d1f31f0b0993ce73fb52ea7f0bb32bd5e",
+    "compiler-0-ldc/benchmark-default": "4b7fe9f66166c083d47f925315547eb250d22c2ecd4549ca37ff235aa350b7b4",
+    "compiler-0-ldc/benchmark-prepared": "ec56371d1abf7be7f2d15cdd204a8c75aacf640de114f380b0bf8cb36ddf83a8",
+    "cpp-benchmark": "b01f08fe98a87bc3646d7377f100ec7bf658c0cb05615c6d857cca66c9cb9f55"
+  },
+  "all_replay_source_hashes_match_XPS_snapshot": true,
+  "ci_artifact": {
+    "id": 11193019019,
+    "name": "bv-qualification-ldc-1.41.0",
+    "size_in_bytes": 3776087,
+    "digest": "sha256:06523448fb7f7e17a0eebbef72cd8c01143b567babd052b71e05867f91dbeb0d",
+    "expires_at": "2026-12-30T20:51:20Z"
+  }
+}

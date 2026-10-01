@@ -196,3 +196,11 @@ Its two-block smoke passes all four compiler jobs. The actual
 complete reconstructed block and pooled reports, and compiler/kernel decisions.
 Large BV gains replicate, while material DMD gaps and uncontrolled clock/thermal
 conditions keep production performance acceptance open.
+
+## Follow-up: combined BV qualification
+
+The existing direct/split combination is [qualified in Debug and Release](R7_4_5_BV_QUALIFICATION.md)
+on all four compilers, with extended finite/IEEE inputs, in-place stores and CTFE.
+Three-size, three-block measurements confirm Brettel and float Viénot gains;
+LDC double Viénot regressions and DMD/C++ residual gaps keep a universal
+replacement and production performance acceptance open.
