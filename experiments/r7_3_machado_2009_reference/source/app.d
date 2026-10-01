@@ -1,11 +1,21 @@
 import std.stdio : writeln;
 import std.math : abs, isNaN, isInfinity;
 
+struct Rgb(T){ T r; T g; T b; }
+
 struct Matrix3(T)
 {
     T m00; T m01; T m02;
     T m10; T m11; T m12;
     T m20; T m21; T m22;
+}
+
+Rgb!T apply(T)(Matrix3!T m, Rgb!T v)
+@safe pure nothrow @nogc
+{
+    return Rgb!T(m.m00*v.r+m.m01*v.g+m.m02*v.b,
+                  m.m10*v.r+m.m11*v.g+m.m12*v.b,
+                  m.m20*v.r+m.m21*v.g+m.m22*v.b);
 }
 
 Matrix3!T lerp(T)(Matrix3!T a, Matrix3!T b, T alpha)
@@ -120,10 +130,45 @@ void validateTable()
     writeln("Nonlinear severity table preserved: PASS");
 }
 
+void errorEnvelope()
+@safe
+{
+    enum Rgb!double[12] points = [
+        Rgb!double(0,0,0), Rgb!double(1,1,1), Rgb!double(.5,.5,.5),
+        Rgb!double(1,0,0), Rgb!double(0,1,0), Rgb!double(0,0,1),
+        Rgb!double(0,1,1), Rgb!double(1,0,1), Rgb!double(1,1,0),
+        Rgb!double(.2,.4,.7), Rgb!double(.63,.21,.47), Rgb!double(.17,.59,.33)
+    ];
+
+    double maxAbs;
+    string maxCase;
+    foreach(si; 0 .. 11)
+    foreach(pi; 0 .. points.length)
+    {
+        foreach(mi, ref table; [protanTable[], deutanTable[], tritanTable[]])
+        {
+            const md = matrixAtSeverity(table, cast(double)si / 10.0);
+            const mf = castMatrix!float(md);
+            const vf = apply(mf, cast(Rgb!float)points[pi]);
+            const vd = apply(md, points[pi]);
+            const e0 = abs(vf.r - cast(float)vd.r);
+            const e1 = abs(vf.g - cast(float)vd.g);
+            const e2 = abs(vf.b - cast(float)vd.b);
+            const e = max(e0, max(e1,e2));
+            if (e > maxAbs) { maxAbs=e; maxCase=si==si ? "machado" : "machado"; }
+        }
+    }
+    assert(maxAbs < 2e-6);
+    writeln("R7.4.2 PASS");
+    writeln("float-vs-double matrix/output envelope: PASS");
+    writeln("max absolute component error: ", maxAbs);
+}
+
 void main()
 @safe
 {
     validateTable();
+    errorEnvelope();
 
     enum pCtfe = matrixAtSeverity(protanTable[], 0.35);
     enum dCtfe = matrixAtSeverity(deutanTable[], 0.65);
