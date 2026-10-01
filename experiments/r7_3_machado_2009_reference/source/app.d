@@ -188,8 +188,8 @@ void validateNonFiniteAndGamut()
     assert(isInfinity(infOut.r) || isInfinity(infOut.g) || isInfinity(infOut.b)
         || isNaN(infOut.r) || isNaN(infOut.g) || isNaN(infOut.b));
 
-    enum out = apply(protanTable[10], outInput);
-    assert(out.r < 0.0 || out.g > 1.0 || out.b > 1.0);
+    enum gamutOutput = apply(protanTable[10], outInput);
+    assert(gamutOutput.r < 0.0 || gamutOutput.g > 1.0 || gamutOutput.b > 1.0);
 
     writeln("R7.4.3 PASS");
     writeln("NaN/Infinity IEEE propagation: PASS");
