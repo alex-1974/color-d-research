@@ -130,3 +130,34 @@ The production contract remains undecided until R6.6 and R6.7 are complete. In p
 R6.7 compares `float` and `double` CIEDE2000 evaluation and requires CTFE and runtime results to agree for the same scalar type. The probe also checks both scalar types against the reference-value envelope.
 
 This is a capability and numerical-stability check. It does not establish a required tolerance for a future public API; tolerances must be derived from the intended scalar contract and reference evidence.
+
+
+## R6.8 promotion decision
+
+The consumer-shaped probe confirms the intended architectural boundary: a color consumer can evaluate a generic Delta-E metric at CTFE and apply its own semantic threshold, while color-d itself need not encode accessibility thresholds, theme semantics, or automatic algorithm selection.
+
+### Promotion proposal
+
+Promote the smallest generic CIE surface needed for interoperability:
+
+1. CIELAB representation with explicit reference-white semantics. Do not silently reinterpret the existing XyzD65 type as D50-relative Lab.
+2. XYZ ↔ CIELAB conversion for the explicitly supported reference white/adaptation path established by the implementation contract.
+3. Delta E 1976 as the direct Euclidean CIELAB metric.
+4. CIEDE2000 as a separately named metric, because it is a standardized and independently validated algorithm with behavior that differs materially from Delta E 1976.
+5. Preserve deltaEOK separately for Oklab; no automatic choice between metrics.
+
+Do not promote in #162:
+- CIELCh as a mandatory public model unless another concrete consumer/API need emerges;
+- JND/accessibility thresholds;
+- theme helpers;
+- palette/theme generation;
+- automatic perceptual metric selection;
+- a generic white-point framework broader than the evidence and current API require.
+
+### Numerical contract direction
+
+The production API should retain the library's established scalar discipline and CTFE capability. Non-finite behavior must be explicit rather than accidental. Exact cross-compiler floating-point identity is not required merely because CTFE and runtime are both supported; reference-value envelopes and the established compiler matrix remain the validation mechanism.
+
+### Release recommendation
+
+#162 can move from research to implementation with the minimal surface above, subject to a production API review and executable reference-vector tests. The research branch remains the evidence record; no research implementation is copied into production without review.
