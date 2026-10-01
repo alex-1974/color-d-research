@@ -2,6 +2,10 @@ module bench;
 import bv;
 import ma;
 import candidates;
+import machado_candidates;
+version (FixedMachado) enum machadoMode = 1;
+else version (DirectMachado) enum machadoMode = 2;
+else enum machadoMode = 0;
 
 version (PreparedCvd) enum candidateMode = 1;
 else version (InlineCvd) enum candidateMode = 2;
@@ -85,7 +89,9 @@ void runCase(T, Mode mode)(size_t n, uint deficiency, bool reverse)
         deficiency == 0 ? ma.protanTable : deficiency == 1 ? ma.deutanTable : ma.tritanTable);
     const prepared = ma.matrixAtSeverity(table[], cast(T)0.65);
     foreach (warm; 0 .. 3)
-        batch!(T, mode)(input, output, table[], prepared, deficiency);
+        static if (machadoMode != 0 && mode == Mode.lookupApply)
+            fixedColorBatch!(T, machadoMode == 2)(input, output, table);
+        else batch!(T, mode)(input, output, table[], prepared, deficiency);
     // Call with runtime slices and parameters; original fixed-vector tests run
     // separately in Debug. Check the batched representation before timing.
     foreach (i; 0 .. n)
@@ -93,10 +99,17 @@ void runCase(T, Mode mode)(size_t n, uint deficiency, bool reverse)
         assert(!isNaN(output[i].r) && !isInfinity(output[i].r));
         assert(!isNaN(output[i].g) && !isInfinity(output[i].g));
         assert(!isNaN(output[i].b) && !isInfinity(output[i].b));
-        static if (mode == Mode.brettel || mode == Mode.vienot)
         {
-            static if (mode == Mode.brettel) const reference = bv.brettelProbe(input[i], deficiency);
-            else const reference = bv.vienotProbe(input[i], deficiency == 1);
+            bv.Rgb!T reference;
+            static if (mode == Mode.brettel) reference = bv.brettelProbe(input[i], deficiency);
+            else static if (mode == Mode.vienot) reference = bv.vienotProbe(input[i], deficiency == 1);
+            else
+            {
+                static if (mode == Mode.prepared) const matrix = prepared;
+                else const matrix = ma.matrixAtSeverity(table[],cast(T)(i%1001)/cast(T)1000);
+                const expected = ma.apply(matrix,ma.Rgb!T(input[i].r,input[i].g,input[i].b));
+                reference = bv.Rgb!T(expected.r,expected.g,expected.b);
+            }
             // Explicit check remains active in optimized -release builds.
             if (!componentMatches(output[i].r, reference.r) ||
                 !componentMatches(output[i].g, reference.g) ||
@@ -112,7 +125,9 @@ void runCase(T, Mode mode)(size_t n, uint deficiency, bool reverse)
         {
             // A changing runtime input prevents collapsing identical batches.
             input[0].r = cast(T)(repeat + round) / cast(T)32;
-            batch!(T, mode)(input, output, table[], prepared, deficiency);
+            static if (machadoMode != 0 && mode == Mode.lookupApply)
+                fixedColorBatch!(T, machadoMode == 2)(input, output, table);
+            else batch!(T, mode)(input, output, table[], prepared, deficiency);
             const p = output[(repeat*997 + round*37) % n];
             checksum += cast(double)p.r + cast(double)p.g + cast(double)p.b;
         }
@@ -128,14 +143,22 @@ void runLookup(T)(size_t n, uint deficiency, bool reverse)
     auto output = new ma.Matrix3!T[n];
     const ma.Matrix3!T[11] table = ma.precisionTable!T(
         deficiency == 0 ? ma.protanTable : deficiency == 1 ? ma.deutanTable : ma.tritanTable);
-    foreach (warm; 0 .. 3) lookupBatch!T(output, table[], 0);
+    foreach (warm; 0 .. 3)
+    {
+        static if (machadoMode != 0) fixedLookupBatch!(T,machadoMode==2)(output,table,0);
+        else lookupBatch!T(output, table[], 0);
+    }
+    foreach (i; 0 .. n)
+        if (!matricesMatch!T(output[i],ma.matrixAtSeverity(table[],cast(T)(i%1001)/cast(T)1000)))
+            throw new Exception("optimized Machado matrix component mismatch");
     foreach (round; 0 .. 9)
     {
         double checksum = 0;
         auto timer = StopWatch(AutoStart.yes);
         foreach (repeat; 0 .. 16)
         {
-            lookupBatch!T(output, table[], cast(uint)(repeat + round));
+            static if (machadoMode != 0) fixedLookupBatch!(T,machadoMode==2)(output,table,cast(uint)(repeat+round));
+            else lookupBatch!T(output, table[], cast(uint)(repeat + round));
             const p = output[(repeat*997 + round*37) % n];
             checksum += cast(double)p.m00 + cast(double)p.m11 + cast(double)p.m22;
         }
@@ -166,6 +189,8 @@ void main(string[] args)
     {
         bv.referenceMain(); ma.referenceMain();
         validateCandidates!float(); validateCandidates!double();
+        validateMachadoCandidates!float(); validateMachadoCandidates!double();
+        writeln("R7.4.5 fixed-table Machado 1001 severities, components, IEEE, CTFE and attributes: PASS");
         writeln("R7.4.5 prepared/inline/direct/split candidate component, IEEE, CTFE and attribute preflight: PASS");
         cases!float(32, false); cases!double(32, false);
     }
