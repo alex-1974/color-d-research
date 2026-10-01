@@ -1,0 +1,4 @@
+name "r5-7-srgb-gamut-boundary-scalar-iterations"
+description "Measure scalar-specific fixed bisection accuracy for color-d #161"
+targetType "executable"
+sourcePaths "source"
