@@ -4,15 +4,15 @@
 
 R7.3 studies the Machado, Oliveira & Fernandes (2009) model as a separate CVD model family. It does not make severity a universal parameter across Brettel, Viénot and Machado.
 
-The paper describes a physiologically based model derived from electrophysiological data and intended to handle normal colour vision, anomalous trichromacy and dichromacy in a unified model. Experimental evaluation involved people with CVD and normal colour vision. citeturn0search0
+The paper describes a physiologically based model derived from electrophysiological data and intended to handle normal colour vision, anomalous trichromacy and dichromacy in a unified model. Experimental evaluation involved people with CVD and normal colour vision. 
 
 ## Severity semantics
 
-The independent DaltonLens reference documents Machado severity on a continuous scale from 0 to 1. It uses the published matrices at 0.1 increments and linearly interpolates between adjacent tabulated matrices for intermediate severity values. Severity 1 represents full dichromacy in that implementation. citeturn0search1turn1search0
+The independent DaltonLens reference documents Machado severity on a continuous scale from 0 to 1. It uses the published matrices at 0.1 increments and linearly interpolates between adjacent tabulated matrices for intermediate severity values. Severity 1 represents full dichromacy in that implementation. 
 
 This is different from merely interpolating Brettel output with the original color: Machado's matrices are the model's severity-dependent transformations.
 
-The implementation evidence also shows that the model is applied to **linear RGB**, with sRGB decoding before the matrix and encoding afterwards. citeturn0search2turn0search5
+The implementation evidence also shows that the model is applied to **linear RGB**, with sRGB decoding before the matrix and encoding afterwards. 
 
 ## Published/reference matrix family
 
@@ -42,11 +42,11 @@ The reference table contains ten increments between normal vision and the full-s
 [ 0.004733  0.691367  0.303900 ]
 ```
 
-The complete 0.1-step table is preserved in the R7.3 probe rather than being rounded into a smaller production table. The source table is independently reproduced in public implementations and reference material. citeturn3search0turn3search2
+The complete 0.1-step table is preserved in the independent reference source; R7.3 currently probes the identity and full-severity endpoints and the continuous interpolation contract. A subsequent numerical probe should cross-check the complete 0.1-step table. The source table is independently reproduced in public implementations and reference material. 
 
 ## Tritan limitation
 
-The DaltonLens review explicitly warns that Machado 2009 does not work well for tritanopia. Its simulator therefore treats Machado as useful for anomalous protan/deutan modelling but does not regard it as a strong tritan reference. citeturn0search1turn0search5
+The DaltonLens review explicitly warns that Machado 2009 does not work well for tritanopia. Its simulator therefore treats Machado as useful for anomalous protan/deutan modelling but does not regard it as a strong tritan reference. 
 
 This is an important production boundary: implementing the published tritan matrix is not equivalent to claiming that it is a validated tritan perception model.
 
@@ -98,7 +98,7 @@ A generic CVD deficiency enum may still be useful at a higher layer, but model-s
 - [x] linear-RGB boundary documented
 - [x] independent reference identified
 - [x] tritan limitation documented
-- [x] complete severity table represented by probe
+- [x] endpoint severity interpolation represented by probe
 - [ ] numerical cross-check
 - [ ] float/double error envelope
 - [ ] CTFE/runtime equivalence
