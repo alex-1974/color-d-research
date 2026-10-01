@@ -88,14 +88,14 @@ void runLookup(T)(size_t n, uint deficiency, bool reverse)
     auto output = new ma.Matrix3!T[n];
     const ma.Matrix3!T[11] table = ma.precisionTable!T(
         deficiency == 0 ? ma.protanTable : deficiency == 1 ? ma.deutanTable : ma.tritanTable);
-    foreach (warm; 0 .. 3) lookupBatch(output, table[], 0);
+    foreach (warm; 0 .. 3) lookupBatch!T(output, table[], 0);
     foreach (round; 0 .. 9)
     {
         double checksum = 0;
         auto timer = StopWatch(AutoStart.yes);
         foreach (repeat; 0 .. 16)
         {
-            lookupBatch(output, table[], repeat + round);
+            lookupBatch!T(output, table[], cast(uint)(repeat + round));
             const p = output[(repeat*997 + round*37) % n];
             checksum += cast(double)p.m00 + cast(double)p.m11 + cast(double)p.m22;
         }
