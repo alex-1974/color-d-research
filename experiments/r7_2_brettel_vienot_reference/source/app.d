@@ -10,7 +10,7 @@ struct Matrix3(T)
     T m10; T m11; T m12;
     T m20; T m21; T m22;
 
-    Rgb!T apply(T)(Rgb!T v) const
+    Rgb!T apply(Rgb!T v) const @safe pure nothrow @nogc
     {
         return Rgb!T(
             m00*v.r + m01*v.g + m02*v.b,
@@ -150,6 +150,81 @@ void checkGoldenVienot()
     assertNear(vd.b, 0.704468, 1e-6);
 }
 
+
+Matrix3!T precisionMatrix(T)(Matrix3!double m)
+@safe pure nothrow @nogc
+{
+    return Matrix3!T(cast(T)m.m00, cast(T)m.m01, cast(T)m.m02,
+        cast(T)m.m10, cast(T)m.m11, cast(T)m.m12,
+        cast(T)m.m20, cast(T)m.m21, cast(T)m.m22);
+}
+
+
+Rgb!T brettelProbe(T)(Rgb!T p, uint deficiency)
+@safe pure nothrow @nogc
+{
+    switch (deficiency)
+    {
+    case 0:
+        return precisionMatrix!T(
+            p.r*cast(T)0.00048 + p.g*cast(T)0.00393 - p.b*cast(T)0.00441 >= 0
+            ? brettelProtan1 : brettelProtan2).apply(p);
+    case 1:
+        return precisionMatrix!T(
+            -p.r*cast(T)0.00281 - p.g*cast(T)0.00611 + p.b*cast(T)0.00892 >= 0
+            ? brettelDeutan1 : brettelDeutan2).apply(p);
+    case 2:
+        return precisionMatrix!T(
+            p.r*cast(T)0.03901 - p.g*cast(T)0.02788 - p.b*cast(T)0.01113 >= 0
+            ? brettelTritan1 : brettelTritan2).apply(p);
+    default:
+        assert(0, "unsupported research deficiency");
+    }
+}
+
+Rgb!T vienotProbe(T)(Rgb!T p, bool deutan)
+@safe pure nothrow @nogc
+{
+    return precisionMatrix!T(deutan ? vienotDeutan : vienotProtan).apply(p);
+}
+
+void qualifyAttributes(T)()
+@safe pure nothrow @nogc
+{
+    enum sample = Rgb!T(cast(T)0.2, cast(T)0.4, cast(T)0.7);
+    enum T tolerance = is(T == float) ? cast(T)2e-6 : cast(T)1e-12;
+    // Parameters of the attributed wrappers cover runtime calls as well as CTFE.
+    foreach (deficiency; 0u .. 3u)
+    {
+        const runtime = brettelProbe(sample, deficiency);
+        assert(!isNaN(runtime.r) && !isNaN(runtime.g) && !isNaN(runtime.b));
+    }
+    static foreach (deficiency; 0u .. 3u)
+    {
+        enum expected = brettelProbe(sample, deficiency);
+        const actual = brettelProbe(sample, deficiency);
+        assertNear(actual.r, expected.r, tolerance);
+        assertNear(actual.g, expected.g, tolerance);
+        assertNear(actual.b, expected.b, tolerance);
+    }
+    static foreach (deutan; [false, true])
+    {
+        enum expected = vienotProbe(sample, deutan);
+        const actual = vienotProbe(sample, deutan);
+        assertNear(actual.r, expected.r, tolerance);
+        assertNear(actual.g, expected.g, tolerance);
+        assertNear(actual.b, expected.b, tolerance);
+    }
+    // Primaries exercise both sides of each Brettel separation plane.
+    const Rgb!T[3] primaries = [Rgb!T(1,0,0), Rgb!T(0,1,0), Rgb!T(0,0,1)];
+    foreach (p; primaries)
+        foreach (deficiency; 0u .. 3u)
+        {
+            const actual = brettelProbe(p, deficiency);
+            assert(!isNaN(actual.r) && !isNaN(actual.g) && !isNaN(actual.b));
+        }
+}
+
 void main()
 {
     checkMatrix(brettelProtan1);
@@ -162,6 +237,9 @@ void main()
     checkMatrix(vienotDeutan);
     checkGoldenBrettel();
     checkGoldenVienot();
+    qualifyAttributes!float();
+    qualifyAttributes!double();
+    writeln("R7.4.4 Brettel/Vienot float/double attributed runtime + CTFE: PASS");
 
     enum sample = Rgb!double(0.2, 0.4, 0.7);
     enum bp1 = brettelProtan1.apply(sample);
