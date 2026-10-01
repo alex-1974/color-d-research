@@ -1,0 +1,4 @@
+name "r6-6-ciede2000-nonfinite"
+description "Research CIEDE2000 non-finite and extended-value semantics"
+targetType "executable"
+sourcePaths "source"
