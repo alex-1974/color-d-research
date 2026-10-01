@@ -199,13 +199,15 @@ void validateNonFiniteAndGamut()
 Matrix3!double attributeMatrixProbe()
 @safe pure nothrow @nogc
 {
-    return matrixAtSeverity(protanTable[], 0.35);
+    const Matrix3!double[11] table = protanTable;
+    return matrixAtSeverity(table[], 0.35);
 }
 
 Rgb!double attributeApplyProbe()
 @safe pure nothrow @nogc
 {
-    return apply(matrixAtSeverity(deutanTable[], 0.65), Rgb!double(0.2, 0.4, 0.7));
+    const Matrix3!double[11] table = deutanTable;
+    return apply(matrixAtSeverity(table[], 0.65), Rgb!double(0.2, 0.4, 0.7));
 }
 
 
@@ -232,17 +234,18 @@ void qualifyAttributes(T)()
     static foreach (source; [protanTable, deutanTable, tritanTable])
     {{
         enum table = precisionTable!T(source);
+        const Matrix3!T[11] runtimeTable = table;
         static foreach (severity; [cast(T)0, cast(T)0.35, cast(T)0.65, cast(T)0.85, cast(T)1])
         {{
             enum expected = machadoAttributeProbe(table[], severity, sample);
-            const actual = machadoAttributeProbe(table[], severity, sample);
+            const actual = machadoAttributeProbe(runtimeTable[], severity, sample);
             assert(abs(actual.r-expected.r) <= tolerance);
             assert(abs(actual.g-expected.g) <= tolerance);
             assert(abs(actual.b-expected.b) <= tolerance);
         }}
         foreach (i; 0 .. 11)
         {
-            const actual = machadoAttributeProbe(table[], cast(T)i/cast(T)10, sample);
+            const actual = machadoAttributeProbe(runtimeTable[], cast(T)i/cast(T)10, sample);
             assert(!isNaN(actual.r) && !isInfinity(actual.r));
             assert(!isNaN(actual.g) && !isInfinity(actual.g));
             assert(!isNaN(actual.b) && !isInfinity(actual.b));
