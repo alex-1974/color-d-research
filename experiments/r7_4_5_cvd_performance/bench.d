@@ -5,6 +5,7 @@ import candidates;
 import machado_candidates;
 version (FixedMachado) enum machadoMode = 1;
 else version (DirectMachado) enum machadoMode = 2;
+else version (BoundedMachado) enum machadoMode = 3;
 else enum machadoMode = 0;
 
 version (PreparedCvd) enum candidateMode = 1;
@@ -90,7 +91,7 @@ void runCase(T, Mode mode)(size_t n, uint deficiency, bool reverse)
     const prepared = ma.matrixAtSeverity(table[], cast(T)0.65);
     foreach (warm; 0 .. 3)
         static if (machadoMode != 0 && mode == Mode.lookupApply)
-            fixedColorBatch!(T, machadoMode == 2)(input, output, table);
+            fixedColorBatch!(T, machadoMode == 2, machadoMode == 3)(input, output, table);
         else batch!(T, mode)(input, output, table[], prepared, deficiency);
     // Call with runtime slices and parameters; original fixed-vector tests run
     // separately in Debug. Check the batched representation before timing.
@@ -126,7 +127,7 @@ void runCase(T, Mode mode)(size_t n, uint deficiency, bool reverse)
             // A changing runtime input prevents collapsing identical batches.
             input[0].r = cast(T)(repeat + round) / cast(T)32;
             static if (machadoMode != 0 && mode == Mode.lookupApply)
-                fixedColorBatch!(T, machadoMode == 2)(input, output, table);
+                fixedColorBatch!(T, machadoMode == 2, machadoMode == 3)(input, output, table);
             else batch!(T, mode)(input, output, table[], prepared, deficiency);
             const p = output[(repeat*997 + round*37) % n];
             checksum += cast(double)p.r + cast(double)p.g + cast(double)p.b;
@@ -145,7 +146,7 @@ void runLookup(T)(size_t n, uint deficiency, bool reverse)
         deficiency == 0 ? ma.protanTable : deficiency == 1 ? ma.deutanTable : ma.tritanTable);
     foreach (warm; 0 .. 3)
     {
-        static if (machadoMode != 0) fixedLookupBatch!(T,machadoMode==2)(output,table,0);
+        static if (machadoMode != 0) fixedLookupBatch!(T,machadoMode==2,machadoMode==3)(output,table,0);
         else lookupBatch!T(output, table[], 0);
     }
     foreach (i; 0 .. n)
@@ -157,7 +158,7 @@ void runLookup(T)(size_t n, uint deficiency, bool reverse)
         auto timer = StopWatch(AutoStart.yes);
         foreach (repeat; 0 .. 16)
         {
-            static if (machadoMode != 0) fixedLookupBatch!(T,machadoMode==2)(output,table,cast(uint)(repeat+round));
+            static if (machadoMode != 0) fixedLookupBatch!(T,machadoMode==2,machadoMode==3)(output,table,cast(uint)(repeat+round));
             else lookupBatch!T(output, table[], cast(uint)(repeat + round));
             const p = output[(repeat*997 + round*37) % n];
             checksum += cast(double)p.m00 + cast(double)p.m11 + cast(double)p.m22;

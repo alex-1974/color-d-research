@@ -3,12 +3,13 @@ import ma;
 import bv;
 import candidates : componentMatches;
 
-ma.Matrix3!T fixedLookup(T)(const ref ma.Matrix3!T[11] table, T severity)
+ma.Matrix3!T fixedLookup(T, bool narrow = false)(const ref ma.Matrix3!T[11] table, T severity)
 @safe pure nothrow @nogc
 {
     assert(severity >= 0 && severity <= 1);
     const T scaled = severity * 10;
-    const size_t lo = cast(size_t)scaled;
+    static if (narrow) const int lo = cast(int)scaled;
+    else const size_t lo = cast(size_t)scaled;
     if (lo >= 10) return table[10];
     const T alpha = scaled - cast(T)lo;
     return ma.lerp(table[lo], table[lo+1], alpha);
@@ -28,7 +29,7 @@ void lookupWrite(T)(ref ma.Matrix3!T output, const ref ma.Matrix3!T[11] table, T
 }
 
 pragma(inline, false)
-void fixedColorBatch(T, bool direct)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
+void fixedColorBatch(T, bool direct, bool narrow = false)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
     const ref ma.Matrix3!T[11] table)
 @safe pure nothrow @nogc
 {
@@ -38,14 +39,14 @@ void fixedColorBatch(T, bool direct)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
         ma.Matrix3!T matrix;
         const T severity = cast(T)(i%1001)/cast(T)1000;
         static if (direct) lookupWrite!T(matrix, table, severity);
-        else matrix = fixedLookup!T(table, severity);
+        else matrix = fixedLookup!(T,narrow)(table, severity);
         const c = ma.apply(matrix, ma.Rgb!T(p.r,p.g,p.b));
         output[i] = bv.Rgb!T(c.r,c.g,c.b);
     }
 }
 
 pragma(inline, false)
-void fixedLookupBatch(T, bool direct)(ma.Matrix3!T[] output,
+void fixedLookupBatch(T, bool direct, bool narrow = false)(ma.Matrix3!T[] output,
     const ref ma.Matrix3!T[11] table, uint shift)
 @safe pure nothrow @nogc
 {
@@ -53,7 +54,7 @@ void fixedLookupBatch(T, bool direct)(ma.Matrix3!T[] output,
     {
         const T severity = cast(T)((i+shift)%1001)/cast(T)1000;
         static if (direct) lookupWrite!T(matrix, table, severity);
-        else matrix = fixedLookup!T(table, severity);
+        else matrix = fixedLookup!(T,narrow)(table, severity);
     }
 }
 
@@ -77,6 +78,7 @@ bool qualifyCtfe(T)()
         lookupWrite!T(direct, table, severity);
         if (!matricesMatch!T(direct, ma.matrixAtSeverity(table[], severity))) return false;
         if (!matricesMatch!T(fixedLookup!T(table,severity), direct)) return false;
+        if (!matricesMatch!T(fixedLookup!(T,true)(table,severity), direct)) return false;
     }
     return true;
 }
@@ -97,6 +99,7 @@ void validateMachadoCandidates(T)()
             ma.Matrix3!T direct;
             lookupWrite!T(direct, table, severity);
             assert(matricesMatch!T(fixed, reference));
+            assert(matricesMatch!T(fixedLookup!(T,true)(table,severity),reference));
             assert(matricesMatch!T(direct, reference));
             const bv.Rgb!T[4] inputs = [
                 bv.Rgb!T(cast(T)0.2,cast(T)0.4,cast(T)0.7),
