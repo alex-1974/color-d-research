@@ -1,0 +1,4 @@
+name "r6-5-ciede2000-edge-cases"
+description "Validate CIEDE2000 singularities and hue-wrap behavior for color-d #162"
+targetType "executable"
+sourcePaths "source"
