@@ -5,7 +5,7 @@
 // Standalone by design: no production color-d imports.
 
 import std.math : abs, cos, isFinite, sin, PI;
-import std.stdio : writefln;
+import std.stdio : writefln, writeln;
 
 struct Rgb(T)
 {
@@ -139,8 +139,8 @@ if (is(T == float) || is(T == double))
     foreach (li; 1 .. 100)
     foreach (hi; 0 .. 360)
     {
-        const T L = cast(T)li / cast(T)100;
-        const T h = cast(T)hi;
+        T L = cast(T)li / cast(T)100;
+        T h = cast(T)hi;
 
         const auto oracle = ulpOracle(L, h);
         const auto fixed = fixedBoundary(L, h, iterations);
