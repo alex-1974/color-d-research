@@ -159,3 +159,14 @@ The C++ baseline uses a fixed 11-element table and an unchecked but bounded
 vector loop. The D lookup accepts a dynamically sized borrowed slice and keeps
 bounds checks enabled. These representation/safety differences require review
 before making a general language-performance claim.
+
+## Follow-up: prepared coefficient candidates
+
+The focused preparation and explicit-arithmetic experiment is complete and
+recorded in [R7_4_5_PREPARED_CANDIDATES.md](R7_4_5_PREPARED_CANDIDATES.md).
+LDC Brettel double improves substantially, but DMD double regresses and major
+float gaps remain. The candidate prepares coefficients inside each timed batch;
+the original baseline methodology above describes the default executable.
+No universal candidate is accepted and the production performance gate remains
+open. Float code generation, fixed-size Machado representation and controlled
+consumer-machine replay remain the next investigations.

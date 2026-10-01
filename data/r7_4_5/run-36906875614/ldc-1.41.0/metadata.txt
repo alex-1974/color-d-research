@@ -1,0 +1,109 @@
+8c844e2b96d55c092f1210d343798aebd39ac4f0
+LDC - the LLVM D compiler (1.41.0):
+  based on DMD v2.111.0 and LLVM 20.1.5
+  built with LDC - the LLVM D compiler (1.41.0)
+  Default target: x86_64-unknown-linux-gnu
+  Host CPU: znver3
+  http://dlang.org - http://wiki.dlang.org/LDC
+
+
+  Registered Targets:
+    aarch64     - AArch64 (little endian)
+    aarch64_32  - AArch64 (little endian ILP32)
+    aarch64_be  - AArch64 (big endian)
+    amdgcn      - AMD GCN GPUs
+    arm         - ARM
+    arm64       - ARM64 (little endian)
+    arm64_32    - ARM64 (little endian ILP32)
+    armeb       - ARM (big endian)
+    avr         - Atmel AVR Microcontroller
+    bpf         - BPF (host endian)
+    bpfeb       - BPF (big endian)
+    bpfel       - BPF (little endian)
+    hexagon     - Hexagon
+    lanai       - Lanai
+    loongarch32 - 32-bit LoongArch
+    loongarch64 - 64-bit LoongArch
+    mips        - MIPS (32-bit big endian)
+    mips64      - MIPS (64-bit big endian)
+    mips64el    - MIPS (64-bit little endian)
+    mipsel      - MIPS (32-bit little endian)
+    msp430      - MSP430 [experimental]
+    nvptx       - NVIDIA PTX 32-bit
+    nvptx64     - NVIDIA PTX 64-bit
+    ppc32       - PowerPC 32
+    ppc32le     - PowerPC 32 LE
+    ppc64       - PowerPC 64
+    ppc64le     - PowerPC 64 LE
+    r600        - AMD GPUs HD2XXX-HD6XXX
+    riscv32     - 32-bit RISC-V
+    riscv64     - 64-bit RISC-V
+    sparc       - Sparc
+    sparcel     - Sparc LE
+    sparcv9     - Sparc V9
+    spirv       - SPIR-V Logical
+    spirv32     - SPIR-V 32-bit
+    spirv64     - SPIR-V 64-bit
+    systemz     - SystemZ
+    thumb       - Thumb
+    thumbeb     - Thumb (big endian)
+    ve          - VE
+    wasm32      - WebAssembly 32-bit
+    wasm64      - WebAssembly 64-bit
+    x86         - 32-bit X86: Pentium-Pro and above
+    x86-64      - 64-bit X86: EM64T and AMD64
+    xcore       - XCore
+    xtensa      - Xtensa 32
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Copyright (C) 2023 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Linux runnervm8df0l 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           48 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  4
+On-line CPU(s) list:                     0-3
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD EPYC 7763 64-Core Processor
+CPU family:                              25
+Model:                                   1
+Thread(s) per core:                      2
+Core(s) per socket:                      2
+Socket(s):                               1
+Stepping:                                1
+BogoMIPS:                                4890.84
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm
+Virtualization:                          AMD-V
+Hypervisor vendor:                       Microsoft
+Virtualization type:                     full
+L1d cache:                               64 KiB (2 instances)
+L1i cache:                               64 KiB (2 instances)
+L2 cache:                                1 MiB (2 instances)
+L3 cache:                                32 MiB (1 instance)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-3
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Old microcode:             Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Vulnerable: Safe RET, no microcode
+Vulnerability Spec store bypass:         Vulnerable
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Vulnerable: No microcode
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Not affected
+bv source_sha256 1ebbd9e9227a20fee096f5d13bf80efe84198c24d158441a203960927e9e3a79
+ma source_sha256 f2e714358502fbb4265a8866f1dbec57f0c4c69b9b4da437d04ee8dfe0f79b04
+affinity_cpu=0; workload=65536; turbo/frequency/SMT=uncontrolled shared runner
