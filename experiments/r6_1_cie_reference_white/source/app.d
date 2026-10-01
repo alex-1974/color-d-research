@@ -11,7 +11,6 @@ Xyz!T adaptD65ToD50(T)(Xyz!T v)
 {
     return Xyz!T(
         cast(T)1.0479297925449969 * v.x +
-        cast(T)0.022946870961 + v.y * cast(T)0.0 +
         cast(T)0.022946870961 * v.y -
         cast(T)0.05019226628920524 * v.z,
         cast(T)0.02962780877005599 * v.x +
