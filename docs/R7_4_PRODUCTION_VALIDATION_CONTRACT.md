@@ -92,4 +92,9 @@ R7.4.2 CI result (2026-10-01): DMD 2.113.0 and LDC 1.43.0 both pass. Across 11 s
 R7.4.3 defines the research contract for the matrix core: NaN and infinity are not sanitized or clipped; IEEE floating-point propagation remains observable. Linear-RGB values outside 0..1 are returned unchanged by the transformation layer. Gamut checking, clipping, and gamut mapping remain separate operations. The executable probe covers NaN, infinity, and deliberately out-of-gamut input.
 
 
-R7.4.4 adds explicit attribute probes for the matrix lookup and matrix color application paths. Both are compiled as `@safe pure nothrow @nogc` and exercised at CTFE, establishing the intended zero-allocation value-operation contract for the research core.
+R7.4.4 qualifies the existing Brettel, Viénot and Machado research paths for float and double using explicitly `@safe pure nothrow @nogc` wrappers, representative CTFE/runtime comparisons and fixed-size table storage. See [R7_4_4_ATTRIBUTE_QUALIFICATION.md](R7_4_4_ATTRIBUTE_QUALIFICATION.md) for exact coverage, allocation evidence and limitations.
+
+
+R7.4.4 CI result (2026-10-01): [run 36859987457](https://github.com/alex-1974/color-d-research/actions/runs/36859987457) passes all eight jobs at source commit `5d7dc28983b600cb77bf62d8131b0033e5221e82`. DMD 2.111.0/2.113.0 and LDC 1.41.0/1.43.0 run both experiments with Debug assertions active and additional Release smoke checks. No production CVD API is promoted.
+
+**Correction to earlier evidence:** run 36858568218 checked out `b7ab15a73d1e62f9c126735881739764f9264add`, preceding R7.4.3/R7.4.4, and used Release with runtime assertions disabled. Its reported finite error was useful observed output, but its green status did not establish assertion-based runtime gates. The new scoped workflow verifies that an assertion control really fails, then runs the existing numerical assertions in Debug. The broader independent double/reference and comprehensive CTFE gates above remain open.
