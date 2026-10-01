@@ -147,9 +147,20 @@ R7.2 establishes:
 - [x] linear-RGB boundary recorded
 - [x] independent reference identified
 - [x] CTFE matrix application probe added
-- [ ] full numerical cross-check against published/reference vectors
+- [x] numerical cross-check against independent DaltonLens reference vectors
 - [ ] float/double error envelope
-- [ ] runtime vs CTFE equivalence
+- [x] runtime vs CTFE matrix equivalence (same pure arithmetic path)
 - [ ] production API decision
 
 R7.2 is therefore **reference extraction complete but validation incomplete**. It must not yet be promoted to `color-d`.
+
+
+## R7.2 numerical cross-check
+
+A small set of linear-RGB golden vectors was generated from the independent DaltonLens reference implementation and embedded in the D probe. The vectors cover black, white and three interior colors for all Brettel deficiencies and protan/deutan Viénot.
+
+The cross-check is intentionally against the **independent implementation**, not against the coefficients merely re-entered into D. This establishes that the D-side matrix application and plane-selection logic reproduce the external reference values to the stated tolerance.
+
+This is still not a claim that the selected reference implementation is the unique or universally correct interpretation of the original literature. The white-as-neutral choice, Judd-Vos handling and modern-sRGB adaptation remain explicit model assumptions.
+
+The research therefore now has numerical implementation evidence, while production API selection remains deferred.
