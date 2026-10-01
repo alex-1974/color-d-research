@@ -75,6 +75,81 @@ void checkMatrix(Matrix3!double m)
     assert(!isNaN(white.r) && !isNaN(white.g) && !isNaN(white.b));
 }
 
+void assertNear(T)(T actual, T expected, T tolerance)
+@safe pure nothrow @nogc
+{
+    assert(abs(actual - expected) <= tolerance);
+}
+
+void checkGoldenBrettel()
+@safe
+{
+    enum points = [
+        Rgb!double(0.2, 0.4, 0.7),
+        Rgb!double(0.1, 0.5, 0.2),
+        Rgb!double(0.8, 0.2, 0.1),
+        Rgb!double(1, 1, 1),
+        Rgb!double(0, 0, 0)
+    ];
+
+    enum bpExpected = [
+        Rgb!double(0.278634, 0.390040, 0.699649),
+        Rgb!double(0.543664, 0.443828, 0.197996),
+        Rgb!double(0.324408, 0.260212, 0.102148),
+        Rgb!double(1.0, 1.0, 1.0),
+        Rgb!double(0.0, 0.0, 0.0)
+    ];
+    enum bdExpected = [
+        Rgb!double(0.258472, 0.375802, 0.701846),
+        Rgb!double(0.427200, 0.364564, 0.210332),
+        Rgb!double(0.449252, 0.345184, 0.088924),
+        Rgb!double(1.0, 1.00001, 1.0),
+        Rgb!double(0.0, 0.0, 0.0)
+    ];
+    enum btExpected = [
+        Rgb!double(0.174673, 0.424652, 0.549516),
+        Rgb!double(0.163259, 0.438424, 0.575865),
+        Rgb!double(0.822486, 0.178111, 0.233623),
+        Rgb!double(0.99999, 1.0, 1.0),
+        Rgb!double(0.0, 0.0, 0.0)
+    ];
+
+    foreach(i, p; points)
+    {
+        const bp = (p.r*0.00048 + p.g*0.00393 + p.b*(-0.00441) >= 0)
+            ? brettelProtan1.apply(p) : brettelProtan2.apply(p);
+        const bd = (p.r*(-0.00281) + p.g*(-0.00611) + p.b*0.00892 >= 0)
+            ? brettelDeutan1.apply(p) : brettelDeutan2.apply(p);
+        const bt = (p.r*0.03901 + p.g*(-0.02788) + p.b*(-0.01113) >= 0)
+            ? brettelTritan1.apply(p) : brettelTritan2.apply(p);
+
+        assertNear(bp.r, bpExpected[i].r, 1e-6);
+        assertNear(bp.g, bpExpected[i].g, 1e-6);
+        assertNear(bp.b, bpExpected[i].b, 1e-6);
+        assertNear(bd.r, bdExpected[i].r, 1e-6);
+        assertNear(bd.g, bdExpected[i].g, 1e-6);
+        assertNear(bd.b, bdExpected[i].b, 1e-6);
+        assertNear(bt.r, btExpected[i].r, 1e-6);
+        assertNear(bt.g, btExpected[i].g, 1e-6);
+        assertNear(bt.b, btExpected[i].b, 1e-6);
+    }
+}
+
+void checkGoldenVienot()
+@safe
+{
+    enum p = Rgb!double(0.2, 0.4, 0.7);
+    enum vp = vienotProtan.apply(p);
+    enum vd = vienotDeutan.apply(p);
+
+    assertNear(vp.r, 0.377524, 1e-6);
+    assertNear(vp.g, 0.377524, 1e-6);
+    assertNear(vp.b, 0.699198, 1e-6);
+    assertNear(vd.r, 0.341450, 1e-6);
+    assertNear(vd.g, 0.341450, 1e-6);
+    assertNear(vd.b, 0.704468, 1e-6);
+}
+
 void main()
 {
     checkMatrix(brettelProtan1);
@@ -85,6 +160,8 @@ void main()
     checkMatrix(brettelTritan2);
     checkMatrix(vienotProtan);
     checkMatrix(vienotDeutan);
+    checkGoldenBrettel();
+    checkGoldenVienot();
 
     enum sample = Rgb!double(0.2, 0.4, 0.7);
     enum bp1 = brettelProtan1.apply(sample);
