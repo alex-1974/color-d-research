@@ -1,0 +1,4 @@
+name "r7_1_cvd_lms_reference"
+description "R7.1 independent LMS reference layer for CVD research"
+targetType "executable"
+sourcePaths "source"
