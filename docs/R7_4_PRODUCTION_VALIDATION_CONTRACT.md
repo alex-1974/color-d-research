@@ -69,7 +69,7 @@ Before release, demonstrate composition of CVD transformation + deltaEOK + WCAG 
 ## 11. Promotion checklist
 ```text
 R7.4
- ├─ reference vectors                 ☐
+ ├─ reference vectors                 ✓ (R7.4.1 initial corpus)
  ├─ double error envelope             ☐
  ├─ float error envelope              ☐
  ├─ CTFE/runtime                      ☐
