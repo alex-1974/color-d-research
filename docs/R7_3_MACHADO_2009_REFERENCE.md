@@ -98,10 +98,10 @@ A generic CVD deficiency enum may still be useful at a higher layer, but model-s
 - [x] linear-RGB boundary documented
 - [x] independent reference identified
 - [x] tritan limitation documented
-- [x] endpoint severity interpolation represented by probe
+- [x] complete 11-point severity tables represented by probe
 - [x] cross-source matrix-table comparison: DaltonLens and Colour Science
 - [ ] float/double error envelope
-- [ ] CTFE/runtime equivalence
+- [x] CTFE/runtime equivalence for table lookup and adjacent interpolation
 - [ ] production API decision
 
 R7.3 therefore remains a research reference until its executable validation is complete.
@@ -116,3 +116,10 @@ This establishes source-table agreement. It does not independently validate the 
 A critical observation is that intermediate severity matrices are not obtained by linear interpolation between the identity matrix and the severity-1 endpoint. The Tritanomaly sequence is visibly non-linear. A production implementation must therefore retain the published severity table, or use an explicitly justified equivalent model, rather than replacing it with endpoint interpolation.
 
 R7.3 now has a cross-source validated reference table. Float/double error analysis and CTFE/runtime equivalence remain separate tasks.
+
+
+## Executable table contract
+
+The R7.3 probe now contains all 33 reference matrices. It verifies that every exact 0.0 through 1.0 severity point returns the corresponding table matrix, and that intermediate severity values interpolate only between their adjacent 0.1 reference matrices. It also verifies the non-linear nature of the published table and compares CTFE and runtime results for representative intermediate severities.
+
+The float path is instantiated separately to ensure that the same table/lookup structure is CTFE-capable for both scalar types.
