@@ -1,6 +1,11 @@
 module bench;
 import bv;
 import ma;
+import candidates;
+
+version (PreparedCvd) enum candidateMode = 1;
+else version (InlineCvd) enum candidateMode = 2;
+else enum candidateMode = 0;
 import std.stdio : writeln, writefln;
 import std.datetime.stopwatch : StopWatch, AutoStart;
 import std.math : abs, isNaN, isInfinity;
@@ -14,6 +19,23 @@ void batch(T, Mode mode)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
 @safe pure nothrow @nogc
 {
     assert(output.length == input.length);
+    static if (candidateMode != 0 && mode == Mode.brettel)
+    {
+        const plan = prepareBrettel!T(deficiency);
+        foreach (i, p; input)
+            output[i] = applyBrettel!(T, candidateMode == 2)(plan, p);
+        return;
+    }
+    else static if (candidateMode != 0 && mode == Mode.vienot)
+    {
+        const matrix = prepareVienot!T(deficiency);
+        foreach (i, p; input)
+        {
+            static if (candidateMode == 2) output[i] = inlineApply(matrix,p);
+            else output[i] = matrix.apply(p);
+        }
+        return;
+    }
     foreach (i, p; input)
     {
         static if (mode == Mode.brettel)
@@ -125,6 +147,8 @@ void main(string[] args)
     version (Preflight)
     {
         bv.referenceMain(); ma.referenceMain();
+        validateCandidates!float(); validateCandidates!double();
+        writeln("R7.4.5 prepared/inline candidate component, IEEE, CTFE and attribute preflight: PASS");
         cases!float(32, false); cases!double(32, false);
     }
     else

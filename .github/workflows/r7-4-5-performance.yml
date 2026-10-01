@@ -48,44 +48,48 @@ jobs:
             *) version_flag=-version=Preflight; optimize=(-O -inline) ;;
           esac
           set -x
-          "$DC" -g -boundscheck=on "$version_flag" -of=preflight bench.d _generated/bv.d _generated/ma.d
+          "$DC" -g -boundscheck=on "$version_flag" -of=preflight bench.d candidates.d _generated/bv.d _generated/ma.d
           ./preflight 32 > preflight.txt
-          "$DC" "${optimize[@]}" -release -boundscheck=on -of=benchmark bench.d _generated/bv.d _generated/ma.d
-          g++ -std=c++17 -O3 -ffp-contract=off -fno-fast-math reference.cpp -o cpp-benchmark
-          sha256sum benchmark cpp-benchmark > binaries.sha256
-          objdump -d benchmark > d-assembly.txt
-          objdump -d cpp-benchmark > cpp-assembly.txt
+          "$DC" "${optimize[@]}" -release -boundscheck=on -of=benchmark bench.d candidates.d _generated/bv.d _generated/ma.d
           case "$DC" in
-            *ldc2*) "$DC" "${optimize[@]}" -enable-cross-module-inlining -release -boundscheck=on -of=benchmark-crossmodule bench.d _generated/bv.d _generated/ma.d ;;
+            *ldc2*) prepared_flag=-d-version=PreparedCvd; inline_flag=-d-version=InlineCvd ;;
+            *) prepared_flag=-version=PreparedCvd; inline_flag=-version=InlineCvd ;;
           esac
-      - name: Balanced paired measurement on one allowed CPU
+          "$DC" -g -boundscheck=on "$version_flag" "$prepared_flag" -of=preflight-prepared bench.d candidates.d _generated/bv.d _generated/ma.d
+          ./preflight-prepared 32 > preflight-prepared.txt
+          "$DC" -g -boundscheck=on "$version_flag" "$inline_flag" -of=preflight-inline bench.d candidates.d _generated/bv.d _generated/ma.d
+          ./preflight-inline 32 > preflight-inline.txt
+          "$DC" "${optimize[@]}" "$prepared_flag" -release -boundscheck=on -of=benchmark-prepared bench.d candidates.d _generated/bv.d _generated/ma.d
+          "$DC" "${optimize[@]}" "$inline_flag" -release -boundscheck=on -of=benchmark-inline bench.d candidates.d _generated/bv.d _generated/ma.d
+          g++ -std=c++17 -O3 -ffp-contract=off -fno-fast-math reference.cpp -o cpp-benchmark
+          sha256sum benchmark benchmark-prepared benchmark-inline cpp-benchmark > binaries.sha256
+          objdump -d benchmark > d-assembly.txt
+          objdump -d benchmark-prepared > prepared-assembly.txt
+          objdump -d benchmark-inline > inline-assembly.txt
+          objdump -d cpp-benchmark > cpp-assembly.txt
+      - name: Balanced baseline and candidate measurement on one allowed CPU
         working-directory: experiments/r7_4_5_cvd_performance
         shell: bash
         run: |
           set -euo pipefail
           BENCH_CPU=$(python3 -c 'import os; print(min(os.sched_getaffinity(0)))')
           echo "affinity_cpu=$BENCH_CPU; workload=65536; turbo/frequency/SMT=uncontrolled shared runner" | tee -a metadata.txt
-          taskset -c "$BENCH_CPU" ./benchmark 65536 > d-forward.csv
-          taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 > cpp-forward.csv
-          taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 reverse > cpp-reverse.csv
-          taskset -c "$BENCH_CPU" ./benchmark 65536 reverse > d-reverse.csv
-          python3 summarize.py | tee summary.txt
-          if test -f benchmark-crossmodule; then
-            mkdir -p crossmodule
-            cp summarize.py crossmodule/
-            taskset -c "$BENCH_CPU" ./benchmark-crossmodule 65536 > crossmodule/d-forward.csv
-            taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 > crossmodule/cpp-forward.csv
-            taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 reverse > crossmodule/cpp-reverse.csv
-            taskset -c "$BENCH_CPU" ./benchmark-crossmodule 65536 reverse > crossmodule/d-reverse.csv
-            python3 crossmodule/summarize.py | tee crossmodule/summary.txt
-          fi
-          python3 - <<'PY'
-          from pathlib import Path
-          lines = Path("d-assembly.txt").read_text().splitlines()
-          calls = [line for line in lines if "call" in line and ("<_D2bv" in line or "<_D2ma" in line)]
-          print("direct calls into research modules:", len(calls))
-          print("\n".join(calls[:20]))
-          PY
+          for VARIANT in default prepared inline; do
+            if test "$VARIANT" = default; then TARGET=.; BINARY=benchmark;
+            else TARGET="$VARIANT"; BINARY="benchmark-$VARIANT"; fi
+            mkdir -p "$TARGET"
+            if test "$VARIANT" != default; then cp summarize.py "$TARGET/"; fi
+            taskset -c "$BENCH_CPU" "./$BINARY" 65536 > "$TARGET/d-forward.csv"
+            taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 > "$TARGET/cpp-forward.csv"
+          done
+          for VARIANT in inline prepared default; do
+            if test "$VARIANT" = default; then TARGET=.; BINARY=benchmark;
+            else TARGET="$VARIANT"; BINARY="benchmark-$VARIANT"; fi
+            taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 reverse > "$TARGET/cpp-reverse.csv"
+            taskset -c "$BENCH_CPU" "./$BINARY" 65536 reverse > "$TARGET/d-reverse.csv"
+            echo "VARIANT=$VARIANT"
+            python3 "$TARGET/summarize.py" | tee "$TARGET/summary.txt"
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -95,4 +99,5 @@ jobs:
             experiments/r7_4_5_cvd_performance/*.txt
             experiments/r7_4_5_cvd_performance/*.sha256
             experiments/r7_4_5_cvd_performance/_generated/**
-            experiments/r7_4_5_cvd_performance/crossmodule/**
+            experiments/r7_4_5_cvd_performance/prepared/**
+            experiments/r7_4_5_cvd_performance/inline/**
