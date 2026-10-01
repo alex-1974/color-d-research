@@ -71,7 +71,7 @@ Before release, demonstrate composition of CVD transformation + deltaEOK + WCAG 
 R7.4
  ├─ reference vectors                 ✓ (R7.4.1 initial corpus)
  ├─ double error envelope             ☐
- ├─ float error envelope              ☐
+ ├─ float error envelope              ✓ (R7.4.2 probe)
  ├─ CTFE/runtime                      ☐
  ├─ non-finite contract               ☐
  ├─ gamut non-interference            ☐
@@ -82,3 +82,5 @@ R7.4
 ```
 
 **Status: validation contract defined; no production implementation yet.**
+
+R7.4.2 adds a matrix-core float-vs-double envelope probe over 11 severity points, 12 representative linear-RGB inputs, and all three Machado deficiency tables. This measures numerical implementation error; it is not a perceptual accuracy claim and does not replace independent reference-vector validation.
