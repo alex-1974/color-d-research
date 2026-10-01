@@ -200,21 +200,21 @@ void qualifyAttributes(T)()
         assert(!isNaN(runtime.r) && !isNaN(runtime.g) && !isNaN(runtime.b));
     }
     static foreach (deficiency; 0u .. 3u)
-    {
+    {{
         enum expected = brettelProbe(sample, deficiency);
         const actual = brettelProbe(sample, deficiency);
         assertNear(actual.r, expected.r, tolerance);
         assertNear(actual.g, expected.g, tolerance);
         assertNear(actual.b, expected.b, tolerance);
-    }
+    }}
     static foreach (deutan; [false, true])
-    {
+    {{
         enum expected = vienotProbe(sample, deutan);
         const actual = vienotProbe(sample, deutan);
         assertNear(actual.r, expected.r, tolerance);
         assertNear(actual.g, expected.g, tolerance);
         assertNear(actual.b, expected.b, tolerance);
-    }
+    }}
     // Primaries exercise both sides of each Brettel separation plane.
     const Rgb!T[3] primaries = [Rgb!T(1,0,0), Rgb!T(0,1,0), Rgb!T(0,0,1)];
     foreach (p; primaries)
