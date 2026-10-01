@@ -174,11 +174,34 @@ void errorEnvelope()
     writeln("max absolute component error: ", maxAbs);
 }
 
+void validateNonFiniteAndGamut()
+@safe
+{
+    enum nanInput = Rgb!double(double.nan, 0.25, 0.75);
+    enum infInput = Rgb!double(double.infinity, 0.25, 0.75);
+    enum outInput = Rgb!double(-0.25, 1.25, 2.0);
+
+    enum nanOut = apply(protanTable[10], nanInput);
+    assert(isNaN(nanOut.r) || isNaN(nanOut.g) || isNaN(nanOut.b));
+
+    enum infOut = apply(protanTable[10], infInput);
+    assert(isInfinity(infOut.r) || isInfinity(infOut.g) || isInfinity(infOut.b)
+        || isNaN(infOut.r) || isNaN(infOut.g) || isNaN(infOut.b));
+
+    enum out = apply(protanTable[10], outInput);
+    assert(out.r < 0.0 || out.g > 1.0 || out.b > 1.0);
+
+    writeln("R7.4.3 PASS");
+    writeln("NaN/Infinity IEEE propagation: PASS");
+    writeln("Out-of-gamut values preserved: PASS");
+}
+
 void main()
 @safe
 {
     validateTable();
     errorEnvelope();
+    validateNonFiniteAndGamut();
 
     enum pCtfe = matrixAtSeverity(protanTable[], 0.35);
     enum dCtfe = matrixAtSeverity(deutanTable[], 0.65);
