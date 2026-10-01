@@ -73,8 +73,8 @@ R7.4
  ├─ double error envelope             ☐
  ├─ float error envelope              ✓ (R7.4.2: max 1.19209e-7)
  ├─ CTFE/runtime                      ☐
- ├─ non-finite contract               ☐
- ├─ gamut non-interference            ☐
+ ├─ non-finite contract               ✓ (R7.4.3 probe)
+ ├─ gamut non-interference            ✓ (R7.4.3 probe)
  ├─ @safe/pure/nothrow/@nogc          ☐
  ├─ performance                       ☐
  ├─ consumer composition              ☐
@@ -87,3 +87,6 @@ R7.4.2 adds a matrix-core float-vs-double envelope probe over 11 severity points
 
 
 R7.4.2 CI result (2026-10-01): DMD 2.113.0 and LDC 1.43.0 both pass. Across 11 severity points, 12 representative inputs and all three Machado tables, the maximum absolute float-vs-double component error was `1.19209e-07`. The existing provisional `2e-6` gate therefore passes with substantial measured margin. This is an implementation error envelope, not a perceptual accuracy claim.
+
+
+R7.4.3 defines the research contract for the matrix core: NaN and infinity are not sanitized or clipped; IEEE floating-point propagation remains observable. Linear-RGB values outside 0..1 are returned unchanged by the transformation layer. Gamut checking, clipping, and gamut mapping remain separate operations. The executable probe covers NaN, infinity, and deliberately out-of-gamut input.
