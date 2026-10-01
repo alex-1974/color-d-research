@@ -71,7 +71,7 @@ Before release, demonstrate composition of CVD transformation + deltaEOK + WCAG 
 R7.4
  ├─ reference vectors                 ✓ (R7.4.1 initial corpus)
  ├─ double error envelope             ☐
- ├─ float error envelope              ✓ (R7.4.2 probe)
+ ├─ float error envelope              ✓ (R7.4.2: max 1.19209e-7)
  ├─ CTFE/runtime                      ☐
  ├─ non-finite contract               ☐
  ├─ gamut non-interference            ☐
@@ -84,3 +84,6 @@ R7.4
 **Status: validation contract defined; no production implementation yet.**
 
 R7.4.2 adds a matrix-core float-vs-double envelope probe over 11 severity points, 12 representative linear-RGB inputs, and all three Machado deficiency tables. This measures numerical implementation error; it is not a perceptual accuracy claim and does not replace independent reference-vector validation.
+
+
+R7.4.2 CI result (2026-10-01): DMD 2.113.0 and LDC 1.43.0 both pass. Across 11 severity points, 12 representative inputs and all three Machado tables, the maximum absolute float-vs-double component error was `1.19209e-07`. The existing provisional `2e-6` gate therefore passes with substantial measured margin. This is an implementation error envelope, not a perceptual accuracy claim.
