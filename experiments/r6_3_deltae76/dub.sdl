@@ -1,0 +1,4 @@
+name "r6-3-deltae76"
+description "Validate CIE 1976 Delta E reference vector and CTFE for color-d #162"
+targetType "executable"
+sourcePaths "source"
