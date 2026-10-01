@@ -27,7 +27,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 experiments/r7_4_5_cvd_performance/replay.py --compilers "$DC" --sizes 64 1024 --blocks 1 --output "$RUNNER_TEMP/cvd-replay"
+          python3 experiments/r7_4_5_cvd_performance/replay.py --compilers "$DC" --sizes 64 1024 --blocks 2 --output "$RUNNER_TEMP/cvd-replay"
           python3 - "$RUNNER_TEMP/cvd-replay" <<'PY'
           import csv, json, pathlib, sys
           root = pathlib.Path(sys.argv[1])
@@ -36,7 +36,7 @@ jobs:
           with (root/'pooled-summary.csv').open() as stream:
               rows = list(csv.DictReader(stream))
           assert len(rows) == 8*2*28
-          assert all(int(r['samples_per_language']) == 18 for r in rows)
+          assert all(int(r['samples_per_language']) == 36 for r in rows)
           assert pathlib.Path(str(root)+'.tar.gz').is_file()
           print('Replay complete matrix, pooled report and archive: PASS')
           PY
