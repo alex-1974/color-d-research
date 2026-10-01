@@ -76,7 +76,7 @@ R7.4
  ├─ non-finite contract               ✓ (R7.4.3 probe)
  ├─ gamut non-interference            ✓ (R7.4.3 probe)
  ├─ @safe/pure/nothrow/@nogc          ✓ (R7.4.4 probe)
- ├─ performance                       ☐
+ ├─ performance                       ☐ (R7.4.5 baseline recorded; material gaps open)
  ├─ consumer composition              ☐
  └─ production API review             ☐
 ```
@@ -98,3 +98,6 @@ R7.4.4 qualifies the existing Brettel, Viénot and Machado research paths for fl
 R7.4.4 CI result (2026-10-01): [run 36859987457](https://github.com/alex-1974/color-d-research/actions/runs/36859987457) passes all eight jobs at source commit `5d7dc28983b600cb77bf62d8131b0033e5221e82`. DMD 2.111.0/2.113.0 and LDC 1.41.0/1.43.0 run both experiments with Debug assertions active and additional Release smoke checks. No production CVD API is promoted.
 
 **Correction to earlier evidence:** run 36858568218 checked out `b7ab15a73d1e62f9c126735881739764f9264add`, preceding R7.4.3/R7.4.4, and used Release with runtime assertions disabled. Its reported finite error was useful observed output, but its green status did not establish assertion-based runtime gates. The new scoped workflow verifies that an assertion control really fails, then runs the existing numerical assertions in Debug. The broader independent double/reference and comprehensive CTFE gates above remain open.
+
+
+R7.4.5 records a paired D/C++ benchmark baseline for Brettel, Viénot and Machado with float/double, assert-enabled preflight, optimized builds with D bounds checks enabled, raw rounds, provenance and a supplemental LDC cross-module-inlining experiment. [Run 36903552400](https://github.com/alex-1974/color-d-research/actions/runs/36903552400) passes all four compiler jobs. Large gaps remain in several kernels, so this is not a passed production performance gate. See [R7_4_5_PERFORMANCE_BASELINE.md](R7_4_5_PERFORMANCE_BASELINE.md) and the committed measurement records for evidence and the focused follow-up.
