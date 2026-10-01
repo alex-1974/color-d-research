@@ -5,6 +5,8 @@ import candidates;
 
 version (PreparedCvd) enum candidateMode = 1;
 else version (InlineCvd) enum candidateMode = 2;
+else version (DirectCvd) enum candidateMode = 3;
+else version (SplitCvd) enum candidateMode = 4;
 else enum candidateMode = 0;
 import std.stdio : writeln, writefln;
 import std.datetime.stopwatch : StopWatch, AutoStart;
@@ -23,7 +25,12 @@ void batch(T, Mode mode)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
     {
         const plan = prepareBrettel!T(deficiency);
         foreach (i, p; input)
-            output[i] = applyBrettel!(T, candidateMode == 2)(plan, p);
+        {
+            static if (candidateMode >= 3)
+                directBrettel!(T, candidateMode == 4)(output[i], plan, p.r, p.g, p.b);
+            else
+                output[i] = applyBrettel!(T, candidateMode == 2)(plan, p);
+        }
         return;
     }
     else static if (candidateMode != 0 && mode == Mode.vienot)
@@ -31,7 +38,8 @@ void batch(T, Mode mode)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
         const matrix = prepareVienot!T(deficiency);
         foreach (i, p; input)
         {
-            static if (candidateMode == 2) output[i] = inlineApply!T(matrix,p);
+            static if (candidateMode >= 3) directWrite!T(output[i], matrix, p.r, p.g, p.b);
+            else static if (candidateMode == 2) output[i] = inlineApply!T(matrix,p);
             else output[i] = matrix.apply(p);
         }
         return;
@@ -85,6 +93,16 @@ void runCase(T, Mode mode)(size_t n, uint deficiency, bool reverse)
         assert(!isNaN(output[i].r) && !isInfinity(output[i].r));
         assert(!isNaN(output[i].g) && !isInfinity(output[i].g));
         assert(!isNaN(output[i].b) && !isInfinity(output[i].b));
+        static if (mode == Mode.brettel || mode == Mode.vienot)
+        {
+            static if (mode == Mode.brettel) const reference = bv.brettelProbe(input[i], deficiency);
+            else const reference = bv.vienotProbe(input[i], deficiency == 1);
+            // Explicit check remains active in optimized -release builds.
+            if (!componentMatches(output[i].r, reference.r) ||
+                !componentMatches(output[i].g, reference.g) ||
+                !componentMatches(output[i].b, reference.b))
+                throw new Exception("optimized CVD batch component mismatch");
+        }
     }
     foreach (round; 0 .. 9)
     {
@@ -148,7 +166,7 @@ void main(string[] args)
     {
         bv.referenceMain(); ma.referenceMain();
         validateCandidates!float(); validateCandidates!double();
-        writeln("R7.4.5 prepared/inline candidate component, IEEE, CTFE and attribute preflight: PASS");
+        writeln("R7.4.5 prepared/inline/direct/split candidate component, IEEE, CTFE and attribute preflight: PASS");
         cases!float(32, false); cases!double(32, false);
     }
     else

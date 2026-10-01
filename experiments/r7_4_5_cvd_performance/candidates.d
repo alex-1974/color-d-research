@@ -56,6 +56,43 @@ bv.Rgb!T applyBrettel(T, bool explicitArithmetic)(BrettelPlan!T plan, bv.Rgb!T p
         return matrix.apply(p);
 }
 
+
+pragma(inline, true)
+void directWrite(T)(ref bv.Rgb!T output, const ref bv.Matrix3!T matrix, T r, T g, T b)
+@safe pure nothrow @nogc
+{
+    output.r = matrix.m00*r + matrix.m01*g + matrix.m02*b;
+    output.g = matrix.m10*r + matrix.m11*g + matrix.m12*b;
+    output.b = matrix.m20*r + matrix.m21*g + matrix.m22*b;
+}
+
+pragma(inline, true)
+void directBrettel(T, bool splitSelection)(ref bv.Rgb!T output,
+    const ref BrettelPlan!T plan, T r, T g, T b)
+@safe pure nothrow @nogc
+{
+    const first = r*plan.nr + g*plan.ng + b*plan.nb >= 0;
+    static if (splitSelection)
+    {
+        if (first) directWrite!T(output, plan.first, r, g, b);
+        else directWrite!T(output, plan.second, r, g, b);
+    }
+    else
+    {
+        const matrix = first ? plan.first : plan.second;
+        directWrite!T(output, matrix, r, g, b);
+    }
+}
+
+// Value-returning wrapper is used only by semantic/CTFE validation.
+bv.Rgb!T directColor(T, bool splitSelection)(const ref BrettelPlan!T plan, bv.Rgb!T p)
+@safe pure nothrow @nogc
+{
+    bv.Rgb!T output;
+    directBrettel!(T, splitSelection)(output, plan, p.r, p.g, p.b);
+    return output;
+}
+
 bool componentMatches(T)(T actual, T expected)
 @safe pure nothrow @nogc
 {
@@ -82,12 +119,17 @@ void compareInput(T)(bv.Rgb!T input)
         const reference = bv.brettelProbe(input, deficiency);
         compareColor!T(applyBrettel!(T, false)(plan, input), reference);
         compareColor!T(applyBrettel!(T, true)(plan, input), reference);
+        compareColor!T(directColor!(T, false)(plan, input), reference);
+        compareColor!T(directColor!(T, true)(plan, input), reference);
         if (deficiency < 2)
         {
             const matrix = prepareVienot!T(deficiency);
             const vienotReference = bv.vienotProbe(input, deficiency == 1);
             compareColor!T(matrix.apply(input), vienotReference);
             compareColor!T(inlineApply!T(matrix, input), vienotReference);
+            bv.Rgb!T direct;
+            directWrite!T(direct, matrix, input.r, input.g, input.b);
+            compareColor!T(direct, vienotReference);
         }
     }
 }
@@ -127,6 +169,10 @@ void validateCandidates(T)()
         enum refColor = bv.brettelProbe(p,deficiency);
         enum first = applyBrettel!(T,false)(plan,p);
         enum second = applyBrettel!(T,true)(plan,p);
+        enum direct = directColor!(T,false)(plan,p);
+        enum split = directColor!(T,true)(plan,p);
+        static assert(componentMatches(direct.r,refColor.r) && componentMatches(direct.g,refColor.g) && componentMatches(direct.b,refColor.b));
+        static assert(componentMatches(split.r,refColor.r) && componentMatches(split.g,refColor.g) && componentMatches(split.b,refColor.b));
         static assert(componentMatches(first.r,refColor.r) && componentMatches(first.g,refColor.g) && componentMatches(first.b,refColor.b));
         static assert(componentMatches(second.r,refColor.r) && componentMatches(second.g,refColor.g) && componentMatches(second.b,refColor.b));
     }}

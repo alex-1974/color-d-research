@@ -52,8 +52,8 @@ jobs:
           ./preflight 32 > preflight.txt
           "$DC" "${optimize[@]}" -release -boundscheck=on -of=benchmark bench.d candidates.d _generated/bv.d _generated/ma.d
           case "$DC" in
-            *ldc2*) prepared_flag=-d-version=PreparedCvd; inline_flag=-d-version=InlineCvd ;;
-            *) prepared_flag=-version=PreparedCvd; inline_flag=-version=InlineCvd ;;
+            *ldc2*) prepared_flag=-d-version=PreparedCvd; inline_flag=-d-version=InlineCvd; direct_flag=-d-version=DirectCvd; split_flag=-d-version=SplitCvd ;;
+            *) prepared_flag=-version=PreparedCvd; inline_flag=-version=InlineCvd; direct_flag=-version=DirectCvd; split_flag=-version=SplitCvd ;;
           esac
           "$DC" -g -boundscheck=on "$version_flag" "$prepared_flag" -of=preflight-prepared bench.d candidates.d _generated/bv.d _generated/ma.d
           ./preflight-prepared 32 > preflight-prepared.txt
@@ -61,8 +61,16 @@ jobs:
           ./preflight-inline 32 > preflight-inline.txt
           "$DC" "${optimize[@]}" "$prepared_flag" -release -boundscheck=on -of=benchmark-prepared bench.d candidates.d _generated/bv.d _generated/ma.d
           "$DC" "${optimize[@]}" "$inline_flag" -release -boundscheck=on -of=benchmark-inline bench.d candidates.d _generated/bv.d _generated/ma.d
+
+          for EXTRA in direct split; do
+            if test "$EXTRA" = direct; then EXTRA_FLAG="$direct_flag"; else EXTRA_FLAG="$split_flag"; fi
+            "$DC" -g -boundscheck=on "$version_flag" "$EXTRA_FLAG" -of="preflight-$EXTRA" bench.d candidates.d _generated/bv.d _generated/ma.d
+            "./preflight-$EXTRA" 32 > "preflight-$EXTRA.txt"
+            "$DC" "${optimize[@]}" "$EXTRA_FLAG" -release -boundscheck=on -of="benchmark-$EXTRA" bench.d candidates.d _generated/bv.d _generated/ma.d
+            objdump -d "benchmark-$EXTRA" > "$EXTRA-assembly.txt"
+          done
           g++ -std=c++17 -O3 -ffp-contract=off -fno-fast-math reference.cpp -o cpp-benchmark
-          sha256sum benchmark benchmark-prepared benchmark-inline cpp-benchmark > binaries.sha256
+          sha256sum benchmark benchmark-prepared benchmark-inline benchmark-direct benchmark-split cpp-benchmark > binaries.sha256
           objdump -d benchmark > d-assembly.txt
           objdump -d benchmark-prepared > prepared-assembly.txt
           objdump -d benchmark-inline > inline-assembly.txt
@@ -74,7 +82,7 @@ jobs:
           set -euo pipefail
           BENCH_CPU=$(python3 -c 'import os; print(min(os.sched_getaffinity(0)))')
           echo "affinity_cpu=$BENCH_CPU; workload=65536; turbo/frequency/SMT=uncontrolled shared runner" | tee -a metadata.txt
-          for VARIANT in default prepared inline; do
+          for VARIANT in default prepared inline direct split; do
             if test "$VARIANT" = default; then TARGET=.; BINARY=benchmark;
             else TARGET="$VARIANT"; BINARY="benchmark-$VARIANT"; fi
             mkdir -p "$TARGET"
@@ -82,7 +90,7 @@ jobs:
             taskset -c "$BENCH_CPU" "./$BINARY" 65536 > "$TARGET/d-forward.csv"
             taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 > "$TARGET/cpp-forward.csv"
           done
-          for VARIANT in inline prepared default; do
+          for VARIANT in split direct inline prepared default; do
             if test "$VARIANT" = default; then TARGET=.; BINARY=benchmark;
             else TARGET="$VARIANT"; BINARY="benchmark-$VARIANT"; fi
             taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 reverse > "$TARGET/cpp-reverse.csv"
@@ -101,3 +109,5 @@ jobs:
             experiments/r7_4_5_cvd_performance/_generated/**
             experiments/r7_4_5_cvd_performance/prepared/**
             experiments/r7_4_5_cvd_performance/inline/**
+            experiments/r7_4_5_cvd_performance/direct/**
+            experiments/r7_4_5_cvd_performance/split/**
