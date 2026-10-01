@@ -32,9 +32,14 @@ jobs:
           git rev-parse HEAD
           "$DC" --version
           dub --version
-          printf '%s\n' 'void main() { assert(false, "expected assertion canary failure"); }' > assertion-canary.d
-          if "$DC" -run assertion-canary.d > assertion-canary.txt 2>&1; then
+          printf '%s\n' 'void main() { assert(false, "expected assertion canary failure"); }' > assertion_canary.d
+          if "$DC" -run assertion_canary.d > assertion-canary.txt 2>&1; then
             echo "Assertion canary unexpectedly passed" >&2
+            exit 1
+          fi
+          if ! grep -q 'core.exception.AssertError' assertion-canary.txt; then
+            cat assertion-canary.txt
+            echo 'Canary did not reach a runtime assertion' >&2
             exit 1
           fi
           cat assertion-canary.txt
