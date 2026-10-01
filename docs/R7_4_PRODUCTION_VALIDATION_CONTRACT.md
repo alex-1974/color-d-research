@@ -75,7 +75,7 @@ R7.4
  ├─ CTFE/runtime                      ☐
  ├─ non-finite contract               ✓ (R7.4.3 probe)
  ├─ gamut non-interference            ✓ (R7.4.3 probe)
- ├─ @safe/pure/nothrow/@nogc          ☐
+ ├─ @safe/pure/nothrow/@nogc          ✓ (R7.4.4 probe)
  ├─ performance                       ☐
  ├─ consumer composition              ☐
  └─ production API review             ☐
@@ -90,3 +90,6 @@ R7.4.2 CI result (2026-10-01): DMD 2.113.0 and LDC 1.43.0 both pass. Across 11 s
 
 
 R7.4.3 defines the research contract for the matrix core: NaN and infinity are not sanitized or clipped; IEEE floating-point propagation remains observable. Linear-RGB values outside 0..1 are returned unchanged by the transformation layer. Gamut checking, clipping, and gamut mapping remain separate operations. The executable probe covers NaN, infinity, and deliberately out-of-gamut input.
+
+
+R7.4.4 adds explicit attribute probes for the matrix lookup and matrix color application paths. Both are compiled as `@safe pure nothrow @nogc` and exercised at CTFE, establishing the intended zero-allocation value-operation contract for the research core.
