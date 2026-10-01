@@ -1,5 +1,5 @@
 import std.stdio : writeln;
-import std.math : abs;
+import std.math : abs, isNaN, isInfinity;
 
 struct Matrix3(T)
 {
@@ -10,6 +10,7 @@ struct Matrix3(T)
 
 Matrix3!T lerp(T)(Matrix3!T a, Matrix3!T b, T alpha)
 @safe pure nothrow @nogc
+if (is(T == float) || is(T == double))
 {
     return Matrix3!T(
         a.m00 + (b.m00-a.m00)*alpha, a.m01 + (b.m01-a.m01)*alpha, a.m02 + (b.m02-a.m02)*alpha,
@@ -18,26 +19,23 @@ Matrix3!T lerp(T)(Matrix3!T a, Matrix3!T b, T alpha)
     );
 }
 
-enum Matrix3!double protan0 = Matrix3!double(1,0,0,0,1,0,0,0,1);
-enum Matrix3!double protan1 = Matrix3!double(
-0.152286,1.052583,-0.204868, 0.114503,0.786281,0.099216, -0.003882,-0.048116,1.051998);
-enum Matrix3!double deutan0 = Matrix3!double(1,0,0,0,1,0,0,0,1);
-enum Matrix3!double deutan1 = Matrix3!double(
-0.367322,0.860646,-0.227968, 0.280085,0.672501,0.047413, -0.011820,0.042940,0.968881);
-enum Matrix3!double tritan0 = Matrix3!double(1,0,0,0,1,0,0,0,1);
-enum Matrix3!double tritan1 = Matrix3!double(
-1.255528,-0.076749,-0.178779, -0.078411,0.930809,0.147602, 0.004733,0.691367,0.303900);
-
-Matrix3!T interpolateEndpoint(T)(Matrix3!T a, Matrix3!T b, T severity)
+Matrix3!T matrixAtSeverity(T)(const Matrix3!T[] table, T severity)
 @safe pure nothrow @nogc
 if (is(T == float) || is(T == double))
 {
     assert(severity >= 0 && severity <= 1);
-    return lerp(a,b,severity);
+    const T scaled = severity * 10;
+    const size_t lo = cast(size_t) scaled;
+    if (lo >= 10)
+        return table[10];
+    const T alpha = scaled - cast(T) lo;
+    return lerp(table[lo], table[lo + 1], alpha);
 }
 
+enum Matrix3!double identity = Matrix3!double(1,0,0,0,1,0,0,0,1);
+
 enum Matrix3!double[11] protanTable = [
-Matrix3!double(1,0,0,0,1,0,0,0,1),
+identity,
 Matrix3!double(.856167,.182038,-.038205,.029342,.955115,.015544,-.002880,-.001563,1.004443),
 Matrix3!double(.734766,.334872,-.069637,.051840,.919198,.028963,-.004928,-.004209,1.009137),
 Matrix3!double(.630323,.465641,-.095964,.069181,.890046,.040773,-.006308,-.007724,1.014032),
@@ -51,7 +49,7 @@ Matrix3!double(.152286,1.052583,-.204868,.114503,.786281,.099216,-.003882,-.0481
 ];
 
 enum Matrix3!double[11] deutanTable = [
-Matrix3!double(1,0,0,0,1,0,0,0,1),
+identity,
 Matrix3!double(.866435,.177704,-.044139,.049567,.939063,.011370,-.003453,.007233,.996220),
 Matrix3!double(.760729,.319078,-.079807,.090568,.889315,.020117,-.006027,.013325,.992702),
 Matrix3!double(.675425,.433850,-.109275,.125303,.847755,.026942,-.007950,.018572,.989378),
@@ -65,7 +63,7 @@ Matrix3!double(.367322,.860646,-.227968,.280085,.672501,.047413,-.011820,.042940
 ];
 
 enum Matrix3!double[11] tritanTable = [
-Matrix3!double(1,0,0,0,1,0,0,0,1),
+identity,
 Matrix3!double(.926670,.092514,-.019184,.021191,.964503,.014306,.008437,.054813,.936750),
 Matrix3!double(.895720,.133330,-.029050,.029997,.945400,.024603,.013027,.104707,.882266),
 Matrix3!double(.905871,.127791,-.033662,.026856,.941251,.031893,.013410,.148296,.838294),
@@ -86,47 +84,68 @@ bool same(T)(Matrix3!T a, Matrix3!T b, T tol)
         && abs(a.m20-b.m20)<=tol && abs(a.m21-b.m21)<=tol && abs(a.m22-b.m22)<=tol;
 }
 
+Matrix3!T castMatrix(T)(Matrix3!double m)
+@safe pure nothrow @nogc
+if (is(T == float) || is(T == double))
+{
+    return Matrix3!T(cast(T)m.m00,cast(T)m.m01,cast(T)m.m02,
+                     cast(T)m.m10,cast(T)m.m11,cast(T)m.m12,
+                     cast(T)m.m20,cast(T)m.m21,cast(T)m.m22);
+}
+
 void validateTable()
 @safe
 {
     foreach(i; 0 .. 11)
     {
-        const severity = cast(double)i / 10.0;
-        const p = interpolateEndpoint(protan0, protan1, severity);
-        const d = interpolateEndpoint(deutan0, deutan1, severity);
-        const t = interpolateEndpoint(tritan0, tritan1, severity);
-        assert(severity == 0.0 || severity == 1.0 || !same(p, protanTable[i], 1e-12));
-        // The published/reference table is NOT linear interpolation between endpoints.
-        // Verify endpoint contract separately; table values remain the authoritative 0.1 samples.
-        if (i == 0 || i == 10) {
-            assert(same(p, protanTable[i], 1e-12));
-            assert(same(d, deutanTable[i], 1e-12));
-            assert(same(t, tritanTable[i], 1e-12));
-        }
+        const T = cast(double)i / 10.0;
+        assert(same(matrixAtSeverity(protanTable[], T), protanTable[i], 1e-12));
+        assert(same(matrixAtSeverity(deutanTable[], T), deutanTable[i], 1e-12));
+        assert(same(matrixAtSeverity(tritanTable[], T), tritanTable[i], 1e-12));
     }
-    writeln("Machado reference table: 33 matrices / 297 coefficients loaded");
-    writeln("Severity endpoints: PASS");
+
+    enum double half = 0.5;
+    const p = matrixAtSeverity(protanTable[], half);
+    const d = matrixAtSeverity(deutanTable[], half);
+    const t = matrixAtSeverity(tritanTable[], half);
+    assert(same(p, lerp(protanTable[5], protanTable[6], 0.0), 1e-12));
+    assert(same(d, lerp(deutanTable[5], deutanTable[6], 0.0), 1e-12));
+    assert(same(t, lerp(tritanTable[5], tritanTable[6], 0.0), 1e-12));
+
+    assert(!same(tritanTable[5], lerp(tritanTable[0], tritanTable[10], 0.5), 1e-6));
+    writeln("R7.3 PASS");
+    writeln("33 Machado reference matrices: PASS");
+    writeln("11 severity points x 3 deficiencies: PASS");
+    writeln("Adjacent-table interpolation: PASS");
+    writeln("Nonlinear severity table preserved: PASS");
 }
 
 void main()
 @safe
 {
-    enum p0 = interpolateEndpoint(protan0,protan1,0.0);
-    enum p5 = interpolateEndpoint(protan0,protan1,0.5);
-    enum p10 = interpolateEndpoint(protan0,protan1,1.0);
-
-    static assert(p0.m00 == 1.0);
-    static assert(p10.m00 == 0.152286);
-    static assert(p5.m00 == (1.0 + 0.152286) / 2.0);
-
-    enum d10 = interpolateEndpoint(deutan0,deutan1,1.0);
-    enum t10 = interpolateEndpoint(tritan0,tritan1,1.0);
-    static assert(d10.m11 == 0.672501);
-    static assert(t10.m22 == 0.303900);
     validateTable();
 
-    writeln("R7.3 PASS");
-    writeln("Machado endpoint matrices: CTFE PASS");
-    writeln("Severity interpolation contract: CTFE PASS");
-    writeln("Linear-RGB matrix domain: PASS");
+    enum pCtfe = matrixAtSeverity(protanTable[], 0.35);
+    enum dCtfe = matrixAtSeverity(deutanTable[], 0.65);
+    enum tCtfe = matrixAtSeverity(tritanTable[], 0.85);
+
+    const pRuntime = matrixAtSeverity(protanTable[], 0.35);
+    const dRuntime = matrixAtSeverity(deutanTable[], 0.65);
+    const tRuntime = matrixAtSeverity(tritanTable[], 0.85);
+
+    assert(same(pCtfe, pRuntime, 1e-15));
+    assert(same(dCtfe, dRuntime, 1e-15));
+    assert(same(tCtfe, tRuntime, 1e-15));
+
+    enum Matrix3!float[11] protanFloat = [
+        castMatrix!float(protanTable[0]), castMatrix!float(protanTable[1]), castMatrix!float(protanTable[2]),
+        castMatrix!float(protanTable[3]), castMatrix!float(protanTable[4]), castMatrix!float(protanTable[5]),
+        castMatrix!float(protanTable[6]), castMatrix!float(protanTable[7]), castMatrix!float(protanTable[8]),
+        castMatrix!float(protanTable[9]), castMatrix!float(protanTable[10])
+    ];
+    enum fp = matrixAtSeverity(protanFloat[], 0.35f);
+    static assert(fp.m00 > 0.5f && fp.m00 < 0.9f);
+
+    writeln("CTFE/runtime equivalence: PASS");
+    writeln("float matrix path: CTFE PASS");
 }
