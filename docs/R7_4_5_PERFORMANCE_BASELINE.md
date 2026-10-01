@@ -170,3 +170,10 @@ the original baseline methodology above describes the default executable.
 No universal candidate is accepted and the production performance gate remains
 open. Float code generation, fixed-size Machado representation and controlled
 consumer-machine replay remain the next investigations.
+
+## Follow-up: direct stores and split selection
+
+The [direct-store investigation](R7_4_5_DIRECT_STORES.md) records a large
+portable float improvement under both LDC and DMD. Release binaries now also
+check full finite Brettel/Viénot batch components before timing. Residual C++
+gaps and LDC Viénot double trade-offs remain; no production gate is closed.
