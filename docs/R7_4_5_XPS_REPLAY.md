@@ -110,9 +110,11 @@ Local Python syntax and argument parsing are checked. The dedicated
 It checks the complete pooled report (448 cases, 36 samples per language/case)
 and archive creation. These runner smoke tests are not XPS measurements.
 
-The XPS run and its interpretation remain pending until the returned archive
-is inspected. Review per-block spread, kernel/scalar trade-offs, source and
-binary identity before selecting an internal implementation policy.
+The returned XPS archive is inspected in
+[R7_4_5_XPS_RESULTS.md](R7_4_5_XPS_RESULTS.md). All manifest hashes, source
+identities and reconstructed reports pass. Large gains replicate, but the
+consumer measurements are not frequency/thermal/SMT controlled; compiler/kernel
+trade-offs and residual gaps keep production performance acceptance open.
 
 The two-block smoke [run 36920078378](https://github.com/alex-1974/color-d-research/actions/runs/36920078378)
 passes all four jobs at the pinned revision above. A downloaded LDC 1.41.0

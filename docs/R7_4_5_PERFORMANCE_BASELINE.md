@@ -191,5 +191,8 @@ controlled consumer-machine replay and the existing open gates remain.
 
 The [XPS replay protocol](R7_4_5_XPS_REPLAY.md) provides an isolated, pinned
 runner for eight source forms, several batch sizes and repeated balanced blocks.
-Its two-block smoke passes all four compiler jobs. Actual XPS measurements and
-performance interpretation remain pending; no production gate is closed.
+Its two-block smoke passes all four compiler jobs. The actual
+[XPS results](R7_4_5_XPS_RESULTS.md) now include verified source/hash identity,
+complete reconstructed block and pooled reports, and compiler/kernel decisions.
+Large BV gains replicate, while material DMD gaps and uncontrolled clock/thermal
+conditions keep production performance acceptance open.
