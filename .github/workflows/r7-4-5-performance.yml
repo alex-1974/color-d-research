@@ -53,6 +53,11 @@ jobs:
           "$DC" "${optimize[@]}" -release -boundscheck=on -of=benchmark bench.d _generated/bv.d _generated/ma.d
           g++ -std=c++17 -O3 -ffp-contract=off -fno-fast-math reference.cpp -o cpp-benchmark
           sha256sum benchmark cpp-benchmark > binaries.sha256
+          objdump -d benchmark > d-assembly.txt
+          objdump -d cpp-benchmark > cpp-assembly.txt
+          case "$DC" in
+            *ldc2*) "$DC" "${optimize[@]}" -enable-cross-module-inlining -release -boundscheck=on -of=benchmark-crossmodule bench.d _generated/bv.d _generated/ma.d ;;
+          esac
       - name: Balanced paired measurement on one allowed CPU
         working-directory: experiments/r7_4_5_cvd_performance
         shell: bash
@@ -65,6 +70,22 @@ jobs:
           taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 reverse > cpp-reverse.csv
           taskset -c "$BENCH_CPU" ./benchmark 65536 reverse > d-reverse.csv
           python3 summarize.py | tee summary.txt
+          if test -f benchmark-crossmodule; then
+            mkdir -p crossmodule
+            cp summarize.py crossmodule/
+            taskset -c "$BENCH_CPU" ./benchmark-crossmodule 65536 > crossmodule/d-forward.csv
+            taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 > crossmodule/cpp-forward.csv
+            taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 reverse > crossmodule/cpp-reverse.csv
+            taskset -c "$BENCH_CPU" ./benchmark-crossmodule 65536 reverse > crossmodule/d-reverse.csv
+            python3 crossmodule/summarize.py | tee crossmodule/summary.txt
+          fi
+          python3 - <<'PY'
+          from pathlib import Path
+          lines = Path("d-assembly.txt").read_text().splitlines()
+          calls = [line for line in lines if "call" in line and ("<_D2bv" in line or "<_D2ma" in line)]
+          print("direct calls into research modules:", len(calls))
+          print("\n".join(calls[:20]))
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -74,3 +95,4 @@ jobs:
             experiments/r7_4_5_cvd_performance/*.txt
             experiments/r7_4_5_cvd_performance/*.sha256
             experiments/r7_4_5_cvd_performance/_generated/**
+            experiments/r7_4_5_cvd_performance/crossmodule/**
