@@ -1,0 +1,4 @@
+name "r6-7-ciede2000-numerics"
+description "Compare CIEDE2000 float/double and CTFE/runtime behavior"
+targetType "executable"
+sourcePaths "source"
