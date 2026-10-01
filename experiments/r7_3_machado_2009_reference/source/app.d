@@ -147,7 +147,7 @@ void errorEnvelope()
         Rgb!double(.2,.4,.7), Rgb!double(.63,.21,.47), Rgb!double(.17,.59,.33)
     ];
 
-    double maxAbs;
+    double maxAbs = 0.0;
     foreach(si; 0 .. 11)
     foreach(pi; 0 .. points.length)
     {
@@ -160,10 +160,14 @@ void errorEnvelope()
             const e0 = abs(vf.r - cast(float)vd.r);
             const e1 = abs(vf.g - cast(float)vd.g);
             const e2 = abs(vf.b - cast(float)vd.b);
+            assert(!isNaN(e0) && !isNaN(e1) && !isNaN(e2));
+            assert(!isInfinity(e0) && !isInfinity(e1) && !isInfinity(e2));
             const e = e0 > e1 ? (e0 > e2 ? e0 : e2) : (e1 > e2 ? e1 : e2);
+            assert(!isNaN(e));
             if (e > maxAbs) { maxAbs=e; }
         }
     }
+    assert(!isNaN(maxAbs) && !isInfinity(maxAbs));
     assert(maxAbs < 2e-6);
     writeln("R7.4.2 PASS");
     writeln("float-vs-double matrix/output envelope: PASS");
