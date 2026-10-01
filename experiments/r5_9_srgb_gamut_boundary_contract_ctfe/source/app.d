@@ -132,9 +132,9 @@ if (is(T == float) || is(T == double))
     size_t outsideFailures;
     size_t bracketFailures;
     size_t endpointFailures;
-    double maxAbsError;
-    double maxRelError;
-    double maxBracketWidth;
+    double maxAbsError = 0;
+    double maxRelError = 0;
+    double maxBracketWidth = 0;
 
     foreach (li; 1 .. 100)
     foreach (hi; 0 .. 360)
@@ -158,16 +158,16 @@ if (is(T == float) || is(T == double))
         const double error =
             abs(cast(double)fixed.inside - cast(double)oracle.inside);
         const double relative =
-            error / cast(double)oracle.inside;
+            oracle.inside == 0
+                ? error
+                : error / cast(double)oracle.inside;
         const double width =
             cast(double)fixed.outside - cast(double)fixed.inside;
 
         if (error > maxAbsError)
-        {
             maxAbsError = error;
+        if (relative > maxRelError)
             maxRelError = relative;
-        }
-
         if (width > maxBracketWidth)
             maxBracketWidth = width;
 
