@@ -334,3 +334,35 @@ For Brettel only, retain a research follow-up comparing prepared branch forms,
 if-conversion/branchless selection where IEEE semantics allow it, and
 auto-vectorization/codegen across DMD/LDC/GCC before selecting a production
 batch kernel.
+
+
+## Exact production replay
+
+After the prepared API was promoted to color-d, the research harness gained a
+separate production replay pinned to color-d commit
+`7a7550d44b3133b1145562c6ca8483fe6b0f668c`.
+
+The replay does not benchmark copied research candidates. It snapshots the
+exact production `source/color/cvd.d` and `source/color/rgb.d` from that
+commit and compiles `production_bench.d` directly against those modules.
+
+Measured D paths are therefore the public production APIs:
+
+- scalar `brettel1997Dichromat`, `vienot1999Dichromat`, and
+  `machado2009`;
+- prepared `PreparedBrettel1997Dichromat.tryApplyInto`;
+- prepared `PreparedVienot1999Dichromat.tryApplyInto`;
+- prepared `PreparedMachado2009.tryApplyInto`, after one successful
+  `tryPrepareMachado2009`.
+
+`production_reference.cpp` mirrors the same scalar/prepared model work.
+The replay retains the same D/C++ checksum gates, CPU affinity, balanced
+forward/reverse ordering, source/binary hashes, and codegen capture used by the
+architecture comparison.
+
+GitHub Actions run 37079909935 passed the exact-production replay smoke under
+both DMD 2.113.0 and LDC 1.43.0. The smoke uses n=1024 and one block only;
+shared-runner timing is not performance evidence.
+
+Controlled XPS production performance evidence over 1024/8191/65536 and three
+balanced blocks is pending.
