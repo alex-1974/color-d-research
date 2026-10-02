@@ -487,3 +487,58 @@ multiplexing.
 The purpose is to correlate the measured fast/slow phase directly with the
 active float or double Viénot kernel's concrete address. This is still research
 evidence, not a production alignment workaround.
+
+
+## Single-kernel/single-scalar alignment diagnostic — phase 6 result
+
+The XPS phase-6 run completed successfully at revision
+`b7f2d4e1392688c77284bb35cfd1c7eb71a6e375` with DMD 2.113.0.
+
+The reduced executables materially improve localization because each benchmark
+contains only Viénot and one scalar type. Two hardware events were measured:
+`cycles` and `instructions`.
+
+The strongest result is indexed-float. Its active function is
+`candidates.indexedVienotBatch!float`, not `bv.vienotProbe` and not merely
+the outer `bench.batch` wrapper. Its candidate entry phases and median ratios
+were:
+
+| candidate mod64 | representative pads | time / p0 | cycles / p0 | instructions / p0 |
+| ---: | --- | ---: | ---: | ---: |
+| 8  | p0/p8   | ~1.00 | ~1.00 | ~1.000 |
+| 24 | p16/p24 | ~1.47 | ~1.42 | ~1.000 |
+| 40 | p32/p40 | ~1.01 | ~1.00 | ~1.000 |
+| 56 | p48/p56 | ~1.48 | ~1.43 | ~1.001 |
+
+This is a repeatable 32-byte-periodic cycle-cost change with effectively
+unchanged dynamic instruction count.
+
+The outer `bench.batch!float` entry cannot explain the effect by itself:
+indexed-float and reference-float have the same outer entry addresses under each
+padding variant, yet reference-float remains approximately invariant. Their
+active candidate kernels differ in source shape and generated size.
+
+Disassembly localization strengthens the candidate-kernel interpretation.
+`indexedVienotBatch!float` is 784 bytes in this build, whereas
+`referenceVienotBatch!float` is 712 bytes. The indexed hot-loop backward
+branch moves from mod64 63 in the p0 form to mod64 15 in p16 while the
+instruction sequence is otherwise shifted with the section. The p16 form is the
+slow form. This does not prove that the branch itself is causal, but identifies
+the internal loop/code-region alignment as the next target.
+
+DMD emits the candidate specialization into its own COMDAT text section, for
+example the indexed-float specialization appears as a dedicated
+`.text.<mangled indexedVienotBatch!float name>` section. This makes a
+section-local alignment experiment possible without globally padding all text.
+
+Other phase-6 combinations do not show one universal entry-address rule:
+reference-float is largely insensitive; indexed-double is also near neutral in
+this reduced build; reference-double shows smaller and noisier cycle movements
+that do not track wall time as cleanly as indexed-float. Therefore no global
+alignment rule is promoted.
+
+Decision: the best-supported phenomenon is a code-layout sensitivity of the
+indexed-float candidate kernel on DMD 2.113.0/x86-64. The next experiment should
+alter only that candidate's COMDAT-section alignment and verify that the outer
+wrapper and unrelated sections retain their addresses as far as the linker
+permits.
