@@ -225,3 +225,62 @@ python3 experiments/r7_4_5_cvd_performance/placement_diagnostic.py \
 A failed placement-validation check is a useful result: it means the linker did
 not place the padding object ahead of the measured D text and the layout method
 must be changed before timing data is interpreted.
+
+
+## Code-placement diagnostic — phase 2 result
+
+The XPS phase-2 placement run completed successfully at revision
+`f4a8aa0566c8bb86f95d363830658862bd99ef8a` with DMD 2.113.0.
+
+Evidence summary:
+
+- 216 raw process outputs;
+- 6,048 timing groups;
+- 0 FP control-state changes;
+- the only observed FP control state remained MXCSR control `0x1f80` and
+  x87 control word `0x037f`;
+- all 12 targeted symbols moved under the 64/128/256/512/1024-byte padding
+  variants;
+- normalized instructions for every targeted function were identical within
+  each indexed/reference family across all padding variants;
+- the padding changed target offsets within a 4 KiB page, but because every
+  increment was a multiple of 64 bytes, each target's offset modulo 64 remained
+  unchanged.
+
+For Viénot, after taking the median across the three blocks for each logical
+case/direction, the placement-to-p0 median ratios were close to unity. Indexed
+medians were approximately 1.000, 1.010, 1.013, 1.000 and 1.000 for the
+64/128/256/512/1024-byte variants. Reference medians were approximately 1.003,
+1.007, 1.000, 1.000 and 1.002. Unchanged Brettel, prepared, lookup and
+lookup+apply controls showed similarly small central movements together with
+isolated large outliers.
+
+Decision: changing the 4 KiB page offset while preserving mod-64 code alignment
+does not reproduce the earlier multifold timing movements. The phase-2 evidence
+therefore does not support page-offset placement as the primary cause.
+
+A more targeted alignment question remains. In the p0 binaries, the float
+Viénot batch entry is at mod-64 20 in the indexed family and mod-64 4 in the
+reference family, while the corresponding double batch entry is mod-64 0 in
+both families. Because phase 2 preserved those mod-64 positions, it could not
+test cache-line/code-alignment sensitivity directly.
+
+## 64-byte alignment diagnostic — phase 3
+
+`alignment_diagnostic.py` keeps the same DMD 2.113.0, kernels, FP-state
+instrumentation, workload, affinity, balanced ordering, hashes, symbols and
+disassembly, but uses 0/16/32/48-byte text padding.
+
+Before accepting timing evidence, it requires the target symbols to change
+their address modulo 64. This isolates the remaining code-alignment hypothesis
+without yet changing floating-point controls or production code.
+
+Run on the same XPS:
+
+```sh
+python3 experiments/r7_4_5_cvd_performance/alignment_diagnostic.py \
+  --compiler "$HOME/dlang/dmd-2.113.0/linux/bin64/dmd" \
+  --expected-dmd 2.113.0 \
+  --cc gcc \
+  --output /tmp/color-cvd-alignment-213
+```
