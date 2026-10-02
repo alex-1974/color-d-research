@@ -850,3 +850,65 @@ This phase is still research-only. A production handoff requires the reference
 form to preserve semantics and attributes across the compiler matrix and to
 show a robust performance benefit or stability improvement without weakening
 the safety contract.
+
+
+## Reference-bound production-candidate qualification — phase 11 result
+
+The XPS compiler-matrix qualification completed successfully at research revision
+`61b851fa0e4ba660d9d715c072882eb725941c9d`.
+
+All semantic gates passed for every compiler in both debug and release
+qualification:
+
+- DMD 2.111.0;
+- DMD 2.112.1;
+- DMD 2.113.0;
+- LDC 1.41.0.
+
+For both float and double, the qualification covered 5,839 inputs and reported
+extended/IEEE/selection/in-place/CTFE/attribute PASS. The indexed/static and
+reference Viénot batch contracts also passed empty/tail/batch-in-place/CTFE and
+attribute checks. The full replay preflight passed for every compiler.
+
+Across the pooled Viénot measurements, reference-bound versus indexed D median
+ratios were:
+
+| compiler | scalar | median ref/index | observed range |
+| --- | --- | ---: | ---: |
+| DMD 2.111.0 | float  | 0.607 | 0.583–0.614 |
+| DMD 2.111.0 | double | 0.606 | 0.567–0.611 |
+| DMD 2.112.1 | float  | 0.605 | 0.559–0.759 |
+| DMD 2.112.1 | double | 0.858 | 0.741–0.868 |
+| DMD 2.113.0 | float  | 0.638 | 0.634–0.649 |
+| DMD 2.113.0 | double | 0.905 | 0.886–0.930 |
+| LDC 1.41.0 | float  | 0.990 | 0.978–1.014 |
+| LDC 1.41.0 | double | 0.999 | 0.967–1.014 |
+
+Thus the reference-bound source form is a large and consistent improvement for
+DMD float, a material improvement for DMD double, and essentially neutral for
+LDC 1.41.0. No supported compiler shows a material regression.
+
+Median D/C++ ratios for reference-bound Viénot were approximately:
+
+| compiler | float | double |
+| --- | ---: | ---: |
+| DMD 2.111.0 | 2.70 | 1.63 |
+| DMD 2.112.1 | 2.78 | 2.36 |
+| DMD 2.113.0 | 2.64 | 1.63 |
+| LDC 1.41.0 | 1.12 | 0.81 |
+
+The DMD 2.112.1 n=65536 block is visibly affected by the uncontrolled XPS
+thermal/frequency environment: both indexed and reference D/C++ ratios rise
+sharply there. The within-D comparison still favors reference-bound, but that
+large-workload D/C++ result is not used as a precise compiler-performance
+estimate.
+
+Conclusion: the reference-bound Viénot source form is qualified as the
+production handoff candidate. It preserves the semantic/safety contract with
+`boundscheck=on`, eliminates the diagnosed indexed-loop alignment pathology
+on DMD, materially improves DMD performance, and remains performance-neutral on
+LDC 1.41.0.
+
+This research result does **not** by itself close the remaining DMD-to-C++
+performance gap. Production adoption should be a separate color-d change with
+the normal repository gates, tests, API/attribute checks and compiler matrix.
