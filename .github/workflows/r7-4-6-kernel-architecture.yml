@@ -29,6 +29,13 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Checkout exact color-d production commit
+        uses: actions/checkout@v7
+        with:
+          repository: alex-1974/color-d
+          ref: 7a7550d44b3133b1145562c6ca8483fe6b0f668c
+          path: external/color-d
+
       - name: Install D toolchain
         uses: dlang-community/setup-dlang@v2
         with:
@@ -74,6 +81,36 @@ jobs:
           print("R7.4.6 matched architecture smoke: PASS")
           PY
 
+      - name: Exact production CVD replay smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 experiments/r7_4_6_cvd_kernel_architecture/production_replay.py \
+            --color-d "$GITHUB_WORKSPACE/external/color-d" \
+            --compilers "$DC" \
+            --sizes 1024 \
+            --blocks 1 \
+            --output "$RUNNER_TEMP/cvd-production" \
+            --notes "CI smoke only; exact production commit; shared-runner timing is not performance evidence"
+
+          python3 - "$RUNNER_TEMP/cvd-production" <<'PY'
+          import csv
+          import json
+          import pathlib
+          import sys
+
+          root = pathlib.Path(sys.argv[1])
+          metadata = json.loads((root / "metadata.json").read_text())
+          assert metadata["status"] == "passed"
+          assert metadata["production_revision"] == "7a7550d44b3133b1145562c6ca8483fe6b0f668c"
+
+          rows = list(csv.DictReader((root / "pooled-summary.csv").open()))
+          assert len(rows) == 28
+          assert all(int(row["samples_per_language"]) == 18 for row in rows)
+
+          print("R7.4.6 exact production replay smoke: PASS")
+          PY
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -81,4 +118,6 @@ jobs:
           path: |
             ${{ runner.temp }}/cvd-kernel/**
             ${{ runner.temp }}/cvd-kernel.tar.gz
+            ${{ runner.temp }}/cvd-production/**
+            ${{ runner.temp }}/cvd-production.tar.gz
           if-no-files-found: warn
