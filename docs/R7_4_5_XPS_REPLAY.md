@@ -134,5 +134,6 @@ above remain the identity of the returned 2026-10-01 XPS archive.
 
 For the new candidate, use the [focused pinned XPS script](../tools/run_xps_bv_policy.sh)
 rather than substituting a newer driver into the earlier source revision.
-The new integrated consumer replay is pending and cannot be inferred from the
-older XPS binary measurements.
+The new integrated consumer replay is now [completed and inspected](R7_4_5_BV_POLICY_XPS.md)
+from its own returned archive. Earlier XPS results retain their separate binary
+identity. Consumer completion does not close material C++ gaps or production gates.

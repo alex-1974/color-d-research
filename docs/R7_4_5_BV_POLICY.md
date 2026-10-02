@@ -164,7 +164,10 @@ Run the tracked script from a checkout containing it:
 bash tools/run_xps_bv_policy.sh "XPS; record actual AC and background conditions here"
 ```
 
-The final RESULT_ARCHIVE line identifies the archive to return. This slice has
-CI evidence; the new integrated consumer replay is still pending. Prior XPS
-measurements remain evidence for the earlier isolated/combined forms, not for
-the new policy binary. Do not reuse their result as acceptance of this integration.
+The final RESULT_ARCHIVE line identifies the archive to return. The returned
+2026-10-02 integrated archive is now [inspected](R7_4_5_BV_POLICY_XPS.md): all hashes,
+source identities, raw matrices and reconstructed reports pass. The gains survive
+integration on the XPS; the LDC small-batch CI regression is not reproduced there.
+This completes the integrated consumer stage, while material DMD/C++ gaps and
+independent model/API gates remain open. Earlier isolated-form XPS measurements
+retain their own source/binary identity.

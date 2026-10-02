@@ -212,3 +212,11 @@ Debug/Release/CTFE qualification and complete the three-size CI comparison.
 The compiler-selected candidate avoids the prior LDC double Viénot regression
 while retaining DMD's direct-store gain. It remains a research candidate;
 consumer replay, small-batch limits and material C++ gaps remain open.
+
+## Follow-up: integrated XPS replay
+
+The [2026-10-02 integrated consumer replay](R7_4_5_BV_POLICY_XPS.md) is inspected:
+source/hash identity, Debug/Release qualification, complete raw matrix and all
+block/pooled reports pass. The XPS preserves the integrated gains and does not
+reproduce LDC's small-batch CI regression. The consumer stage is complete;
+material DMD Viénot/C++ gaps and independent model/API work remain open.

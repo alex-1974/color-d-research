@@ -1,0 +1,45 @@
+Architektur:                             x86_64
+CPU Operationsmodus:                     32-bit, 64-bit
+Adressgrößen:                            39 bits physical, 48 bits virtual
+Byte-Reihenfolge:                        Little Endian
+CPU(s):                                  12
+Liste der Online-CPU(s):                 0-11
+Anbieterkennung:                         GenuineIntel
+Modellname:                              Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+Prozessorfamilie:                        6
+Modell:                                  158
+Thread(s) pro Kern:                      2
+Kern(e) pro Sockel:                      6
+Sockel:                                  1
+Stepping:                                10
+Skalierung der CPU(s):                   55%
+Maximale Taktfrequenz der CPU:           4500,0000
+Minimale Taktfrequenz der CPU:           800,0000
+BogoMIPS:                                5199,98
+Markierungen:                            fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp vnmi md_clear flush_l1d arch_capabilities
+Virtualisierung:                         VT-x
+L1d Cache:                               192 KiB (6 Instanzen)
+L1i Cache:                               192 KiB (6 Instanzen)
+L2 Cache:                                1,5 MiB (6 Instanzen)
+L3 Cache:                                12 MiB (1 Instanz)
+NUMA-Knoten:                             1
+NUMA-Knoten0 CPU(s):                     0-11
+Schwachstelle Gather data sampling:      Vulnerable
+Schwachstelle Ghostwrite:                Not affected
+Schwachstelle Indirect target selection: Not affected
+Schwachstelle Itlb multihit:             KVM: Mitigation: Split huge pages
+Schwachstelle L1tf:                      Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
+Schwachstelle Mds:                       Mitigation; Clear CPU buffers; SMT vulnerable
+Schwachstelle Meltdown:                  Mitigation; PTI
+Schwachstelle Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable
+Schwachstelle Old microcode:             Not affected
+Schwachstelle Reg file data sampling:    Not affected
+Schwachstelle Retbleed:                  Mitigation; IBRS
+Schwachstelle Spec rstack overflow:      Not affected
+Schwachstelle Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+Schwachstelle Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Schwachstelle Spectre v2:                Mitigation; IBRS; IBPB conditional; STIBP conditional; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Schwachstelle Srbds:                     Mitigation; Microcode
+Schwachstelle Tsa:                       Not affected
+Schwachstelle Tsx async abort:           Not affected
+Schwachstelle Vmscape:                   Mitigation; IBPB before exit to userspace
