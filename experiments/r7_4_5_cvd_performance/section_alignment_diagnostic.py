@@ -148,10 +148,9 @@ def main():
             probe_rows=[line for line in sec_text.splitlines() if ".color_d_probe" in line]
             if len(probe_rows)!=1: raise RuntimeError("fixed envelope output section missing")
             # Record the output section size from readelf. It must be invariant.
-            parts=probe_rows[0].split()
-            hexes=[p for p in parts if re.fullmatch(r"[0-9A-Fa-f]+",p)]
-            if len(hexes)<3: raise RuntimeError("unable to parse fixed envelope section")
-            probe_size=int(hexes[-3],16)
+            mprobe=re.search(r"[.]color_d_probe\s+PROGBITS\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]+\s+([0-9A-Fa-f]+)", probe_rows[0])
+            if not mprobe: raise RuntimeError("unable to parse fixed envelope section")
+            probe_size=int(mprobe.group(1),16)
             if target_size is None: target_size=probe_size
             elif probe_size!=target_size: raise RuntimeError("fixed envelope total size changed")
 
