@@ -755,3 +755,70 @@ The comparison is not a semantic performance comparison and must not be used
 to justify disabling bounds checks in production. Its sole purpose is to test
 whether the narrow mod-64=48 effect depends on the bounds-check-heavy loop
 shape.
+
+
+## Bounds-check dependency diagnostic — phase 10 result
+
+The XPS phase-10 run completed successfully at revision
+`f64b8e97de8b3200c2b4a4d345d1cb12f6a1d2d1` with DMD 2.113.0.
+
+The experiment repeated the fine caller-only sweep with two diagnostic build
+shapes:
+
+- `-boundscheck=on`;
+- `-boundscheck=off`.
+
+The off configuration is diagnostic only and is not a proposed production
+policy.
+
+All per-configuration isolation guards passed. Within each configuration the
+candidate address remained fixed while the caller moved through all eight
+mod-64 phases.
+
+With bounds checks enabled, the phase-9 singularity reproduced:
+
+| caller mod64 | time / p0 | cycles / p0 | instructions / p0 |
+| ---: | ---: | ---: | ---: |
+| 0  | 1.000 | 1.000 | 1.000 |
+| 8  | 1.060 | 1.061 | 1.0000 |
+| 16 | 1.008 | 1.000 | 1.0000 |
+| 24 | 1.076 | 1.061 | 1.0000 |
+| 32 | 1.003 | 1.000 | 1.0000 |
+| 40 | 1.076 | 1.063 | 0.9999 |
+| 48 | **0.725** | **0.755** | **0.9997** |
+| 56 | 1.068 | 1.060 | 0.9999 |
+
+With bounds checks disabled, the narrow mod-64=48 phase disappeared:
+
+| caller mod64 | time / p0 | cycles / p0 | instructions / p0 |
+| ---: | ---: | ---: | ---: |
+| 0  | 1.000 | 1.000 | 1.000 |
+| 8  | 1.031 | 0.999 | 1.0000 |
+| 16 | 1.029 | 1.027 | 1.0000 |
+| 24 | 1.000 | 1.000 | 1.0000 |
+| 32 | 0.989 | 1.000 | 1.0002 |
+| 40 | 0.989 | 0.990 | 1.0000 |
+| 48 | 1.017 | 1.027 | 1.0002 |
+| 56 | 0.973 | 0.989 | 1.0000 |
+
+The off-build measurements are noisier under the uncontrolled XPS frequency and
+thermal environment, but there is no repeatable singular speedup at mod-64 48.
+
+Disassembly explains the structural dependency. With bounds checks enabled, the
+indexed-float hot loop contains several repeated `cmp/jae` bounds branches
+before the RGB component loads and output store. At caller mod-64 48, one of
+those checks at function offset `+0x210` lands exactly on a 64-byte boundary.
+With bounds checks disabled, DMD emits a substantially simpler pointer-end loop:
+the repeated bounds branches disappear and the body terminates with one
+backward `cmp/jb` loop branch.
+
+Conclusion: the anomalous DMD 2.113.0 alignment sensitivity depends on the
+bounds-check-heavy indexed loop shape. It is not evidence for a general
+function-alignment requirement and does not justify disabling bounds checks.
+
+Engineering implication: prefer a safe source form that lets the compiler
+eliminate redundant bounds checks while preserving the production safety
+contract. The existing reference-bound Viénot experiment is already evidence
+in that direction: its float path was largely alignment-insensitive. Any
+production choice must still be qualified across the supported DMD/LDC matrix,
+with semantic preflight and C++-comparable work.
