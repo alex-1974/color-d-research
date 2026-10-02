@@ -1,0 +1,347 @@
+{
+  "archive_sha256": "d2dc4593d5d6bfad4282bef09e110766b623fb35010c0e3e0df0324d1c07c444",
+  "archive_bytes": 8293355,
+  "manifest_entries": 827,
+  "commands": 331,
+  "raw_sample_rows": 63504,
+  "checksum_max_abs": {
+    "float": 0.0,
+    "double": 0.0
+  },
+  "metadata": {
+    "revision": "b2267e17ad45c5b47e3f1fa5922b55de83236b61",
+    "cpu": 0,
+    "sizes": [
+      1024,
+      8191,
+      65536
+    ],
+    "blocks": 3,
+    "variants": [
+      "default",
+      "bv_direct",
+      "bv_split",
+      "bv_portable",
+      "bv_compiler",
+      "bv_vienot_index",
+      "bv_vienot_static"
+    ],
+    "notes": "Integrated BV policy; shared CI clocks/thermals/SMT uncontrolled",
+    "compilers": [
+      {
+        "executable": "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+        "family": "dmd",
+        "version": "DMD64 D Compiler v2.113.0\nCopyright (C) 1999-2026 by The D Language Foundation, All Rights Reserved written by Walter Bright\n"
+      }
+    ],
+    "gcc_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "uname": [
+      "Linux",
+      "runnervm8df0l",
+      "6.17.0-1022-azure",
+      "#22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026",
+      "x86_64"
+    ],
+    "controls": "CPU affinity applied; frequency/turbo/SMT/thermals observed, not changed",
+    "observations": [
+      {
+        "time_utc": "2026-10-02T06:53:15.686610+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:53:32.259225+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:56:25.990806+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:56:25.991026+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:59:19.615096+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:59:19.615334+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T07:02:13.528232+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      }
+    ],
+    "status": "passed",
+    "interpretation": "Replay checks passed; performance acceptance and independent model qualification remain separate."
+  },
+  "source_hashes": {
+    "source/experiments/r7_2_brettel_vienot_reference/source/app.d": "1ebbd9e9227a20fee096f5d13bf80efe84198c24d158441a203960927e9e3a79",
+    "source/experiments/r7_3_machado_2009_reference/source/app.d": "f2e714358502fbb4265a8866f1dbec57f0c4c69b9b4da437d04ee8dfe0f79b04",
+    "source/experiments/r7_4_5_cvd_performance/_generated/bv.d": "9da462fb72982c5b8c55614e2441a19bfc6490675c388d71196fbd5a29ec0827",
+    "source/experiments/r7_4_5_cvd_performance/_generated/coefficients.hpp": "05f1b86646323adc0241426f4dc68de45a1b02435adde632b6cbd6af7ae621b0",
+    "source/experiments/r7_4_5_cvd_performance/_generated/ma.d": "160c98aca44d3facf6dd3ab4722d0229e5c78f34c27196b19ceaab5825531918",
+    "source/experiments/r7_4_5_cvd_performance/bench.d": "53b25e61eb44f48c85d2dfa0c7a006a0a0401f7ca9dfe178cc55e38c349d6d2c",
+    "source/experiments/r7_4_5_cvd_performance/bv_policy.d": "1a06cba2f95630a176385fdab5e6c55de0adbb9b2747b92919d9fd1fc21aa186",
+    "source/experiments/r7_4_5_cvd_performance/bv_qualification.d": "71829a7a6712de42eafc39187d261b7120db0069b493cbc1637915c8ed94b215",
+    "source/experiments/r7_4_5_cvd_performance/candidates.d": "9d7e2ef7f30b545edfe144aef88b96568646f6f47fb5d5f622317b32710de955",
+    "source/experiments/r7_4_5_cvd_performance/machado_candidates.d": "8cc646a5950d862dfbacfc83f286db95eee1d4aca1074c2bac46ceae905233d0",
+    "source/experiments/r7_4_5_cvd_performance/prepare.py": "265bcedede07f7a599f83cc85a00fe016fd5b2fd26365bf0b63c8a6d74890659",
+    "source/experiments/r7_4_5_cvd_performance/reference.cpp": "62464ad880c1569edcc1739f84886a60e1b8ddab6374cdebf5d537a9f5df0cf2",
+    "source/experiments/r7_4_5_cvd_performance/replay.py": "4776abc61fc368cb1a270726e6ba1f63478d51d759e374d8fd571acf6ad84dec",
+    "source/experiments/r7_4_5_cvd_performance/summarize.py": "4d2968c60818ebf468b36ad037cc16f6ec779ac28c415e6fc0d94e11141b13c8"
+  },
+  "binary_hashes": {
+    "compiler-0-dmd/benchmark-bv_compiler": "ecd7dbe9757ab7152c9d1bdcdbd79fb4fc12cdcc6c49e943c04d6a5e7dc1a320",
+    "compiler-0-dmd/benchmark-bv_direct": "7037da7d850fb25141fc9b5007c5d8726b6559d53f302fffa2703e6a4d54080e",
+    "compiler-0-dmd/benchmark-bv_portable": "85afd1d2be69ea5ba48ffe5296d3bda16a7f8ddd71de88d0b3ad246704ff292b",
+    "compiler-0-dmd/benchmark-bv_split": "68acad4a72d31d5761efd477bff47273e17b6e68d8a82549bfba1abf2e69aa68",
+    "compiler-0-dmd/benchmark-bv_vienot_index": "1220b9e8e8a0efee67e3986362b634ed739083424f0443bc8849568be681e9f2",
+    "compiler-0-dmd/benchmark-bv_vienot_static": "ba0006e108f93cb2bf0c24bcb3ad8e61cca18e393f8dd743356babebbe6a87c1",
+    "compiler-0-dmd/benchmark-default": "6bc882f981d8aebab4f91db2c108cc6d5128731f9347fff960c2fe5c261eda0a",
+    "cpp-benchmark": "b01f08fe98a87bc3646d7377f100ec7bf658c0cb05615c6d857cca66c9cb9f55"
+  },
+  "verified_codegen_binaries": 4,
+  "verified_timed_affinity_commands": 252,
+  "build_commands": [
+    [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O3",
+      "-ffp-contract=off",
+      "-fno-fast-math",
+      "reference.cpp",
+      "-o",
+      "/home/runner/work/_temp/bv-replay/cpp-benchmark"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-g",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/bv-qualification-debug",
+      "bv_qualification.d",
+      "candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/bv-qualification-release",
+      "bv_qualification.d",
+      "candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-g",
+      "-boundscheck=on",
+      "-version=Preflight",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/preflight",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-default",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=DirectCvd",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_direct",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=SplitCvd",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_split",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=PortableBvPolicy",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_portable",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=CompilerBvPolicy",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_compiler",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=IndexedVienot",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_vienot_index",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.113.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=StaticVienot",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_vienot_static",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ]
+  ],
+  "source_git_blobs": [
+    {
+      "path": "experiments/r7_2_brettel_vienot_reference/source/app.d",
+      "sha": "d50237f89ae7d07f239c56093c4c7668723ee85e"
+    },
+    {
+      "path": "experiments/r7_3_machado_2009_reference/source/app.d",
+      "sha": "dd7756dc71f05b38cbbf8ae78eb46be15716c3c4"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bench.d",
+      "sha": "7a5ae184b16d89977ec293a3b054f7e97437a726"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_policy.d",
+      "sha": "1734b56bb1bff9bc78ffdead9e0851c18a80c9c8"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_qualification.d",
+      "sha": "4d2804283017b8cf40eaca2878998895281274e2"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/candidates.d",
+      "sha": "5181ac1e6ce86b36f3cc9e97d8ff69fa0be83b41"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/machado_candidates.d",
+      "sha": "4e80d9d6c4433055d41eb99a2ae20a5736cf2ced"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/prepare.py",
+      "sha": "4f1b305c33353c0ac80d004bfb7a11aaa5857f1c"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/reference.cpp",
+      "sha": "e8a798a07a90c3b941c96169792f5f2606bace4b"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/replay.py",
+      "sha": "b5d48fdda6899f80d5440a7b603131910aa3a00e"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/summarize.py",
+      "sha": "6d6f93f6b1ed45e0874ef4040973a37ce1d0dfe7"
+    }
+  ],
+  "source_identity": "All eleven archived tracked source Git blob hashes were independently matched to GitHub at the recorded source revision; all four archives have identical tracked and generated source hashes."
+}

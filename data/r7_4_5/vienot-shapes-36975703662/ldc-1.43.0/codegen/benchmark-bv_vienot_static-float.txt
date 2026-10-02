@@ -1,0 +1,249 @@
+
+/home/runner/work/_temp/bv-replay/compiler-0-ldc/benchmark-bv_vienot_static:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+000000000004d1c0 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   4d1c0:	push   rax
+   4d1c1:	mov    r8,rdx
+   4d1c4:	cmp    DWORD PTR [rsp+0x38],0x1
+   4d1c9:	jne    4d21f <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x5f>
+   4d1cb:	test   rdi,rdi
+   4d1ce:	je     4d57e <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x3be>
+   4d1d4:	lea    rdx,[rdi-0x1]
+   4d1d8:	cmp    rdx,r8
+   4d1db:	mov    rax,r8
+   4d1de:	cmovb  rax,rdx
+   4d1e2:	inc    rax
+   4d1e5:	cmp    rax,0x5
+   4d1e9:	jb     4d218 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x58>
+   4d1eb:	cmp    rdx,r8
+   4d1ee:	cmovae rdx,r8
+   4d1f2:	lea    rdx,[rdx+rdx*2]
+   4d1f6:	lea    r9,[rcx+rdx*4]
+   4d1fa:	add    r9,0xc
+   4d1fe:	lea    rdx,[rsi+rdx*4]
+   4d202:	add    rdx,0xc
+   4d206:	cmp    rcx,rdx
+   4d209:	setb   dl
+   4d20c:	cmp    rsi,r9
+   4d20f:	setb   r9b
+   4d213:	test   dl,r9b
+   4d216:	je     4d277 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xb7>
+   4d218:	xor    eax,eax
+   4d21a:	jmp    4d37f <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x1bf>
+   4d21f:	test   rdi,rdi
+   4d222:	je     4d57e <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x3be>
+   4d228:	lea    rdx,[rdi-0x1]
+   4d22c:	cmp    rdx,r8
+   4d22f:	mov    rax,r8
+   4d232:	cmovb  rax,rdx
+   4d236:	inc    rax
+   4d239:	cmp    rax,0x5
+   4d23d:	jb     4d270 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xb0>
+   4d23f:	cmp    rdx,r8
+   4d242:	cmovae rdx,r8
+   4d246:	lea    rdx,[rdx+rdx*2]
+   4d24a:	lea    r9,[rcx+rdx*4]
+   4d24e:	add    r9,0xc
+   4d252:	lea    rdx,[rsi+rdx*4]
+   4d256:	add    rdx,0xc
+   4d25a:	cmp    rcx,rdx
+   4d25d:	setb   dl
+   4d260:	cmp    rsi,r9
+   4d263:	setb   r9b
+   4d267:	test   dl,r9b
+   4d26a:	je     4d407 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x247>
+   4d270:	xor    eax,eax
+   4d272:	jmp    4d50b <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x34b>
+   4d277:	mov    edx,eax
+   4d279:	and    edx,0x3
+   4d27c:	mov    r9d,0x4
+   4d282:	cmovne r9,rdx
+   4d286:	sub    rax,r9
+   4d289:	xor    edx,edx
+   4d28b:	movaps xmm0,XMMWORD PTR [rip+0x4cafe]        # 99d90 <_fini+0xee0>
+   4d292:	xorps  xmm1,xmm1
+   4d295:	movaps xmm2,XMMWORD PTR [rip+0x4cb04]        # 99da0 <_fini+0xef0>
+   4d29c:	movaps xmm3,XMMWORD PTR [rip+0x4cb0d]        # 99db0 <_fini+0xf00>
+   4d2a3:	mov    r9,rax
+   4d2a6:	cs nop WORD PTR [rax+rax*1+0x0]
+   4d2b0:	movss  xmm4,DWORD PTR [rsi+rdx*1+0x2c]
+   4d2b6:	movss  xmm7,DWORD PTR [rsi+rdx*1+0x20]
+   4d2bc:	unpcklps xmm7,xmm4
+   4d2bf:	movss  xmm8,DWORD PTR [rsi+rdx*1+0x14]
+   4d2c6:	movss  xmm4,DWORD PTR [rsi+rdx*1]
+   4d2cb:	movss  xmm6,DWORD PTR [rsi+rdx*1+0x4]
+   4d2d1:	movss  xmm5,DWORD PTR [rsi+rdx*1+0x8]
+   4d2d7:	unpcklps xmm5,xmm8
+   4d2db:	movlhps xmm5,xmm7
+   4d2de:	movss  xmm7,DWORD PTR [rsi+rdx*1+0xc]
+   4d2e4:	unpcklps xmm4,xmm7
+   4d2e7:	movss  xmm7,DWORD PTR [rsi+rdx*1+0x28]
+   4d2ed:	movss  xmm8,DWORD PTR [rsi+rdx*1+0x1c]
+   4d2f4:	unpcklps xmm8,xmm7
+   4d2f8:	movss  xmm7,DWORD PTR [rsi+rdx*1+0x10]
+   4d2fe:	unpcklps xmm6,xmm7
+   4d301:	movlhps xmm6,xmm8
+   4d305:	movss  xmm7,DWORD PTR [rsi+rdx*1+0x24]
+   4d30b:	movss  xmm8,DWORD PTR [rsi+rdx*1+0x18]
+   4d312:	unpcklps xmm8,xmm7
+   4d316:	movlhps xmm4,xmm8
+   4d31a:	movaps xmm7,xmm4
+   4d31d:	mulps  xmm7,xmm0
+   4d320:	movaps xmm8,xmm6
+   4d324:	mulps  xmm8,xmm0
+   4d328:	subps  xmm8,xmm7
+   4d32c:	addps  xmm8,xmm5
+   4d330:	mulps  xmm5,xmm1
+   4d333:	mulps  xmm6,xmm2
+   4d336:	mulps  xmm4,xmm3
+   4d339:	addps  xmm4,xmm6
+   4d33c:	addps  xmm4,xmm5
+   4d33f:	movaps xmm5,xmm8
+   4d343:	shufps xmm5,xmm4,0x10
+   4d347:	movaps xmm6,xmm4
+   4d34a:	shufps xmm6,xmm5,0x80
+   4d34e:	movaps xmm5,xmm8
+   4d352:	shufps xmm5,xmm4,0x11
+   4d356:	shufps xmm5,xmm4,0xa2
+   4d35a:	shufps xmm4,xmm8,0xef
+   4d35f:	shufps xmm4,xmm4,0xd2
+   4d363:	movups XMMWORD PTR [rcx+rdx*1+0x20],xmm4
+   4d368:	movups XMMWORD PTR [rcx+rdx*1+0x10],xmm5
+   4d36d:	movups XMMWORD PTR [rcx+rdx*1],xmm6
+   4d371:	add    rdx,0x30
+   4d375:	add    r9,0xfffffffffffffffc
+   4d379:	jne    4d2b0 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xf0>
+   4d37f:	lea    rdx,[rax*4+0x0]
+   4d387:	lea    rdx,[rdx+rdx*2]
+   4d38b:	movsd  xmm0,QWORD PTR [rip+0x4c9cd]        # 99d60 <_fini+0xeb0>
+   4d393:	movsd  xmm1,QWORD PTR [rip+0x4ca25]        # 99dc0 <_fini+0xf10>
+   4d39b:	movsd  xmm2,QWORD PTR [rip+0x4ca2d]        # 99dd0 <_fini+0xf20>
+   4d3a3:	data16 data16 data16 cs nop WORD PTR [rax+rax*1+0x0]
+   4d3b0:	cmp    r8,rax
+   4d3b3:	je     4d580 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x3c0>
+   4d3b9:	movsd  xmm3,QWORD PTR [rsi+rdx*1]
+   4d3be:	movss  xmm4,DWORD PTR [rsi+rdx*1+0x8]
+   4d3c4:	shufps xmm4,xmm4,0x0
+   4d3c8:	mulps  xmm4,xmm0
+   4d3cb:	movaps xmm5,xmm3
+   4d3ce:	shufps xmm5,xmm3,0xe1
+   4d3d2:	mulps  xmm5,xmm1
+   4d3d5:	mulps  xmm3,xmm2
+   4d3d8:	movaps xmm6,xmm3
+   4d3db:	addps  xmm6,xmm5
+   4d3de:	subps  xmm3,xmm5
+   4d3e1:	shufps xmm3,xmm6,0x1
+   4d3e5:	shufps xmm3,xmm6,0xe2
+   4d3e9:	addps  xmm3,xmm4
+   4d3ec:	movss  DWORD PTR [rcx+rdx*1],xmm3
+   4d3f1:	movlps QWORD PTR [rcx+rdx*1+0x4],xmm3
+   4d3f6:	inc    rax
+   4d3f9:	add    rdx,0xc
+   4d3fd:	cmp    rdi,rax
+   4d400:	jne    4d3b0 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x1f0>
+   4d402:	jmp    4d57e <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x3be>
+   4d407:	mov    edx,eax
+   4d409:	and    edx,0x3
+   4d40c:	mov    r9d,0x4
+   4d412:	cmovne r9,rdx
+   4d416:	sub    rax,r9
+   4d419:	xor    edx,edx
+   4d41b:	movaps xmm0,XMMWORD PTR [rip+0x4c90e]        # 99d30 <_fini+0xe80>
+   4d422:	xorps  xmm1,xmm1
+   4d425:	movaps xmm2,XMMWORD PTR [rip+0x4c914]        # 99d40 <_fini+0xe90>
+   4d42c:	movaps xmm3,XMMWORD PTR [rip+0x4c91d]        # 99d50 <_fini+0xea0>
+   4d433:	mov    r9,rax
+   4d436:	cs nop WORD PTR [rax+rax*1+0x0]
+   4d440:	movss  xmm4,DWORD PTR [rsi+rdx*1+0x2c]
+   4d446:	movss  xmm7,DWORD PTR [rsi+rdx*1+0x20]
+   4d44c:	unpcklps xmm7,xmm4
+   4d44f:	movss  xmm8,DWORD PTR [rsi+rdx*1+0x14]
+   4d456:	movss  xmm4,DWORD PTR [rsi+rdx*1]
+   4d45b:	movss  xmm6,DWORD PTR [rsi+rdx*1+0x4]
+   4d461:	movss  xmm5,DWORD PTR [rsi+rdx*1+0x8]
+   4d467:	unpcklps xmm5,xmm8
+   4d46b:	movlhps xmm5,xmm7
+   4d46e:	movss  xmm7,DWORD PTR [rsi+rdx*1+0xc]
+   4d474:	unpcklps xmm4,xmm7
+   4d477:	movss  xmm7,DWORD PTR [rsi+rdx*1+0x28]
+   4d47d:	movss  xmm8,DWORD PTR [rsi+rdx*1+0x1c]
+   4d484:	unpcklps xmm8,xmm7
+   4d488:	movss  xmm7,DWORD PTR [rsi+rdx*1+0x10]
+   4d48e:	unpcklps xmm6,xmm7
+   4d491:	movlhps xmm6,xmm8
+   4d495:	movss  xmm7,DWORD PTR [rsi+rdx*1+0x24]
+   4d49b:	movss  xmm8,DWORD PTR [rsi+rdx*1+0x18]
+   4d4a2:	unpcklps xmm8,xmm7
+   4d4a6:	movlhps xmm4,xmm8
+   4d4aa:	movaps xmm7,xmm4
+   4d4ad:	mulps  xmm7,xmm0
+   4d4b0:	movaps xmm8,xmm6
+   4d4b4:	mulps  xmm8,xmm0
+   4d4b8:	subps  xmm7,xmm8
+   4d4bc:	addps  xmm7,xmm5
+   4d4bf:	mulps  xmm5,xmm1
+   4d4c2:	mulps  xmm6,xmm2
+   4d4c5:	mulps  xmm4,xmm3
+   4d4c8:	addps  xmm4,xmm6
+   4d4cb:	addps  xmm4,xmm5
+   4d4ce:	movaps xmm5,xmm7
+   4d4d1:	shufps xmm5,xmm4,0x10
+   4d4d5:	movaps xmm6,xmm4
+   4d4d8:	shufps xmm6,xmm5,0x80
+   4d4dc:	movaps xmm5,xmm7
+   4d4df:	shufps xmm5,xmm4,0x11
+   4d4e3:	shufps xmm5,xmm4,0xa2
+   4d4e7:	shufps xmm4,xmm7,0xef
+   4d4eb:	shufps xmm4,xmm4,0xd2
+   4d4ef:	movups XMMWORD PTR [rcx+rdx*1+0x20],xmm4
+   4d4f4:	movups XMMWORD PTR [rcx+rdx*1+0x10],xmm5
+   4d4f9:	movups XMMWORD PTR [rcx+rdx*1],xmm6
+   4d4fd:	add    rdx,0x30
+   4d501:	add    r9,0xfffffffffffffffc
+   4d505:	jne    4d440 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x280>
+   4d50b:	lea    rdx,[rax*4+0x0]
+   4d513:	lea    rdx,[rdx+rdx*2]
+   4d517:	movsd  xmm0,QWORD PTR [rip+0x4c841]        # 99d60 <_fini+0xeb0>
+   4d51f:	movsd  xmm1,QWORD PTR [rip+0x4c849]        # 99d70 <_fini+0xec0>
+   4d527:	movsd  xmm2,QWORD PTR [rip+0x4c851]        # 99d80 <_fini+0xed0>
+   4d52f:	nop
+   4d530:	cmp    r8,rax
+   4d533:	je     4d580 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x3c0>
+   4d535:	movsd  xmm3,QWORD PTR [rsi+rdx*1]
+   4d53a:	movss  xmm4,DWORD PTR [rsi+rdx*1+0x8]
+   4d540:	shufps xmm4,xmm4,0x0
+   4d544:	mulps  xmm4,xmm0
+   4d547:	movaps xmm5,xmm3
+   4d54a:	shufps xmm5,xmm3,0xe1
+   4d54e:	mulps  xmm5,xmm1
+   4d551:	mulps  xmm3,xmm2
+   4d554:	movaps xmm6,xmm5
+   4d557:	addps  xmm6,xmm3
+   4d55a:	subps  xmm5,xmm3
+   4d55d:	shufps xmm5,xmm6,0x1
+   4d561:	shufps xmm5,xmm6,0xe2
+   4d565:	addps  xmm5,xmm4
+   4d568:	movss  DWORD PTR [rcx+rdx*1],xmm5
+   4d56d:	movlps QWORD PTR [rcx+rdx*1+0x4],xmm5
+   4d572:	inc    rax
+   4d575:	add    rdx,0xc
+   4d579:	cmp    rdi,rax
+   4d57c:	jne    4d530 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x370>
+   4d57e:	pop    rax
+   4d57f:	ret
+   4d580:	lea    rsi,[rip+0x5e79d]        # abd24 <_D2ma__T7Matrix3TdZQl6__initZ+0x9c>
+   4d587:	mov    edi,0xc
+   4d58c:	mov    edx,0xd0
+   4d591:	mov    rcx,r8
+   4d594:	call   26b70 <_d_arraybounds_index>
+
+Disassembly of section .fini:

@@ -16,6 +16,7 @@ def inspect(artifact, destination, expected_variants=None):
     if expected_variants is None:
         expected_variants=['default','prepared','bv_direct','bv_split']
     destination.mkdir(parents=True, exist_ok=False)
+    codegen_files={}
     with zipfile.ZipFile(artifact) as z:
         tar_names=[n for n in z.namelist() if n.endswith('/bv-replay.tar.gz') or n=='bv-replay.tar.gz']
         assert len(tar_names)==1
@@ -26,8 +27,15 @@ def inspect(artifact, destination, expected_variants=None):
             log=z.read(names[0])
             for scalar in ['float','double']:
                 assert f'qualification,{scalar},inputs=5839,'.encode() in log
-            assert log.count(b'=PASS')==2
+            shape_variants={'bv_vienot_index','bv_vienot_static'} & set(expected_variants)
+            if shape_variants:
+                assert b'vienot,indexed/static,empty/tails/batch-in-place/CTFE/attributes=PASS' in log
+            assert log.count(b'=PASS')==(3 if shape_variants else 2)
             (destination/(mode+'.txt')).write_bytes(log)
+        if {'bv_vienot_index','bv_vienot_static'} & set(expected_variants):
+            names=[n for n in z.namelist() if '/codegen/' in n and not n.endswith('/')]
+            assert len(names)==9 and len({Path(n).name for n in names})==9
+            codegen_files={Path(n).name:z.read(n) for n in names}
     with tarfile.open(fileobj=io.BytesIO(archive),mode='r:gz') as t:
         assert all(m.isdir() or m.isfile() for m in t.getmembers())
         roots={m.name.split('/')[0] for m in t.getmembers()}
@@ -103,6 +111,24 @@ def inspect(artifact, destination, expected_variants=None):
     with (destination/'block-summary.csv').open('w') as f:
         w=csv.DictWriter(f,fieldnames=list(block_rows[0]));w.writeheader();w.writerows(block_rows)
     evidence=dict(archive_sha256=hashlib.sha256(archive).hexdigest(),archive_bytes=len(archive),manifest_entries=len(manifest),commands=len(commands),raw_sample_rows=sum(map(len,all_samples.values())),checksum_max_abs=checksum_max,metadata=metadata,source_hashes={p:h for p,h in manifest.items() if p.startswith('source/')},binary_hashes={p:h for p,h in manifest.items() if ('/benchmark-' in p and not p.endswith('.o')) or p=='cpp-benchmark'})
+    if codegen_files:
+        records=json.loads(codegen_files['inspection.json'])
+        assert len(records)==4
+        family=metadata['compilers'][0]['family']
+        expected_binaries={'cpp-benchmark','benchmark-bv_compiler','benchmark-bv_vienot_index','benchmark-bv_vienot_static'}
+        assert {Path(r['binary']).name for r in records}==expected_binaries
+        for record in records:
+            name=Path(record['binary']).name
+            path=name if name=='cpp-benchmark' else 'compiler-0-'+family+'/'+name
+            assert record['sha256']==evidence['binary_hashes'][path]
+            assert len(record['functions'])==2
+            assert {f['scalar'] for f in record['functions']}=={'float','double'}
+            for function in record['functions']:
+                assert function['instruction_count']==sum(function['mnemonics'].values())
+                assert ('<'+function['symbol']+'>:').encode() in codegen_files[function['disassembly']]
+        output=destination/'codegen';output.mkdir()
+        for name,content in codegen_files.items(): (output/name).write_bytes(content)
+        evidence['verified_codegen_binaries']=len(records)
     evidence['verified_timed_affinity_commands']=len(timed)
     evidence['build_commands']=[c['argv'] for c in commands if Path(c['stdout']).name.startswith('build-')]
     (destination/'inspection.json').write_text(json.dumps(evidence,indent=2)+'\n')

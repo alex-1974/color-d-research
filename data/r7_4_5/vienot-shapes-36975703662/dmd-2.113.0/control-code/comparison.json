@@ -1,0 +1,29 @@
+{
+  "normalization": "Discard instruction addresses; normalize relative call/jump targets and RIP displacements while retaining symbols and offsets; normalize generated _TMP numeric identities in bounds-failure filename constants. No arithmetic or branch condition is discarded.",
+  "functions": [
+    {
+      "selector": "lookupBatchTd",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "a132c652377d2cf2c74d3aee229c7406c2be4454904c7aa9d92d32b30f6765ec",
+        "a132c652377d2cf2c74d3aee229c7406c2be4454904c7aa9d92d32b30f6765ec"
+      ]
+    },
+    {
+      "selector": "batchTdVEQt4Modei3",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "20cdcd0a9938a310cae70edbaa47ec37c7b36614e9271e8ed8c0f6a9cf3bce83",
+        "20cdcd0a9938a310cae70edbaa47ec37c7b36614e9271e8ed8c0f6a9cf3bce83"
+      ]
+    },
+    {
+      "selector": "matrixAtSeverityTd",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "408ff4739b29abb31a7855054d94748ba10c042c443195fc7f74b68a22dc188b",
+        "408ff4739b29abb31a7855054d94748ba10c042c443195fc7f74b68a22dc188b"
+      ]
+    }
+  ]
+}

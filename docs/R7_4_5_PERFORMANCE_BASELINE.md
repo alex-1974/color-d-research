@@ -220,3 +220,15 @@ source/hash identity, Debug/Release qualification, complete raw matrix and all
 block/pooled reports pass. The XPS preserves the integrated gains and does not
 reproduce LDC's small-batch CI regression. The consumer stage is complete;
 material DMD Viénot/C++ gaps and independent model/API work remain open.
+
+### Viénot component-load and CTFE source-shape follow-up
+
+The [four-compiler source-shape comparison](R7_4_5_VIENOT_SHAPES.md) at source
+`b2267e17ad45c5b47e3f1fa5922b55de83236b61` is fully inspected. Indexed component
+loading improves DMD Viénot by about 1.56–1.69 times for float and 1.96–2.01 times
+for double against the selected policy. CTFE coefficients improve LDC float,
+but materially regress DMD float and unchanged double Machado controls under
+DMD 2.113. No integrated policy or production API was changed. The DMD indexed
+residual gap remains about 2.8–3.0 times C++ for float and 1.8–1.9 times for
+double on these CI hosts; the performance gate is still open. The next narrow
+probe is reference-bound input iteration with direct stores and bounds checks.
