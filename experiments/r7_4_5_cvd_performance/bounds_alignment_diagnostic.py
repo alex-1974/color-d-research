@@ -6,6 +6,7 @@ import replay
 
 OFFSETS=[0,8,16,24,32,40,48,56]
 EVENTS=["cycles","instructions"]
+BOUNDS={"on":"on","off":"off"}
 TARGET_TOKEN="_D5bench__T5batchTf"
 OUTER_TOKEN="bench.batch!(float, 1)"
 CONTROL_TOKEN="candidates.indexedVienotBatch!(float)"
@@ -72,7 +73,6 @@ def main():
         fpobj=root/"fp_state.o"
         run([cc,"-O2","-c","fp_state.c","-o",fpobj],work,"build-fp-state.txt")
 
-        seed=root/"seed"
         sources=["bench.d","candidates.d","machado_candidates.d","bv_policy.d","_generated/bv.d","_generated/ma.d"]
         builds={}
         placements=[]
@@ -161,48 +161,56 @@ def main():
 
         rows=[]
         orders=[OFFSETS,list(reversed(OFFSETS)),OFFSETS[2:]+OFFSETS[:2],list(reversed(OFFSETS[2:]+OFFSETS[:2]))]
-        for bname in BOUNDS:\n            for reverse in (False,True):
-            for rep,order in enumerate(orders):
-                for offset in order:
-                    binary=builds[(bname,offset)]
-                    outpath=root/"program"/f"{bname}-offset-{offset}-r{int(reverse)}-rep{rep}.txt"
-                    argv=["env","LC_ALL=C",perf,"stat","-x,","-e",",".join(EVENTS),"--",
+        for bname in BOUNDS:
+            for reverse in (False,True):
+                for rep,order in enumerate(orders):
+                    for offset in order:
+                        binary=builds[(bname,offset)]
+                        outpath=root/"program"/f"{bname}-offset-{offset}-r{int(reverse)}-rep{rep}.txt"
+                        argv=["env","LC_ALL=C",perf,"stat","-x,","-e",",".join(EVENTS),"--",
                           "taskset","-c",str(cpu),binary,"65536"]
-                    if reverse: argv.append("reverse")
-                    rc=run(argv,work,str(outpath.relative_to(root)),check=False)
-                    if rc: raise RuntimeError("perf run failed")
-                    err=Path(str(outpath)+".stderr").read_text(errors="replace")
-                    vals={}
-                    for rr in csv.reader(err.splitlines()):
-                        if len(rr)>=3 and rr[2].strip() in EVENTS:
-                            vals[rr[2].strip()]=float(rr[0].strip().replace(" ",""))
-                    if set(vals)!=set(EVENTS): raise RuntimeError("missing perf counters")
-                    samples=[rr for rr in csv.reader(outpath.read_text().splitlines()) if rr and rr[0]=="sample"]
-                    if len(samples)!=18: raise RuntimeError("unexpected Viénot sample count")
-                    ns=statistics.median(float(rr[8]) for rr in samples)
-                    rows.append([bname,offset,int(reverse),rep,ns,vals["cycles"],vals["instructions"]])
+                        if reverse: argv.append("reverse")
+                        rc=run(argv,work,str(outpath.relative_to(root)),check=False)
+                        if rc: raise RuntimeError("perf run failed")
+                        err=Path(str(outpath)+".stderr").read_text(errors="replace")
+                        vals={}
+                        for rr in csv.reader(err.splitlines()):
+                            if len(rr)>=3 and rr[2].strip() in EVENTS:
+                                vals[rr[2].strip()]=float(rr[0].strip().replace(" ",""))
+                        if set(vals)!=set(EVENTS): raise RuntimeError("missing perf counters")
+                        samples=[rr for rr in csv.reader(outpath.read_text().splitlines()) if rr and rr[0]=="sample"]
+                        if len(samples)!=18: raise RuntimeError("unexpected Viénot sample count")
+                        ns=statistics.median(float(rr[8]) for rr in samples)
+                        rows.append([bname,offset,int(reverse),rep,ns,vals["cycles"],vals["instructions"]])
         with (root/"samples.csv").open("w",newline="") as f:
             w=csv.writer(f);w.writerow(["bounds","offset","reverse","rep","median_ns","cycles","instructions"]);w.writerows(rows)
 
         ratios=[]
-        for reverse in (0,1):
-            for rep in range(len(orders)):
-                sub=[r for r in rows if r[1]==reverse and r[2]==rep]
-                base=next(r for r in sub if r[0]==0)
-                for r in sub:
-                    ratios.append([r[0],reverse,rep,r[3]/base[3],r[4]/base[4],r[5]/base[5]])
+        for bname in BOUNDS:
+            for reverse in (0,1):
+                for rep in range(len(orders)):
+                    sub=[r for r in rows if r[0]==bname and r[2]==reverse and r[3]==rep]
+                    base=next(r for r in sub if r[1]==0)
+                    for r in sub:
+                        ratios.append([bname,r[1],reverse,rep,
+                                       r[4]/base[4],r[5]/base[5],r[6]/base[6]])
         with (root/"ratios.csv").open("w",newline="") as f:
-            w=csv.writer(f);w.writerow(["bounds","offset","reverse","rep","ns_ratio","cycles_ratio","instructions_ratio"]);w.writerows(ratios)
+            w=csv.writer(f)
+            w.writerow(["bounds","offset","reverse","rep","ns_ratio","cycles_ratio","instructions_ratio"])
+            w.writerows(ratios)
 
         summary=[]
-        for offset in OFFSETS:
-            s=[r for r in ratios if r[0]==offset]
-            summary.append([offset,
-                            statistics.median(x[3] for x in s),
-                            statistics.median(x[4] for x in s),
-                            statistics.median(x[5] for x in s)])
+        for bname in BOUNDS:
+            for offset in OFFSETS:
+                s=[r for r in ratios if r[0]==bname and r[1]==offset]
+                summary.append([bname,offset,
+                                statistics.median(x[4] for x in s),
+                                statistics.median(x[5] for x in s),
+                                statistics.median(x[6] for x in s)])
         with (root/"summary.csv").open("w",newline="") as f:
-            w=csv.writer(f);w.writerow(["bounds","offset","median_ns_ratio","median_cycles_ratio","median_instructions_ratio"]);w.writerows(summary)
+            w=csv.writer(f)
+            w.writerow(["bounds","offset","median_ns_ratio","median_cycles_ratio","median_instructions_ratio"])
+            w.writerows(summary)
 
         meta.update(status="passed",sample_rows=len(rows),summary_rows=len(summary),
                     interpretation="bounds-check dependency diagnostic only; off is not a production policy")
