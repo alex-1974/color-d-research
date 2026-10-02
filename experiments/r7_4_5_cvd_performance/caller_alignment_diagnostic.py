@@ -6,8 +6,9 @@ import replay
 
 OFFSETS=[0,16,32,48]
 EVENTS=["cycles","instructions"]
-TARGET_TOKEN="_D10candidates__T18indexedVienotBatchTf"
+TARGET_TOKEN="_D5bench__T5batchTf"
 OUTER_TOKEN="bench.batch!(float, 1)"
+CONTROL_TOKEN="candidates.indexedVienotBatch!(float)"
 
 def capture(argv,cwd):
     return subprocess.check_output(list(map(str,argv)),cwd=cwd)
@@ -95,8 +96,8 @@ def main():
         meta["target_section"]=section
         (root/"seed-sections.txt").write_text(sections)
 
-        # Rename only the candidate COMDAT text section. A fixed 64-byte
-        # pre/post envelope moves the target locally while preserving the total
+        # Rename only the caller COMDAT text section. A fixed 64-byte
+        # pre/post envelope moves the caller locally while preserving the total
         # size before ordinary .text.
         target_obj=root/"candidate-target.o"
         shutil.copy2(seedobj,target_obj)
@@ -139,7 +140,7 @@ def main():
             run(["objdump","-d","--no-show-raw-insn","-M","intel",binary],
                 work,f"codegen/offset-{offset}.txt")
 
-            cand_addr,cand_name=symbol_addr(binary,"candidates.indexedVienotBatch!(float)",work)
+            cand_addr,cand_name=symbol_addr(binary,CONTROL_TOKEN,work)
             outer_addr,outer_name=symbol_addr(binary,OUTER_TOKEN,work)
             outer_addrs.add(outer_addr); target_addrs.add(cand_addr)
 
@@ -159,15 +160,15 @@ def main():
                                probe_size])
             hashes[str(offset)]=hashlib.sha256(binary.read_bytes()).hexdigest()
 
-        if len(outer_addrs)!=1:
-            raise RuntimeError("outer bench.batch address changed; fixed envelope failed")
-        if len({r[4] for r in placements})<2:
-            raise RuntimeError("candidate mod64 placement did not change")
+        if len(target_addrs)!=1:
+            raise RuntimeError("candidate address changed; caller probe is not isolated")
+        if len({r[8] for r in placements})<2:
+            raise RuntimeError("caller mod64 placement did not change")
         meta["binary_sha256"]=hashes
         meta["fixed_envelope_size"]=target_size
         with (root/"placement.csv").open("w",newline="") as f:
             w=csv.writer(f);w.writerow(["offset","post_pad","candidate_symbol","candidate_address","candidate_mod64","candidate_mod4096",
-                                        "outer_symbol","outer_address","outer_mod64","outer_mod4096","envelope_size"]);w.writerows(placements)
+                                        "caller_symbol","caller_address","caller_mod64","caller_mod4096","envelope_size"]);w.writerows(placements)
 
         rows=[]
         orders=[OFFSETS,list(reversed(OFFSETS)),OFFSETS[2:]+OFFSETS[:2],list(reversed(OFFSETS[2:]+OFFSETS[:2]))]
