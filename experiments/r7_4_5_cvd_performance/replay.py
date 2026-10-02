@@ -21,11 +21,12 @@ VARIANTS = {
     'bv_direct': 'DirectCvd', 'bv_split': 'SplitCvd',
     'ma_fixed': 'FixedMachado', 'ma_bounded': 'BoundedMachado',
     'ma_direct': 'DirectMachado',
+    'bv_portable': 'PortableBvPolicy', 'bv_compiler': 'CompilerBvPolicy',
 }
 EXPERIMENT = Path('experiments/r7_4_5_cvd_performance')
 FILES = [EXPERIMENT / name for name in (
     'bench.d', 'candidates.d', 'machado_candidates.d', 'prepare.py',
-    'reference.cpp', 'summarize.py', 'replay.py')]
+    'reference.cpp', 'summarize.py', 'replay.py', 'bv_policy.d', 'bv_qualification.d')]
 FILES += [Path('experiments') / name / 'source/app.d' for name in (
     'r7_2_brettel_vienot_reference', 'r7_3_machado_2009_reference')]
 
@@ -144,13 +145,19 @@ def main():
         cpp = output / 'cpp-benchmark'
         run([gcc, '-std=c++17', '-O3', '-ffp-contract=off', '-fno-fast-math',
              'reference.cpp', '-o', cpp], work, output / 'build-cpp.txt')
-        sources = ['bench.d', 'candidates.d', 'machado_candidates.d', '_generated/bv.d', '_generated/ma.d']
+        sources = ['bench.d', 'candidates.d', 'machado_candidates.d', 'bv_policy.d', '_generated/bv.d', '_generated/ma.d']
         binaries = {}
         for ci, (compiler, family, _) in enumerate(compilers):
             build = output / f'compiler-{ci}-{family}'
             build.mkdir()
             version_flag = '-d-version=' if family == 'ldc' else '-version='
             optimize = ['-O3', '-fp-contract=off'] if family == 'ldc' else ['-O', '-inline']
+            qualification_sources = ['bv_qualification.d', 'candidates.d', 'bv_policy.d', '_generated/bv.d']
+            for mode, qualification_flags in [('debug', ['-g']), ('release', [*optimize, '-release'])]:
+                qualification = build / ('bv-qualification-' + mode)
+                run([compiler, *qualification_flags, '-boundscheck=on',
+                     '-of=' + str(qualification), *qualification_sources], work, build / ('build-bv-qualification-' + mode + '.txt'))
+                run([qualification], work, build / ('bv-qualification-' + mode + '.txt'))
             preflight = build / 'preflight'
             run([compiler, '-g', '-boundscheck=on', version_flag + 'Preflight',
                  '-of=' + str(preflight), *sources], work, build / 'build-preflight.txt')

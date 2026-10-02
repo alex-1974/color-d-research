@@ -2,13 +2,16 @@ module bench;
 import bv;
 import ma;
 import candidates;
+import bv_policy;
 import machado_candidates;
 version (FixedMachado) enum machadoMode = 1;
 else version (DirectMachado) enum machadoMode = 2;
 else version (BoundedMachado) enum machadoMode = 3;
 else enum machadoMode = 0;
 
-version (PreparedCvd) enum candidateMode = 1;
+version (PortableBvPolicy) enum candidateMode = 5;
+else version (CompilerBvPolicy) enum candidateMode = 6;
+else version (PreparedCvd) enum candidateMode = 1;
 else version (InlineCvd) enum candidateMode = 2;
 else version (DirectCvd) enum candidateMode = 3;
 else version (SplitCvd) enum candidateMode = 4;
@@ -26,7 +29,18 @@ void batch(T, Mode mode)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
 @safe pure nothrow @nogc
 {
     assert(output.length == input.length);
-    static if (candidateMode != 0 && mode == Mode.brettel)
+    static if (candidateMode >= 5 && mode == Mode.brettel)
+    {
+        policyBrettelBatch!T(input,output,deficiency);
+        return;
+    }
+    else static if (candidateMode >= 5 && mode == Mode.vienot)
+    {
+        enum policy = candidateMode == 5 ? BvPolicy.portable : BvPolicy.compilerSelected;
+        policyVienotBatch!(T,policy)(input,output,deficiency);
+        return;
+    }
+    else static if (candidateMode != 0 && mode == Mode.brettel)
     {
         const plan = prepareBrettel!T(deficiency);
         foreach (i, p; input)

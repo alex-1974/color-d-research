@@ -57,9 +57,9 @@ jobs:
             if test "$VARIANT" = fixed; then EXTRA_FLAGS=("$fixed_flag"); fi
             if test "$VARIANT" = direct; then EXTRA_FLAGS=("$direct_flag"); fi
             if test "$VARIANT" = bounded; then EXTRA_FLAGS=("$bounded_flag"); fi
-            "$DC" -g -boundscheck=on "$version_flag" "${EXTRA_FLAGS[@]}" -of="preflight-$VARIANT" bench.d candidates.d machado_candidates.d _generated/bv.d _generated/ma.d
+            "$DC" -g -boundscheck=on "$version_flag" "${EXTRA_FLAGS[@]}" -of="preflight-$VARIANT" bench.d candidates.d machado_candidates.d bv_policy.d _generated/bv.d _generated/ma.d
             "./preflight-$VARIANT" 32 > "preflight-$VARIANT.txt"
-            "$DC" "${optimize[@]}" "${EXTRA_FLAGS[@]}" -release -boundscheck=on -of="benchmark-$VARIANT" bench.d candidates.d machado_candidates.d _generated/bv.d _generated/ma.d
+            "$DC" "${optimize[@]}" "${EXTRA_FLAGS[@]}" -release -boundscheck=on -of="benchmark-$VARIANT" bench.d candidates.d machado_candidates.d bv_policy.d _generated/bv.d _generated/ma.d
             objdump -d "benchmark-$VARIANT" > "$VARIANT-assembly.txt"
           done
           g++ -std=c++17 -O3 -ffp-contract=off -fno-fast-math reference.cpp -o cpp-benchmark

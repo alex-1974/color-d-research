@@ -2,6 +2,7 @@ module bv_qualification;
 
 import bv;
 import candidates;
+import bv_policy;
 import std.stdio : writefln;
 
 // Comparisons use the existing preliminary component envelope. This is source
@@ -16,10 +17,17 @@ bool colorsMatch(T)(bv.Rgb!T a, bv.Rgb!T b)
 bool qualifyInput(T)(bv.Rgb!T input)
 @safe pure nothrow @nogc
 {
+    const bv.Rgb!T[1] source = [input];
+    bv.Rgb!T[1] policyOutput, inPlaceOutput;
     foreach (deficiency; 0u .. 3u)
     {
         const plan = prepareBrettel!T(deficiency);
         const expected = bv.brettelProbe(input,deficiency);
+        policyBrettelBatch!T(source[],policyOutput[],deficiency);
+        inPlaceOutput[0] = input;
+        policyBrettelBatch!T(inPlaceOutput[],inPlaceOutput[],deficiency);
+        if (!colorsMatch!T(policyOutput[0],expected)
+            || !colorsMatch!T(inPlaceOutput[0],expected)) return false;
         bv.Rgb!T split, direct;
         directBrettel!(T,true)(split,plan,input.r,input.g,input.b);
         directBrettel!(T,false)(direct,plan,input.r,input.g,input.b);
@@ -31,6 +39,14 @@ bool qualifyInput(T)(bv.Rgb!T input)
         {
             const matrix = prepareVienot!T(deficiency);
             const vienotExpected = bv.vienotProbe(input,deficiency == 1);
+            static foreach (policy; [BvPolicy.portable,BvPolicy.compilerSelected])
+            {{
+                policyVienotBatch!(T,policy)(source[],policyOutput[],deficiency);
+                inPlaceOutput[0] = input;
+                policyVienotBatch!(T,policy)(inPlaceOutput[],inPlaceOutput[],deficiency);
+                if (!colorsMatch!T(policyOutput[0],vienotExpected)
+                    || !colorsMatch!T(inPlaceOutput[0],vienotExpected)) return false;
+            }}
             directWrite!T(direct,matrix,input.r,input.g,input.b);
             inPlace = input;
             directWrite!T(inPlace,matrix,inPlace.r,inPlace.g,inPlace.b);
@@ -116,6 +132,8 @@ bool qualifyRuntime(T)(out size_t inputs)
 
 void main()
 {
+    writefln("policy,portable,double-vienot=original,compilerSelected,double-vienot=%s",
+        preferDirectDoubleVienot ? "direct" : "original");
     size_t inputs;
     if (!qualifyRuntime!float(inputs)) throw new Exception("combined BV float qualification failed");
     writefln("qualification,float,inputs=%s,extended/IEEE/selection/in-place/CTFE/attributes=PASS",inputs);
