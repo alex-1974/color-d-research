@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """XPS phase-1 diagnostic: A/A rebuild reproducibility and per-case FP-state capture."""
-import argparse, csv, hashlib, json, os, shutil, statistics, subprocess, time
+import argparse, csv, hashlib, json, os, re, shutil, statistics, subprocess, time
 from collections import defaultdict
 from pathlib import Path
 import replay
@@ -36,7 +36,7 @@ def main():
     if "DMD" not in version.upper(): raise RuntimeError("phase 1 is intentionally pinned to DMD")
     meta={"revision":rev,"cpu":cpu,"compiler_version":version,"variants":VARIANTS,
           "sizes":SIZES,"blocks":3,"purpose":"A/A reproducibility + read-only MXCSR/x87 capture",
-          "status":"running","observations":[replay.observe(cpu)]}
+          "expected_dmd":a.expected_dmd,"status":"running","observations":[replay.observe(cpu)]}
     ledger=[]
     def save():
         (root/"metadata.json").write_text(json.dumps(meta,indent=2))
