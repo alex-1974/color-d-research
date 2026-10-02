@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Function-local ELF section-alignment probe for indexed float Viénot."""
+"""Fixed-envelope function-local ELF placement probe for indexed float Viénot."""
 import argparse, csv, hashlib, json, os, re, shutil, statistics, subprocess, time
 from pathlib import Path
 import replay
 
-ALIGNMENTS=[4,16,32,64]
+OFFSETS=[0,16,32,48]
 EVENTS=["cycles","instructions"]
 TARGET_TOKEN="_D10candidates__T18indexedVienotBatchTf"
 OUTER_TOKEN="bench.batch!(float, 1)"
@@ -43,8 +43,8 @@ def main():
     if "DMD" not in version.upper() or not m or m.group(1)!=a.expected_dmd:
         raise RuntimeError("unexpected DMD version")
 
-    meta={"revision":rev,"cpu":cpu,"compiler_version":version,"alignments":ALIGNMENTS,
-          "events":EVENTS,"purpose":"function-local ELF section alignment for indexed float Viénot",
+    meta={"revision":rev,"cpu":cpu,"compiler_version":version,"offsets":OFFSETS,
+          "events":EVENTS,"purpose":"fixed-envelope function-local ELF placement for indexed float Viénot",
           "status":"running","observations":[replay.observe(cpu)]}
     ledger=[]
     def save():
@@ -95,39 +95,88 @@ def main():
         meta["target_section"]=section
         (root/"seed-sections.txt").write_text(sections)
 
+        # Rename only the candidate COMDAT text section. A fixed 64-byte
+        # pre/post envelope moves the target locally while preserving the total
+        # size before ordinary .text.
+        target_obj=root/"candidate-target.o"
+        shutil.copy2(seedobj,target_obj)
+        renamed=".text.colorD.target"
+        run([objcopy,"--rename-section",f"{section}={renamed},alloc,load,readonly,code,contents",
+             "--set-section-alignment",f"{renamed}=1",target_obj],
+            work,"objcopy-target.txt")
+
+        linker_script=root/"color-d-probe.ld"
+        linker_script.write_text(
+            "SECTIONS\n"
+            "{\n"
+            "  .color_d_probe ALIGN(64) :\n"
+            "  {\n"
+            "    KEEP(*(.text.colorD.pre))\n"
+            "    KEEP(*(.text.colorD.target))\n"
+            "    KEEP(*(.text.colorD.post))\n"
+            "  }\n"
+            "}\n"
+            "INSERT BEFORE .text;\n")
+
         placements=[]; hashes={}
         outer_addrs=set()
-        for align in ALIGNMENTS:
-            obj=root/f"candidate-align-{align}.o"
-            shutil.copy2(seedobj,obj)
-            run([objcopy,"--set-section-alignment",f"{section}={align}",obj],work,f"objcopy-align-{align}.txt")
-            sec_after=capture(["readelf","-SW",obj],work).decode(errors="replace")
-            (root/f"sections-align-{align}.txt").write_text(sec_after)
-            binary=root/f"benchmark-align-{align}"
-            run([compiler,"-of="+str(binary),obj,fpobj],work,f"link-align-{align}.txt")
-            run(["objdump","-d","--no-show-raw-insn","-M","intel",binary],work,f"codegen/align-{align}.txt")
+        target_addrs=set()
+        target_size=None
+        for offset in OFFSETS:
+            post=64-offset
+            pad_asm=root/f"envelope-{offset}.S"
+            pad_asm.write_text(
+                ".section .text.colorD.pre,\"ax\",@progbits\n"
+                f".fill {offset},1,0x90\n"
+                ".section .text.colorD.post,\"ax\",@progbits\n"
+                f".fill {post},1,0x90\n")
+            pad_obj=root/f"envelope-{offset}.o"
+            run([cc,"-c",pad_asm,"-o",pad_obj],work,f"build-envelope-{offset}.txt")
+
+            binary=root/f"benchmark-offset-{offset}"
+            run([compiler,"-of="+str(binary),target_obj,pad_obj,fpobj,
+                 "-L-T"+str(linker_script)],work,f"link-offset-{offset}.txt")
+            run(["objdump","-d","--no-show-raw-insn","-M","intel",binary],
+                work,f"codegen/offset-{offset}.txt")
+
             cand_addr,cand_name=symbol_addr(binary,"candidates.indexedVienotBatch!(float)",work)
             outer_addr,outer_name=symbol_addr(binary,OUTER_TOKEN,work)
-            outer_addrs.add(outer_addr)
-            placements.append([align,cand_name,f"0x{cand_addr:x}",cand_addr%64,cand_addr%4096,
-                               outer_name,f"0x{outer_addr:x}",outer_addr%64,outer_addr%4096])
-            hashes[str(align)]=hashlib.sha256(binary.read_bytes()).hexdigest()
+            outer_addrs.add(outer_addr); target_addrs.add(cand_addr)
+
+            sec_text=capture(["readelf","-SW",binary],work).decode(errors="replace")
+            (root/f"sections-offset-{offset}.txt").write_text(sec_text)
+            probe_rows=[line for line in sec_text.splitlines() if ".color_d_probe" in line]
+            if len(probe_rows)!=1: raise RuntimeError("fixed envelope output section missing")
+            # Record the output section size from readelf. It must be invariant.
+            parts=probe_rows[0].split()
+            hexes=[p for p in parts if re.fullmatch(r"[0-9A-Fa-f]+",p)]
+            if len(hexes)<3: raise RuntimeError("unable to parse fixed envelope section")
+            probe_size=int(hexes[-3],16)
+            if target_size is None: target_size=probe_size
+            elif probe_size!=target_size: raise RuntimeError("fixed envelope total size changed")
+
+            placements.append([offset,post,cand_name,f"0x{cand_addr:x}",cand_addr%64,cand_addr%4096,
+                               outer_name,f"0x{outer_addr:x}",outer_addr%64,outer_addr%4096,
+                               probe_size])
+            hashes[str(offset)]=hashlib.sha256(binary.read_bytes()).hexdigest()
+
         if len(outer_addrs)!=1:
-            raise RuntimeError("outer bench.batch address changed; probe is not function-local enough")
-        if len({r[3] for r in placements})<2:
+            raise RuntimeError("outer bench.batch address changed; fixed envelope failed")
+        if len({r[4] for r in placements})<2:
             raise RuntimeError("candidate mod64 placement did not change")
         meta["binary_sha256"]=hashes
+        meta["fixed_envelope_size"]=target_size
         with (root/"placement.csv").open("w",newline="") as f:
-            w=csv.writer(f);w.writerow(["alignment","candidate_symbol","candidate_address","candidate_mod64","candidate_mod4096",
-                                        "outer_symbol","outer_address","outer_mod64","outer_mod4096"]);w.writerows(placements)
+            w=csv.writer(f);w.writerow(["offset","post_pad","candidate_symbol","candidate_address","candidate_mod64","candidate_mod4096",
+                                        "outer_symbol","outer_address","outer_mod64","outer_mod4096","envelope_size"]);w.writerows(placements)
 
         rows=[]
-        orders=[ALIGNMENTS,list(reversed(ALIGNMENTS)),ALIGNMENTS[2:]+ALIGNMENTS[:2],list(reversed(ALIGNMENTS[2:]+ALIGNMENTS[:2]))]
+        orders=[OFFSETS,list(reversed(OFFSETS)),OFFSETS[2:]+OFFSETS[:2],list(reversed(OFFSETS[2:]+OFFSETS[:2]))]
         for reverse in (False,True):
             for rep,order in enumerate(orders):
-                for align in order:
-                    binary=root/f"benchmark-align-{align}"
-                    outpath=root/"program"/f"align-{align}-r{int(reverse)}-rep{rep}.txt"
+                for offset in order:
+                    binary=root/f"benchmark-offset-{offset}"
+                    outpath=root/"program"/f"offset-{offset}-r{int(reverse)}-rep{rep}.txt"
                     argv=["env","LC_ALL=C",perf,"stat","-x,","-e",",".join(EVENTS),"--",
                           "taskset","-c",str(cpu),binary,"65536"]
                     if reverse: argv.append("reverse")
@@ -142,32 +191,32 @@ def main():
                     samples=[rr for rr in csv.reader(outpath.read_text().splitlines()) if rr and rr[0]=="sample"]
                     if len(samples)!=18: raise RuntimeError("unexpected Viénot sample count")
                     ns=statistics.median(float(rr[8]) for rr in samples)
-                    rows.append([align,int(reverse),rep,ns,vals["cycles"],vals["instructions"]])
+                    rows.append([offset,int(reverse),rep,ns,vals["cycles"],vals["instructions"]])
         with (root/"samples.csv").open("w",newline="") as f:
-            w=csv.writer(f);w.writerow(["alignment","reverse","rep","median_ns","cycles","instructions"]);w.writerows(rows)
+            w=csv.writer(f);w.writerow(["offset","reverse","rep","median_ns","cycles","instructions"]);w.writerows(rows)
 
         ratios=[]
         for reverse in (0,1):
             for rep in range(len(orders)):
                 sub=[r for r in rows if r[1]==reverse and r[2]==rep]
-                base=next(r for r in sub if r[0]==4)
+                base=next(r for r in sub if r[0]==0)
                 for r in sub:
                     ratios.append([r[0],reverse,rep,r[3]/base[3],r[4]/base[4],r[5]/base[5]])
         with (root/"ratios.csv").open("w",newline="") as f:
-            w=csv.writer(f);w.writerow(["alignment","reverse","rep","ns_ratio","cycles_ratio","instructions_ratio"]);w.writerows(ratios)
+            w=csv.writer(f);w.writerow(["offset","reverse","rep","ns_ratio","cycles_ratio","instructions_ratio"]);w.writerows(ratios)
 
         summary=[]
-        for align in ALIGNMENTS:
-            s=[r for r in ratios if r[0]==align]
-            summary.append([align,
+        for offset in OFFSETS:
+            s=[r for r in ratios if r[0]==offset]
+            summary.append([offset,
                             statistics.median(x[3] for x in s),
                             statistics.median(x[4] for x in s),
                             statistics.median(x[5] for x in s)])
         with (root/"summary.csv").open("w",newline="") as f:
-            w=csv.writer(f);w.writerow(["alignment","median_ns_ratio","median_cycles_ratio","median_instructions_ratio"]);w.writerows(summary)
+            w=csv.writer(f);w.writerow(["offset","median_ns_ratio","median_cycles_ratio","median_instructions_ratio"]);w.writerows(summary)
 
         meta.update(status="passed",sample_rows=len(rows),summary_rows=len(summary),
-                    interpretation="function-local section-alignment diagnostic only")
+                    interpretation="fixed-envelope function-local placement diagnostic only")
     except BaseException as e:
         meta.update(status="failed",error=str(e)); raise
     finally:
