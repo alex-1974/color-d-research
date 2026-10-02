@@ -822,3 +822,31 @@ contract. The existing reference-bound Viénot experiment is already evidence
 in that direction: its float path was largely alignment-insensitive. Any
 production choice must still be qualified across the supported DMD/LDC matrix,
 with semantic preflight and C++-comparable work.
+
+
+## Reference-bound production-candidate qualification — phase 11
+
+The root-cause investigation now supports moving from diagnosis to candidate
+qualification.
+
+The leading safe production candidate is the existing reference-bound Viénot
+source form. It preserves `boundscheck=on` while avoiding the indexed
+source shape that exposed the DMD 2.113.0/x86-64 alignment singularity.
+
+`qualify_reference_bound.py` wraps the tracked replay harness and requires the
+workspace compiler baseline explicitly:
+
+- DMD 2.111.0;
+- DMD 2.112.1;
+- DMD 2.113.0;
+- LDC 1.41.0.
+
+The qualification runs both the indexed and reference-bound Viénot variants
+under the same tracked harness, semantic qualification/preflight, CPU affinity,
+balanced ordering, three workload sizes and C++ reference build. The replay
+harness keeps `boundscheck=on` for all D performance binaries.
+
+This phase is still research-only. A production handoff requires the reference
+form to preserve semantics and attributes across the compiler matrix and to
+show a robust performance benefit or stability improvement without weakening
+the safety contract.
