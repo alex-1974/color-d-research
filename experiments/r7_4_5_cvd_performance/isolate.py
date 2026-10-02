@@ -14,7 +14,9 @@ import time
 import replay
 
 VARIANTS = {'index': 'IndexedVienot', 'reference': 'ReferenceVienot',
-            'lookup': 'IsolateLookup', 'prepared': 'IsolatePrepared'}
+            'lookup': 'IsolateLookup', 'prepared': 'IsolatePrepared',
+            'oldindex': 'IndexedVienot', 'oldreference': 'ReferenceVienot'}
+ORIGINAL = 'bc2c387e933469901cd8c2d2cedfe0b700db9f5f'
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
@@ -29,7 +31,7 @@ def main():
     ledger = []
     cpu = min(__import__('os').sched_getaffinity(0))
     meta = {'revision': revision, 'cpu': cpu, 'blocks': 3,
-            'sizes': [1024,8191,65536], 'variants': VARIANTS,
+            'sizes': [1024,8191,65536], 'variants': VARIANTS, 'original_revision': ORIGINAL,
             'observations': [replay.observe(cpu)], 'status': 'running'}
     def save():
         (root/'metadata.json').write_text(json.dumps(meta, indent=2))
@@ -55,6 +57,16 @@ def main():
             target.parent.mkdir(parents=True,exist_ok=True)
             target.write_bytes(content)
         work = source/replay.EXPERIMENT
+        # Rebuild the measured original source on this same host. Other experiment
+        # inputs must be byte-identical, so this comparison changes bench.d only.
+        for path in replay.FILES:
+            original = replay.capture(['git','show',ORIGINAL+':'+str(path)],repo)
+            if path.name == 'bench.d':
+                historical = work/'historical'/'bench.d'
+                historical.parent.mkdir()
+                historical.write_bytes(original)
+            elif original != (source/path).read_bytes():
+                raise RuntimeError('original dependency changed: '+str(path))
         compiler = shutil.which(args.compiler)
         if not compiler: raise RuntimeError('compiler missing')
         version = replay.capture([compiler,'--version'],repo).decode()
@@ -67,14 +79,15 @@ def main():
         sources=['bench.d','candidates.d','machado_candidates.d','bv_policy.d','_generated/bv.d','_generated/ma.d']
         for variant,define in VARIANTS.items():
             binary=root/('benchmark-'+variant)
-            run([compiler,*optimize,'-release','-boundscheck=on',flag+define,'-of='+str(binary),*sources],work,'build-'+variant+'.txt')
+            selected_sources = ['historical/bench.d', *sources[1:]] if variant.startswith('old') else sources
+            run([compiler,*optimize,'-release','-boundscheck=on',flag+define,'-of='+str(binary),*selected_sources],work,'build-'+variant+'.txt')
             run(['objdump','-d','--no-show-raw-insn','-M','intel',binary],work,'codegen/'+variant+'.txt')
         binaries={v:hashlib.sha256((root/('benchmark-'+v)).read_bytes()).hexdigest() for v in VARIANTS}
         meta['binary_sha256']=binaries
         # Same binary is invoked again after other processes; no per-block rebuild.
-        orders=[['index','lookup','reference','prepared'],
-                ['prepared','reference','lookup','index'],
-                ['reference','prepared','index','lookup']]
+        orders=[['oldindex','lookup','reference','oldreference','prepared','index'],
+                ['index','prepared','oldreference','reference','lookup','oldindex'],
+                ['reference','oldreference','prepared','index','oldindex','lookup']]
         for block,order in enumerate(orders):
             meta['observations'].append(replay.observe(cpu))
             sizes=meta['sizes'] if block%2==0 else list(reversed(meta['sizes']))
