@@ -284,3 +284,73 @@ python3 experiments/r7_4_5_cvd_performance/alignment_diagnostic.py \
   --cc gcc \
   --output /tmp/color-cvd-alignment-213
 ```
+
+
+## 64-byte alignment diagnostic — phase 3 result
+
+The XPS phase-3 alignment sweep completed successfully at revision
+`dc5d40c01968b5b8220253f6c16476b13e3821ab` with DMD 2.113.0.
+
+Integrity and controls:
+
+- all archive hashes verified;
+- 144 raw process outputs;
+- 4,032 timing groups;
+- all 12 targeted symbols changed address modulo 64;
+- zero FP control-state changes;
+- the only FP control state remained MXCSR control `0x1f80` and x87
+  control word `0x037f`;
+- 144 MXCSR changes were sticky precision-status changes only.
+
+Unlike the 4 KiB-offset sweep, this run produced a strong repeatable Viénot
+alignment pattern.
+
+After taking the median across the three blocks for each logical
+scalar/deficiency/size/direction case and then comparing each padding variant
+with p0:
+
+| family | scalar | p16 / p0 median | p32 / p0 median | p48 / p0 median |
+| --- | --- | ---: | ---: | ---: |
+| indexed | float | ~0.654 | ~1.003 | ~0.672 |
+| indexed | double | ~0.640 | ~0.977 | ~0.661 |
+| reference | float | ~0.997 | ~1.034 | ~1.023 |
+| reference | double | ~0.648 | ~1.024 | ~0.663 |
+
+The indexed-float, indexed-double and reference-double pattern persists in all
+three blocks and in both execution directions. Typical per-block/direction
+median ratios for p16 and p48 are approximately 0.58–0.75, while p32 returns
+close to p0. Reference-float remains approximately alignment-insensitive.
+
+The entry offsets for the Viénot batch kernel are:
+
+- indexed float: p0=20, p16=36, p32=52, p48=4 modulo 64;
+- indexed double: p0=0, p16=16, p32=32, p48=48 modulo 64;
+- reference float: p0=4, p16=20, p32=36, p48=52 modulo 64;
+- reference double: p0=0, p16=16, p32=32, p48=48 modulo 64.
+
+The alternating p0/p32 versus p16/p48 behavior in both double families, and the
+same 16-byte phase shift in indexed float, is consistent with a 32-byte-periodic
+front-end/code-layout effect. The experiment does not establish whether the
+responsible mechanism is instruction fetch, decode, uop-cache placement, a
+specific internal branch/loop alignment, or another microarchitectural detail.
+It also shifts every later text symbol together, so it does not identify the
+specific responsible function yet.
+
+Decision: code alignment is now a supported candidate explanation for at least
+part of the previously unexplained DMD timing movement. It is not yet a
+production optimization rule. A finer sweep is required to map the periodicity
+and separate entry-point alignment from internal-loop/helper alignment.
+
+## Fine alignment diagnostic — phase 4
+
+Phase 4 uses 0/8/16/24/32/40/48/56-byte padding. It retains the same DMD 2.113.0
+compiler, kernels, correctness checks, FP-state capture, CPU affinity, binary
+hashes and balanced forward/reverse blocks.
+
+The goals are:
+
+1. determine whether the observed effect is genuinely 32-byte periodic;
+2. locate the transition region within the 64-byte window;
+3. compare Viénot with unchanged Brettel/prepared/lookup controls;
+4. provide enough evidence to design a later function-local alignment probe
+   rather than adopting global text padding as a workaround.
