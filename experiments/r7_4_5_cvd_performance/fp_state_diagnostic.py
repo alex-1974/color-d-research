@@ -34,7 +34,7 @@ def main():
     compiler=shutil.which(a.compiler); cc=shutil.which(a.cc)
     if not compiler or not cc: raise RuntimeError("compiler or C compiler missing")
     version=capture([compiler,"--version"],repo).decode()
-    match=re.search(r"Compiler v([0-9]+(?:\\.[0-9]+)+)", version)
+    match=re.search(r"Compiler v([0-9]+(?:[.][0-9]+)+)", version)
     if "DMD" not in version.upper() or not match:
         raise RuntimeError("phase 1 is intentionally pinned to DMD")
     dmd_version=match.group(1)
