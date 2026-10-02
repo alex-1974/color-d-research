@@ -542,3 +542,28 @@ indexed-float candidate kernel on DMD 2.113.0/x86-64. The next experiment should
 alter only that candidate's COMDAT-section alignment and verify that the outer
 wrapper and unrelated sections retain their addresses as far as the linker
 permits.
+
+
+## Function-local COMDAT-section alignment diagnostic — phase 7
+
+DMD emits `candidates.indexedVienotBatch!float` into its own COMDAT text
+section in the relocatable object. Phase 7 exploits that ELF structure instead
+of adding global text padding.
+
+The probe:
+
+1. builds one indexed-float Viénot seed object with DMD 2.113.0;
+2. identifies the unique `.text.<indexedVienotBatch!float>` section;
+3. copies the exact same relocatable object;
+4. changes only that section's ELF alignment requirement to 4, 16, 32 or 64
+   bytes with `objcopy --set-section-alignment`;
+5. relinks each object without recompiling the D source;
+6. requires the outer `bench.batch!float` address to remain identical across
+   all variants;
+7. requires the candidate kernel's mod-64 address to change;
+8. measures only cycles, instructions and the internal benchmark timing.
+
+This is the narrowest experiment so far: source, candidate machine code and the
+outer wrapper remain fixed, while only the link placement requirement of the
+active candidate section changes. It is still research-only and does not imply
+a production linker/alignment policy.
