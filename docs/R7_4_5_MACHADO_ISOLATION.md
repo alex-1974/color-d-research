@@ -640,3 +640,25 @@ production. The next experiment should hold the candidate fixed and vary only
 the outer `bench.batch!float`/call-site section (or vice versa), using the same
 fixed-envelope technique. This directly tests whether the effect follows the
 caller/call-site geometry rather than the callee entry.
+
+
+## Caller-local fixed-envelope diagnostic — phase 8
+
+Phase 7 falsified the narrow callee-entry hypothesis: moving only
+`indexedVienotBatch!float` through mod-64 positions 0/16/32/48 while holding
+`bench.batch!float` fixed did not reproduce the earlier ~1.47x effect.
+
+Phase 8 therefore inverts the experiment. It moves only the
+`bench.batch!float` COMDAT section inside the same fixed-size linker envelope
+while requiring `candidates.indexedVienotBatch!float` to retain exactly the
+same address in every variant.
+
+Acceptance guards:
+
+- fixed envelope size must be invariant;
+- caller mod-64 position must change;
+- candidate address must be identical across variants;
+- only then are wall time, cycles and instructions recorded.
+
+This directly tests whether the previously observed alignment sensitivity follows
+caller/call-site placement rather than the callee entry.
