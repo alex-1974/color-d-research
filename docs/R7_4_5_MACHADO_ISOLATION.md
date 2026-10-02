@@ -704,3 +704,54 @@ A final fine caller sweep should move only the caller by 8-byte increments
 through the full 64-byte window, preserving the same fixed envelope and fixed
 candidate address. This will map the favorable phase precisely before
 instruction-level branch/fetch-boundary inspection.
+
+
+## Fine caller-local alignment diagnostic — phase 9 result
+
+The XPS fine caller sweep completed successfully at revision
+`62bbc5610723fec259f90a81d85cfadd94236d3e` with DMD 2.113.0.
+
+All isolation guards passed:
+
+- `candidates.indexedVienotBatch!float` remained fixed at `0x97824`
+  (mod-64 36);
+- `bench.batch!float` moved in exact 8-byte steps through every mod-64 phase
+  from 0 through 56;
+- the fixed envelope remained 852 bytes;
+- cycles and instructions were measured without event multiplexing.
+
+The result maps a narrow favorable phase rather than a broad half-window:
+
+| caller mod64 | time / p0 | cycles / p0 | instructions / p0 |
+| ---: | ---: | ---: | ---: |
+| 0  | 1.000 | 1.000 | 1.000 |
+| 8  | 1.062 | 1.054 | 1.000 |
+| 16 | 0.997 | 0.995 | 1.000 |
+| 24 | 1.057 | 1.051 | 1.000 |
+| 32 | 1.004 | 1.000 | 1.000 |
+| 40 | 1.062 | 1.052 | 1.000 |
+| 48 | **0.716** | **0.751** | **0.9995** |
+| 56 | 1.058 | 1.056 | 1.000 |
+
+Thus mod-64 48 is a singular fast phase: about 28% lower benchmark time and
+25% fewer cycles with effectively identical dynamic instruction count.
+The neighboring 40 and 56 phases are both about 5-6% slower than p0.
+
+Disassembly is instruction-identical and shifted by the caller offset. In the
+hot indexed-float loop, the fourth bounds-check branch at function offset
+`+0x210` is located exactly on a 64-byte boundary only when the caller entry
+is mod-64 48. The loop contains several bounds-check branches before the scalar
+matrix arithmetic and a backward loop branch at `+0x2b9`.
+
+This geometric coincidence is not yet proof that the `+0x210` branch itself
+is causal: moving the caller shifts the whole loop. However, it provides a
+specific next hypothesis. The indexed loop is bounds-check-heavy, while the
+reference-bound float path was much less alignment-sensitive in earlier
+experiments.
+
+Decision: the next diagnostic should repeat the same fine caller sweep with
+DMD bounds checks enabled and disabled as separate research configurations.
+The comparison is not a semantic performance comparison and must not be used
+to justify disabling bounds checks in production. Its sole purpose is to test
+whether the narrow mod-64=48 effect depends on the bounds-check-heavy loop
+shape.
