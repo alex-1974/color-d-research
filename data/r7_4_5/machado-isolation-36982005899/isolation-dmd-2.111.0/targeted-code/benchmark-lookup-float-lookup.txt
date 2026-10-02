@@ -1,0 +1,84 @@
+
+isolation-work/paired-isolation-dmd-2.111.0/benchmark-lookup:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000984d8 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv>:
+   984d8:	push   rbp
+   984d9:	mov    rbp,rsp
+   984dc:	sub    rsp,0x70
+   984e0:	mov    QWORD PTR [rbp-0x68],rbx
+   984e4:	mov    QWORD PTR [rbp-0x60],r12
+   984e8:	mov    QWORD PTR [rbp-0x58],r13
+   984ec:	mov    QWORD PTR [rbp-0x50],r14
+   984f0:	mov    QWORD PTR [rbp-0x48],r15
+   984f4:	mov    QWORD PTR [rbp-0x10],rsi
+   984f8:	mov    QWORD PTR [rbp-0x8],rdx
+   984fc:	mov    r15,rcx
+   984ff:	xor    r12d,r12d
+   98502:	test   r15,r15
+   98505:	je     985bb <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0xe3>
+   9850b:	mov    r14d,edi
+   9850e:	mov    r13,r8
+   98511:	mov    rdx,QWORD PTR [rbp-0x8]
+   98515:	mov    rsi,QWORD PTR [rbp-0x10]
+   98519:	mov    QWORD PTR [rbp-0x40],rdx
+   9851d:	lea    rcx,[r12+r14*1]
+   98521:	mov    rax,rcx
+   98524:	movabs rdx,0x5e1d27a3ee9c011
+   9852e:	mul    rdx
+   98531:	mov    rax,rcx
+   98534:	sub    rax,rdx
+   98537:	shr    rax,1
+   9853a:	lea    rax,[rdx+rax*1]
+   9853e:	shr    rax,0x9
+   98542:	imul   rax,rax,0x3e9
+   98549:	sub    rcx,rax
+   9854c:	mov    rbx,rcx
+   9854f:	test   rbx,rbx
+   98552:	js     9855e <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0x86>
+   98554:	mov    rdi,rbx
+   98557:	cvtsi2ss xmm0,rdi
+   9855c:	jmp    98583 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0xab>
+   9855e:	mov    rdx,rbx
+   98561:	shr    rdx,1
+   98564:	mov    rcx,rbx
+   98567:	and    rcx,0x1
+   9856e:	or     rdx,rcx
+   98571:	cvtsi2ss xmm0,rdx
+   98576:	mov    eax,0x40000000
+   9857b:	movd   xmm1,eax
+   9857f:	mulss  xmm0,xmm1
+   98583:	movss  xmm2,DWORD PTR [rip+0x59be5]        # f2170 <_TMP1141+0x8d0>
+   9858b:	divss  xmm0,xmm2
+   9858f:	mov    rdx,QWORD PTR [rbp-0x40]
+   98593:	lea    rdi,[rbp-0x38]
+   98597:	call   ac0d4 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb>
+   9859c:	mov    rsi,rax
+   9859f:	mov    rdi,r13
+   985a2:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   985a4:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   985a6:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   985a8:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   985aa:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   985ab:	add    r13,0x24
+   985af:	inc    r12
+   985b2:	cmp    r12,r15
+   985b5:	jb     98511 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0x39>
+   985bb:	mov    rbx,QWORD PTR [rbp-0x68]
+   985bf:	mov    r12,QWORD PTR [rbp-0x60]
+   985c3:	mov    r13,QWORD PTR [rbp-0x58]
+   985c7:	mov    r14,QWORD PTR [rbp-0x50]
+   985cb:	mov    r15,QWORD PTR [rbp-0x48]
+   985cf:	mov    rsp,rbp
+   985d2:	pop    rbp
+   985d3:	ret
+
+Disassembly of section .fini:

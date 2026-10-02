@@ -244,3 +244,17 @@ Machado controls under DMD 2.113 shift by multiple-fold factors despite matching
 normalized function code. Keep the selected policy unchanged and isolate those
 control movements before selecting an integrated winner. The performance gate
 remains open; no compiler-version fork or production promotion follows.
+
+
+### Machado isolation follow-up — 2026-10-02
+
+The [fixed-binary isolation and paired-source investigation](R7_4_5_MACHADO_ISOLATION.md)
+is complete at measured source `bb8f2a9bb129ac58e0ff23653145375b2af0b085`.
+All 16 final CI jobs pass. Rebuilding the original entry source and separating
+Machado lookup/prepared application on the same hosts does not reproduce the
+earlier multifold unchanged-control movements. DMD 2.113's original lookup pair
+stays within about 2% in pooled results on the EPYC 7763 host. The earlier
+reference run used EPYC 9V45; cause attribution remains open. Direction/block
+disturbances are retained, and no integrated winner or production policy is
+selected. Next diagnostic: floating-point state and deliberate code-placement
+variation on one host/compiler.

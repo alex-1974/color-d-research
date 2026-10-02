@@ -1,0 +1,53 @@
+{
+  "revision": "f2b0237f905e37f38b79da7d6e1bb4792a0e89d5",
+  "files": [
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bench.d",
+      "sha": "5c28a347a680588275d88478312905689b902f85"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/isolate.py",
+      "sha": "59b79b0b686113600b5589f5454a09cc91e3fbd9"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/replay.py",
+      "sha": "714d49497f0f73d8a2bd4ebe16fbcb7537562e68"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/candidates.d",
+      "sha": "68e01035c6f662f75e4923f71c477d4591b85c98"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/machado_candidates.d",
+      "sha": "4e80d9d6c4433055d41eb99a2ae20a5736cf2ced"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/prepare.py",
+      "sha": "4f1b305c33353c0ac80d004bfb7a11aaa5857f1c"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/reference.cpp",
+      "sha": "e8a798a07a90c3b941c96169792f5f2606bace4b"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/summarize.py",
+      "sha": "6d6f93f6b1ed45e0874ef4040973a37ce1d0dfe7"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_policy.d",
+      "sha": "1734b56bb1bff9bc78ffdead9e0851c18a80c9c8"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_qualification.d",
+      "sha": "8d72bbf1283cc6cdc1bb3f4e3a3717c9a065ba4d"
+    },
+    {
+      "path": "experiments/r7_2_brettel_vienot_reference/source/app.d",
+      "sha": "d50237f89ae7d07f239c56093c4c7668723ee85e"
+    },
+    {
+      "path": "experiments/r7_3_machado_2009_reference/source/app.d",
+      "sha": "dd7756dc71f05b38cbbf8ae78eb46be15716c3c4"
+    }
+  ]
+}

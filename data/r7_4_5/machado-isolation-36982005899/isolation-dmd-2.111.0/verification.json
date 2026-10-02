@@ -1,0 +1,81 @@
+{
+  "manifest_entries": 291,
+  "commands": 123,
+  "pinned_processes": 108,
+  "raw_rows": 20088,
+  "reconstructed_summary_rows": 2232,
+  "control_checksum_differences": 0,
+  "binary_hashes": {
+    "index": "987511e28ea634efce0d33620a2bba867575046826d9efd24985fafb510e4980",
+    "reference": "441d71af02c3abe109733ea762302996a8c374e3df327e05f2f5f44c8fa9c976",
+    "lookup": "8027d57c2433c3d11c1c91fdd46c7fd5ccff568eccf55e103d3fe9efa6eb09c1",
+    "prepared": "67eac4ec97cc6eb184fb785dc3adffdb685332ff0428b8c02cbe1293ecbfb04a",
+    "oldindex": "6e7a32723b75fcb50a9ba2dac1e76156ae7a703aa11f17a696b3327a7116411f",
+    "oldreference": "6e5767d6c78bc47c683776333e95ee9b7b7db06cc8202f760286e78e5fd07687"
+  },
+  "source_blobs": [
+    {
+      "path": "experiments/r7_2_brettel_vienot_reference/source/app.d",
+      "sha": "d50237f89ae7d07f239c56093c4c7668723ee85e"
+    },
+    {
+      "path": "experiments/r7_3_machado_2009_reference/source/app.d",
+      "sha": "dd7756dc71f05b38cbbf8ae78eb46be15716c3c4"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/_generated/bv.d",
+      "sha": "d4967f5dad2ceab2be33e7d9e3f1a20c2393cc15"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/_generated/coefficients.hpp",
+      "sha": "67e1ac81df8454e8c42b6a524e5d0e8246335950"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/_generated/ma.d",
+      "sha": "78581a885ca5217588ebfa348239a29d7f956d1d"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bench.d",
+      "sha": "5c28a347a680588275d88478312905689b902f85"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_qualification.d",
+      "sha": "8d72bbf1283cc6cdc1bb3f4e3a3717c9a065ba4d"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_policy.d",
+      "sha": "1734b56bb1bff9bc78ffdead9e0851c18a80c9c8"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/candidates.d",
+      "sha": "68e01035c6f662f75e4923f71c477d4591b85c98"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/isolate.py",
+      "sha": "7fe6de0be10082ef4a83ff69e06295b91b2deef6"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/machado_candidates.d",
+      "sha": "4e80d9d6c4433055d41eb99a2ae20a5736cf2ced"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/prepare.py",
+      "sha": "4f1b305c33353c0ac80d004bfb7a11aaa5857f1c"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/reference.cpp",
+      "sha": "e8a798a07a90c3b941c96169792f5f2606bace4b"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/replay.py",
+      "sha": "714d49497f0f73d8a2bd4ebe16fbcb7537562e68"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/summarize.py",
+      "sha": "6d6f93f6b1ed45e0874ef4040973a37ce1d0dfe7"
+    }
+  ],
+  "archive_sha256": "fcafb01cf3aa967a97ebccb6f3be63582aa010bd0e0547c43a90c3f405bae898",
+  "original_bench_blob": "1a396697f9dc6c8c931717ccabbca6409606be48",
+  "source_git_blobs_independently_verified": 12
+}

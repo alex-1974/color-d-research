@@ -1,0 +1,71 @@
+
+isolation-work/paired-isolation-ldc-1.41.0/benchmark-lookup:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000029760 <_D5bench__T11lookupBatchTdZQqFNaNbNiNfAS2ma__T7Matrix3TdZQlxASQw__TQvTdZQBakZv>:
+   29760:	test   rdi,rdi
+   29763:	je     29825 <_D5bench__T11lookupBatchTdZQqFNaNbNiNfAS2ma__T7Matrix3TdZQlxASQw__TQvTdZQBakZv+0xc5>
+   29769:	push   rbp
+   2976a:	push   r15
+   2976c:	push   r14
+   2976e:	push   r13
+   29770:	push   r12
+   29772:	push   rbx
+   29773:	sub    rsp,0x48
+   29777:	mov    rbx,rcx
+   2977a:	mov    r14,rdx
+   2977d:	mov    r15,rsi
+   29780:	mov    r12,rdi
+   29783:	mov    r13d,r8d
+   29786:	mov    rbp,rsp
+   29789:	nop    DWORD PTR [rax+0x0]
+   29790:	mov    rax,r13
+   29793:	movabs rcx,0x5e1d27a3ee9c011
+   2979d:	mul    rcx
+   297a0:	mov    rax,r13
+   297a3:	sub    rax,rdx
+   297a6:	shr    rax,1
+   297a9:	add    rax,rdx
+   297ac:	shr    rax,0x9
+   297b0:	imul   eax,eax,0x3e9
+   297b6:	mov    ecx,r13d
+   297b9:	sub    ecx,eax
+   297bb:	xorps  xmm0,xmm0
+   297be:	cvtsi2sd xmm0,ecx
+   297c2:	divsd  xmm0,QWORD PTR [rip+0x62756]        # 8bf20 <_fini+0x1040>
+   297ca:	mov    rdi,rbp
+   297cd:	mov    rsi,r14
+   297d0:	mov    rdx,rbx
+   297d3:	call   26000 <_D2ma__T16matrixAtSeverityTdZQvFNaNbNiNfxASQBp__T7Matrix3TdZQldZSQCl__TQwTdZQBb>
+   297d8:	mov    rax,QWORD PTR [rsp+0x40]
+   297dd:	mov    QWORD PTR [r15+0x40],rax
+   297e1:	movups xmm0,XMMWORD PTR [rsp]
+   297e5:	movups xmm1,XMMWORD PTR [rsp+0x10]
+   297ea:	movups xmm2,XMMWORD PTR [rsp+0x20]
+   297ef:	movups xmm3,XMMWORD PTR [rsp+0x30]
+   297f4:	movups XMMWORD PTR [r15+0x30],xmm3
+   297f9:	movups XMMWORD PTR [r15+0x20],xmm2
+   297fe:	movups XMMWORD PTR [r15+0x10],xmm1
+   29803:	movups XMMWORD PTR [r15],xmm0
+   29807:	inc    r13
+   2980a:	add    r15,0x48
+   2980e:	dec    r12
+   29811:	jne    29790 <_D5bench__T11lookupBatchTdZQqFNaNbNiNfAS2ma__T7Matrix3TdZQlxASQw__TQvTdZQBakZv+0x30>
+   29817:	add    rsp,0x48
+   2981b:	pop    rbx
+   2981c:	pop    r12
+   2981e:	pop    r13
+   29820:	pop    r14
+   29822:	pop    r15
+   29824:	pop    rbp
+   29825:	ret
+
+Disassembly of section .fini:

@@ -1,0 +1,69 @@
+
+isolation-work/paired-isolation-ldc-1.43.0/benchmark-index:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+000000000004c870 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   4c870:	push   rax
+   4c871:	test   rdi,rdi
+   4c874:	je     4c93c <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xcc>
+   4c87a:	mov    r8,rdx
+   4c87d:	lea    rax,[rsp+0x10]
+   4c882:	movups xmm0,XMMWORD PTR [rax]
+   4c885:	movsd  xmm1,QWORD PTR [rax+0x10]
+   4c88a:	movss  xmm2,DWORD PTR [rax+0x18]
+   4c88f:	movss  xmm3,DWORD PTR [rax+0x1c]
+   4c894:	movss  xmm4,DWORD PTR [rax+0x20]
+   4c899:	movaps xmm5,xmm0
+   4c89c:	unpcklps xmm5,xmm1
+   4c89f:	shufps xmm1,xmm0,0xe5
+   4c8a3:	shufps xmm1,xmm0,0xe2
+   4c8a7:	shufps xmm0,xmm0,0xed
+   4c8ab:	mov    eax,0x8
+   4c8b0:	xor    edx,edx
+   4c8b2:	data16 data16 data16 data16 cs nop WORD PTR [rax+rax*1+0x0]
+   4c8c0:	cmp    r8,rdx
+   4c8c3:	je     4c93e <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xce>
+   4c8c5:	movss  xmm6,DWORD PTR [rsi+rax*1]
+   4c8ca:	movaps xmm7,xmm6
+   4c8cd:	shufps xmm7,xmm6,0x0
+   4c8d1:	mulps  xmm7,xmm1
+   4c8d4:	movsd  xmm8,QWORD PTR [rsi+rax*1-0x8]
+   4c8db:	movaps xmm9,xmm8
+   4c8df:	shufps xmm9,xmm8,0xe1
+   4c8e4:	mulps  xmm9,xmm0
+   4c8e8:	movaps xmm10,xmm5
+   4c8ec:	mulps  xmm10,xmm8
+   4c8f0:	addps  xmm10,xmm9
+   4c8f4:	addps  xmm10,xmm7
+   4c8f8:	movaps xmm7,xmm2
+   4c8fb:	mulss  xmm7,xmm8
+   4c900:	shufps xmm8,xmm8,0x55
+   4c905:	mulss  xmm8,xmm3
+   4c90a:	addss  xmm8,xmm7
+   4c90f:	mulss  xmm6,xmm4
+   4c913:	addss  xmm6,xmm8
+   4c918:	movss  DWORD PTR [rcx+rax*1-0x8],xmm10
+   4c91f:	shufps xmm10,xmm10,0x55
+   4c924:	movss  DWORD PTR [rcx+rax*1-0x4],xmm10
+   4c92b:	movss  DWORD PTR [rcx+rax*1],xmm6
+   4c930:	inc    rdx
+   4c933:	add    rax,0xc
+   4c937:	cmp    rdi,rdx
+   4c93a:	jne    4c8c0 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x50>
+   4c93c:	pop    rax
+   4c93d:	ret
+   4c93e:	lea    rsi,[rip+0x5f46c]        # abdb1 <_D2ma__T7Matrix3TdZQl6__initZ+0xa9>
+   4c945:	mov    edi,0x7
+   4c94a:	mov    edx,0x59
+   4c94f:	mov    rcx,r8
+   4c952:	call   26b70 <_d_arraybounds_index>
+
+Disassembly of section .fini:

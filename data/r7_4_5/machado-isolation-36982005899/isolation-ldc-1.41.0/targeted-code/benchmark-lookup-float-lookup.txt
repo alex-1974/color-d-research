@@ -1,0 +1,67 @@
+
+isolation-work/paired-isolation-ldc-1.41.0/benchmark-lookup:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000040480 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv>:
+   40480:	test   rdi,rdi
+   40483:	je     4052d <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0xad>
+   40489:	push   rbp
+   4048a:	push   r15
+   4048c:	push   r14
+   4048e:	push   r13
+   40490:	push   r12
+   40492:	push   rbx
+   40493:	sub    rsp,0x28
+   40497:	mov    rbx,rcx
+   4049a:	mov    r14,rdx
+   4049d:	mov    r15,rsi
+   404a0:	mov    r12,rdi
+   404a3:	mov    r13d,r8d
+   404a6:	lea    rbp,[rsp+0x4]
+   404ab:	nop    DWORD PTR [rax+rax*1+0x0]
+   404b0:	mov    rax,r13
+   404b3:	movabs rcx,0x5e1d27a3ee9c011
+   404bd:	mul    rcx
+   404c0:	mov    rax,r13
+   404c3:	sub    rax,rdx
+   404c6:	shr    rax,1
+   404c9:	add    rax,rdx
+   404cc:	shr    rax,0x9
+   404d0:	imul   eax,eax,0x3e9
+   404d6:	mov    ecx,r13d
+   404d9:	sub    ecx,eax
+   404db:	xorps  xmm0,xmm0
+   404de:	cvtsi2ss xmm0,ecx
+   404e2:	divss  xmm0,DWORD PTR [rip+0x4bba2]        # 8c08c <_fini+0x11ac>
+   404ea:	mov    rdi,rbp
+   404ed:	mov    rsi,r14
+   404f0:	mov    rdx,rbx
+   404f3:	call   26820 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb>
+   404f8:	mov    eax,DWORD PTR [rsp+0x24]
+   404fc:	mov    DWORD PTR [r15+0x20],eax
+   40500:	movups xmm0,XMMWORD PTR [rsp+0x4]
+   40505:	movups xmm1,XMMWORD PTR [rsp+0x14]
+   4050a:	movups XMMWORD PTR [r15+0x10],xmm1
+   4050f:	movups XMMWORD PTR [r15],xmm0
+   40513:	inc    r13
+   40516:	add    r15,0x24
+   4051a:	dec    r12
+   4051d:	jne    404b0 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0x30>
+   4051f:	add    rsp,0x28
+   40523:	pop    rbx
+   40524:	pop    r12
+   40526:	pop    r13
+   40528:	pop    r14
+   4052a:	pop    r15
+   4052c:	pop    rbp
+   4052d:	ret
+
+Disassembly of section .fini:

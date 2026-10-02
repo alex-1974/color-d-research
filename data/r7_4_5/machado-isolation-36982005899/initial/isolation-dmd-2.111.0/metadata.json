@@ -1,0 +1,100 @@
+{
+  "revision": "f2b0237f905e37f38b79da7d6e1bb4792a0e89d5",
+  "cpu": 0,
+  "blocks": 3,
+  "sizes": [
+    1024,
+    8191,
+    65536
+  ],
+  "variants": {
+    "index": "IndexedVienot",
+    "reference": "ReferenceVienot",
+    "lookup": "IsolateLookup",
+    "prepared": "IsolatePrepared"
+  },
+  "observations": [
+    {
+      "time_utc": "2026-10-02T07:54:09.526544+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:18.912809+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:58.932553+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:58.932881+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:55:38.612336+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:55:38.612583+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:56:18.642747+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    }
+  ],
+  "status": "passed",
+  "compiler_version": "DMD64 D Compiler v2.111.0\nCopyright (C) 1999-2025 by The D Language Foundation, All Rights Reserved written by Walter Bright\n",
+  "binary_sha256": {
+    "index": "987511e28ea634efce0d33620a2bba867575046826d9efd24985fafb510e4980",
+    "reference": "441d71af02c3abe109733ea762302996a8c374e3df327e05f2f5f44c8fa9c976",
+    "lookup": "8027d57c2433c3d11c1c91fdd46c7fd5ccff568eccf55e103d3fe9efa6eb09c1",
+    "prepared": "67eac4ec97cc6eb184fb785dc3adffdb685332ff0428b8c02cbe1293ecbfb04a"
+  },
+  "raw_rows": 11016,
+  "summary_rows": 1224,
+  "control_checksums": "exact agreement; sampled outputs only",
+  "interpretation": "Placement and prior-case diagnostic; no C++ performance acceptance claim"
+}

@@ -1,0 +1,67 @@
+
+isolation-work/paired-isolation-ldc-1.41.0/benchmark-oldreference:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000048320 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv>:
+   48320:	test   rdi,rdi
+   48323:	je     483cd <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0xad>
+   48329:	push   rbp
+   4832a:	push   r15
+   4832c:	push   r14
+   4832e:	push   r13
+   48330:	push   r12
+   48332:	push   rbx
+   48333:	sub    rsp,0x28
+   48337:	mov    rbx,rcx
+   4833a:	mov    r14,rdx
+   4833d:	mov    r15,rsi
+   48340:	mov    r12,rdi
+   48343:	mov    r13d,r8d
+   48346:	lea    rbp,[rsp+0x4]
+   4834b:	nop    DWORD PTR [rax+rax*1+0x0]
+   48350:	mov    rax,r13
+   48353:	movabs rcx,0x5e1d27a3ee9c011
+   4835d:	mul    rcx
+   48360:	mov    rax,r13
+   48363:	sub    rax,rdx
+   48366:	shr    rax,1
+   48369:	add    rax,rdx
+   4836c:	shr    rax,0x9
+   48370:	imul   eax,eax,0x3e9
+   48376:	mov    ecx,r13d
+   48379:	sub    ecx,eax
+   4837b:	xorps  xmm0,xmm0
+   4837e:	cvtsi2ss xmm0,ecx
+   48382:	divss  xmm0,DWORD PTR [rip+0x4cf42]        # 952cc <_fini+0x195c>
+   4838a:	mov    rdi,rbp
+   4838d:	mov    rsi,r14
+   48390:	mov    rdx,rbx
+   48393:	call   26820 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb>
+   48398:	mov    eax,DWORD PTR [rsp+0x24]
+   4839c:	mov    DWORD PTR [r15+0x20],eax
+   483a0:	movups xmm0,XMMWORD PTR [rsp+0x4]
+   483a5:	movups xmm1,XMMWORD PTR [rsp+0x14]
+   483aa:	movups XMMWORD PTR [r15+0x10],xmm1
+   483af:	movups XMMWORD PTR [r15],xmm0
+   483b3:	inc    r13
+   483b6:	add    r15,0x24
+   483ba:	dec    r12
+   483bd:	jne    48350 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0x30>
+   483bf:	add    rsp,0x28
+   483c3:	pop    rbx
+   483c4:	pop    r12
+   483c6:	pop    r13
+   483c8:	pop    r14
+   483ca:	pop    r15
+   483cc:	pop    rbp
+   483cd:	ret
+
+Disassembly of section .fini:

@@ -1,0 +1,151 @@
+
+isolation-work/paired-isolation-ldc-1.41.0/benchmark-prepared:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000290d0 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   290d0:	push   rbp
+   290d1:	push   rbx
+   290d2:	push   rax
+   290d3:	test   rdi,rdi
+   290d6:	je     292f1 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x221>
+   290dc:	mov    r8,rdx
+   290df:	lea    rax,[rsp+0x20]
+   290e4:	lea    r9,[rdi-0x1]
+   290e8:	cmp    rdx,r9
+   290eb:	mov    rdx,r9
+   290ee:	cmovb  rdx,r8
+   290f2:	lea    r10,[rdx+0x1]
+   290f6:	cmp    r10,0x5
+   290fa:	jae    29104 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x34>
+   290fc:	xor    r9d,r9d
+   290ff:	jmp    2924f <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x17f>
+   29104:	cmp    r8,r9
+   29107:	cmovb  r9,r8
+   2910b:	lea    r9,[r9+r9*2]
+   2910f:	lea    r11,[rcx+r9*8]
+   29113:	add    r11,0x18
+   29117:	lea    r9,[rsi+r9*8]
+   2911b:	add    r9,0x18
+   2911f:	lea    r10,[rax+0x48]
+   29123:	cmp    rcx,r9
+   29126:	setb   bl
+   29129:	cmp    rsi,r11
+   2912c:	setb   bpl
+   29130:	cmp    rcx,r10
+   29133:	setb   r10b
+   29137:	cmp    rax,r11
+   2913a:	setb   r11b
+   2913e:	xor    r9d,r9d
+   29141:	test   bl,bpl
+   29144:	jne    2924f <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x17f>
+   2914a:	and    r10b,r11b
+   2914d:	jne    2924f <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x17f>
+   29153:	and    rdx,0xfffffffffffffffe
+   29157:	xor    r9d,r9d
+   2915a:	mov    r10,rdx
+   2915d:	nop    DWORD PTR [rax]
+   29160:	movsd  xmm2,QWORD PTR [rsi+r9*1]
+   29166:	movsd  xmm1,QWORD PTR [rsi+r9*1+0x8]
+   2916d:	movsd  xmm0,QWORD PTR [rsi+r9*1+0x10]
+   29174:	movhpd xmm2,QWORD PTR [rsi+r9*1+0x18]
+   2917b:	movupd xmm3,XMMWORD PTR [rax+0x30]
+   29180:	unpcklpd xmm3,xmm3
+   29184:	mulpd  xmm3,xmm2
+   29188:	movhpd xmm1,QWORD PTR [rsi+r9*1+0x20]
+   2918f:	movupd xmm4,XMMWORD PTR [rax+0x38]
+   29194:	unpcklpd xmm4,xmm4
+   29198:	mulpd  xmm4,xmm1
+   2919c:	movhpd xmm0,QWORD PTR [rsi+r9*1+0x28]
+   291a3:	addpd  xmm4,xmm3
+   291a7:	movsd  xmm3,QWORD PTR [rax+0x40]
+   291ac:	unpcklpd xmm3,xmm3
+   291b0:	mulpd  xmm3,xmm0
+   291b4:	addpd  xmm3,xmm4
+   291b8:	movupd xmm6,XMMWORD PTR [rax]
+   291bc:	movupd xmm5,XMMWORD PTR [rax+0x8]
+   291c1:	movupd xmm4,XMMWORD PTR [rax+0x10]
+   291c6:	movupd xmm7,XMMWORD PTR [rax+0x18]
+   291cb:	unpcklpd xmm7,xmm7
+   291cf:	mulpd  xmm7,xmm2
+   291d3:	movupd xmm8,XMMWORD PTR [rax+0x20]
+   291d9:	unpcklpd xmm8,xmm8
+   291de:	mulpd  xmm8,xmm1
+   291e3:	addpd  xmm8,xmm7
+   291e8:	movupd xmm7,XMMWORD PTR [rax+0x28]
+   291ed:	unpcklpd xmm7,xmm7
+   291f1:	mulpd  xmm7,xmm0
+   291f5:	addpd  xmm7,xmm8
+   291fa:	unpcklpd xmm6,xmm6
+   291fe:	mulpd  xmm6,xmm2
+   29202:	unpcklpd xmm5,xmm5
+   29206:	mulpd  xmm5,xmm1
+   2920a:	addpd  xmm5,xmm6
+   2920e:	unpcklpd xmm4,xmm4
+   29212:	mulpd  xmm4,xmm0
+   29216:	addpd  xmm4,xmm5
+   2921a:	movapd xmm0,xmm4
+   2921e:	unpcklpd xmm0,xmm7
+   29222:	movsd  xmm4,xmm3
+   29226:	unpckhpd xmm7,xmm3
+   2922a:	movupd XMMWORD PTR [rcx+r9*1+0x20],xmm7
+   29231:	movupd XMMWORD PTR [rcx+r9*1+0x10],xmm4
+   29238:	movupd XMMWORD PTR [rcx+r9*1],xmm0
+   2923e:	add    r9,0x30
+   29242:	add    r10,0xfffffffffffffffe
+   29246:	jne    29160 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x90>
+   2924c:	mov    r9,rdx
+   2924f:	lea    rdx,[r9+r9*2]
+   29253:	lea    rdx,[rdx*8+0x10]
+   2925b:	nop    DWORD PTR [rax+rax*1+0x0]
+   29260:	cmp    r8,r9
+   29263:	je     292f8 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x228>
+   29269:	movsd  xmm0,QWORD PTR [rsi+rdx*1]
+   2926e:	movsd  xmm2,QWORD PTR [rax+0x40]
+   29273:	mulsd  xmm2,xmm0
+   29277:	movupd xmm3,XMMWORD PTR [rsi+rdx*1-0x10]
+   2927d:	movsd  xmm4,QWORD PTR [rax+0x30]
+   29282:	mulsd  xmm4,xmm3
+   29286:	movapd xmm1,xmm3
+   2928a:	unpckhpd xmm1,xmm3
+   2928e:	mulsd  xmm1,QWORD PTR [rax+0x38]
+   29293:	addsd  xmm1,xmm4
+   29297:	addsd  xmm1,xmm2
+   2929b:	movupd xmm2,XMMWORD PTR [rax]
+   2929f:	movupd xmm4,XMMWORD PTR [rax+0x10]
+   292a4:	movupd xmm5,XMMWORD PTR [rax+0x20]
+   292a9:	movapd xmm6,xmm2
+   292ad:	unpcklpd xmm6,xmm5
+   292b1:	mulpd  xmm6,xmm3
+   292b5:	shufpd xmm3,xmm3,0x1
+   292ba:	unpckhpd xmm2,xmm4
+   292be:	mulpd  xmm2,xmm3
+   292c2:	addpd  xmm2,xmm6
+   292c6:	unpcklpd xmm0,xmm0
+   292ca:	movsd  xmm5,xmm4
+   292ce:	mulpd  xmm5,xmm0
+   292d2:	addpd  xmm5,xmm2
+   292d6:	movupd XMMWORD PTR [rcx+rdx*1-0x10],xmm5
+   292dc:	movsd  QWORD PTR [rcx+rdx*1],xmm1
+   292e1:	inc    r9
+   292e4:	add    rdx,0x18
+   292e8:	cmp    rdi,r9
+   292eb:	jne    29260 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x190>
+   292f1:	add    rsp,0x8
+   292f5:	pop    rbx
+   292f6:	pop    rbp
+   292f7:	ret
+   292f8:	lea    rsi,[rip+0x6ca69]        # 95d68 <_D2ma__T7Matrix3TdZQl6__initZ+0x90>
+   292ff:	mov    edi,0x7
+   29304:	mov    edx,0x59
+   29309:	mov    rcx,r8
+   2930c:	call   25bc0 <_d_arraybounds_index>
+
+Disassembly of section .fini:

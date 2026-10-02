@@ -162,3 +162,17 @@ bv_vienot_index bv_vienot_ref`. Source Git blob identity was checked separately
 against GitHub. Raw archives and executables remain Tier-3 CI artifacts; IDs,
 digests, sizes and expiry dates are retained in artifacts.json. Independent
 scientific oracle/envelopes and API/consumer review also remain open.
+
+
+### Machado isolation follow-up — 2026-10-02
+
+The [fixed-binary isolation and paired-source investigation](R7_4_5_MACHADO_ISOLATION.md)
+is complete at measured source `bb8f2a9bb129ac58e0ff23653145375b2af0b085`.
+All 16 final CI jobs pass. Rebuilding the original entry source and separating
+Machado lookup/prepared application on the same hosts does not reproduce the
+earlier multifold unchanged-control movements. DMD 2.113's original lookup pair
+stays within about 2% in pooled results on the EPYC 7763 host. The earlier
+reference run used EPYC 9V45; cause attribution remains open. Direction/block
+disturbances are retained, and no integrated winner or production policy is
+selected. Next diagnostic: floating-point state and deliberate code-placement
+variation on one host/compiler.

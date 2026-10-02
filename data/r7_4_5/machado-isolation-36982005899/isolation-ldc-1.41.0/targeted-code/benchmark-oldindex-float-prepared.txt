@@ -1,0 +1,66 @@
+
+isolation-work/paired-isolation-ldc-1.41.0/benchmark-oldindex:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000048550 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   48550:	push   rax
+   48551:	test   rdi,rdi
+   48554:	je     48602 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xb2>
+   4855a:	mov    r8,rdx
+   4855d:	lea    rax,[rsp+0x10]
+   48562:	mov    edx,0x8
+   48567:	xor    r9d,r9d
+   4856a:	nop    WORD PTR [rax+rax*1+0x0]
+   48570:	cmp    r8,r9
+   48573:	je     48604 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xb4>
+   48579:	movss  xmm0,DWORD PTR [rsi+rdx*1]
+   4857e:	movaps xmm2,xmm0
+   48581:	shufps xmm2,xmm0,0x0
+   48585:	movups xmm1,XMMWORD PTR [rax]
+   48588:	movsd  xmm3,QWORD PTR [rax+0x10]
+   4858d:	movaps xmm4,xmm3
+   48590:	shufps xmm4,xmm1,0xe5
+   48594:	shufps xmm4,xmm4,0xe2
+   48598:	mulps  xmm4,xmm2
+   4859b:	movsd  xmm2,QWORD PTR [rsi+rdx*1-0x8]
+   485a1:	movaps xmm5,xmm2
+   485a4:	shufps xmm5,xmm2,0xe1
+   485a8:	movaps xmm6,xmm1
+   485ab:	shufps xmm6,xmm1,0xed
+   485af:	mulps  xmm6,xmm5
+   485b2:	unpcklps xmm1,xmm3
+   485b5:	mulps  xmm1,xmm2
+   485b8:	addps  xmm1,xmm6
+   485bb:	movss  xmm3,DWORD PTR [rax+0x18]
+   485c0:	mulss  xmm3,xmm2
+   485c4:	shufps xmm2,xmm2,0x55
+   485c8:	mulss  xmm2,DWORD PTR [rax+0x1c]
+   485cd:	addps  xmm1,xmm4
+   485d0:	addss  xmm2,xmm3
+   485d4:	mulss  xmm0,DWORD PTR [rax+0x20]
+   485d9:	addss  xmm0,xmm2
+   485dd:	movss  DWORD PTR [rcx+rdx*1-0x8],xmm1
+   485e3:	shufps xmm1,xmm1,0x55
+   485e7:	movss  DWORD PTR [rcx+rdx*1-0x4],xmm1
+   485ed:	movss  DWORD PTR [rcx+rdx*1],xmm0
+   485f2:	inc    r9
+   485f5:	add    rdx,0xc
+   485f9:	cmp    rdi,r9
+   485fc:	jne    48570 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x20>
+   48602:	pop    rax
+   48603:	ret
+   48604:	lea    rsi,[rip+0x56ab6]        # 9f0c1 <_D2ma__T7Matrix3TdZQl6__initZ+0xa9>
+   4860b:	mov    edi,0x7
+   48610:	mov    edx,0x59
+   48615:	mov    rcx,r8
+   48618:	call   25bc0 <_d_arraybounds_index>
+
+Disassembly of section .fini:

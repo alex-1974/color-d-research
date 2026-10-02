@@ -1,0 +1,107 @@
+
+isolation-work/paired-isolation-dmd-2.113.0/benchmark-oldindex:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000092a44 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   92a44:	push   rbp
+   92a45:	mov    rbp,rsp
+   92a48:	sub    rsp,0x120
+   92a4f:	mov    QWORD PTR [rbp-0x120],rbx
+   92a56:	mov    r11,rcx
+   92a59:	mov    rax,r8
+   92a5c:	mov    rbx,QWORD PTR [rbp+0x58]
+   92a60:	xor    r8d,r8d
+   92a63:	test   rbx,rbx
+   92a66:	je     92bb4 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x170>
+   92a6c:	mov    rdx,QWORD PTR [rbp+0x60]
+   92a70:	mov    r9,rax
+   92a73:	mov    rsi,rdx
+   92a76:	lea    rdi,[rbp-0x118]
+   92a7d:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   92a7f:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   92a81:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   92a83:	lea    rsi,[rbp+0x10]
+   92a87:	lea    rdi,[rbp-0xf8]
+   92a8e:	mov    ecx,0x9
+   92a93:	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   92a96:	lea    rsi,[rbp+0x10]
+   92a9a:	lea    rdi,[rbp-0x88]
+   92aa1:	mov    ecx,0x9
+   92aa6:	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   92aa9:	movsd  xmm0,QWORD PTR [rbp-0x118]
+   92ab1:	rex.W movsd QWORD PTR [rbp-0x38],xmm0
+   92ab7:	movsd  xmm1,QWORD PTR [rbp-0x110]
+   92abf:	rex.W movsd QWORD PTR [rbp-0x30],xmm1
+   92ac5:	movsd  xmm2,QWORD PTR [rbp-0x108]
+   92acd:	rex.W movsd QWORD PTR [rbp-0x28],xmm2
+   92ad3:	movsd  xmm3,QWORD PTR [rbp+0x20]
+   92ad8:	mulsd  xmm3,xmm2
+   92adc:	movsd  xmm4,QWORD PTR [rbp+0x10]
+   92ae1:	movsd  xmm0,QWORD PTR [rbp-0x38]
+   92ae6:	mulsd  xmm4,xmm0
+   92aea:	movsd  xmm1,QWORD PTR [rbp+0x18]
+   92aef:	movsd  xmm5,QWORD PTR [rbp-0x30]
+   92af4:	mulsd  xmm1,xmm5
+   92af8:	addsd  xmm4,xmm1
+   92afc:	addsd  xmm3,xmm4
+   92b00:	rex.W movsd QWORD PTR [rbp-0xa8],xmm3
+   92b09:	movsd  xmm3,QWORD PTR [rbp+0x38]
+   92b0e:	mulsd  xmm3,xmm2
+   92b12:	movsd  xmm4,QWORD PTR [rbp+0x28]
+   92b17:	mulsd  xmm4,xmm0
+   92b1b:	movsd  xmm6,QWORD PTR [rbp+0x30]
+   92b20:	mulsd  xmm6,xmm5
+   92b24:	addsd  xmm4,xmm6
+   92b28:	addsd  xmm3,xmm4
+   92b2c:	rex.W movsd QWORD PTR [rbp-0xa0],xmm3
+   92b35:	movsd  xmm1,QWORD PTR [rbp+0x50]
+   92b3a:	mulsd  xmm1,xmm2
+   92b3e:	movsd  xmm2,QWORD PTR [rbp+0x40]
+   92b43:	mulsd  xmm2,xmm0
+   92b47:	movsd  xmm0,QWORD PTR [rbp+0x48]
+   92b4c:	mulsd  xmm0,xmm5
+   92b50:	addsd  xmm2,xmm0
+   92b54:	addsd  xmm1,xmm2
+   92b58:	rex.W movsd QWORD PTR [rbp-0x98],xmm1
+   92b61:	cmp    r8,r11
+   92b64:	jae    92bc0 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x17c>
+   92b66:	movsd  xmm0,QWORD PTR [rbp-0xa8]
+   92b6e:	rex.W movsd QWORD PTR [rbp-0x18],xmm0
+   92b74:	movsd  xmm1,QWORD PTR [rbp-0xa0]
+   92b7c:	rex.W movsd QWORD PTR [rbp-0x10],xmm1
+   92b82:	movsd  xmm2,QWORD PTR [rbp-0x98]
+   92b8a:	rex.W movsd QWORD PTR [rbp-0x8],xmm2
+   92b90:	lea    rsi,[rbp-0x18]
+   92b94:	mov    rdi,r9
+   92b97:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   92b99:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   92b9b:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   92b9d:	mov    eax,0x18
+   92ba2:	add    rdx,rax
+   92ba5:	add    r9,rax
+   92ba8:	inc    r8
+   92bab:	cmp    r8,rbx
+   92bae:	jb     92a73 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2f>
+   92bb4:	mov    rbx,QWORD PTR [rbp-0x120]
+   92bbb:	mov    rsp,rbp
+   92bbe:	pop    rbp
+   92bbf:	ret
+   92bc0:	mov    rcx,r11
+   92bc3:	mov    rdx,r8
+   92bc6:	mov    esi,0x59
+   92bcb:	lea    rdi,[rip+0x78c6e]        # 10b840 <_TMP0>
+   92bd2:	call   c9178 <_d_arraybounds_indexp>
+   92bd7:	mov    rbx,QWORD PTR [rbp-0x120]
+   92bde:	mov    rsp,rbp
+   92be1:	pop    rbp
+   92be2:	ret
+
+Disassembly of section .fini:

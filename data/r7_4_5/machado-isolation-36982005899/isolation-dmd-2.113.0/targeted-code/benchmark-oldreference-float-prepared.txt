@@ -1,0 +1,108 @@
+
+isolation-work/paired-isolation-dmd-2.113.0/benchmark-oldreference:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000a5d9c <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   a5d9c:	push   rbp
+   a5d9d:	mov    rbp,rsp
+   a5da0:	sub    rsp,0xa0
+   a5da7:	mov    r9,rcx
+   a5daa:	mov    rax,r8
+   a5dad:	mov    r11,QWORD PTR [rbp+0x38]
+   a5db1:	xor    r8d,r8d
+   a5db4:	test   r11,r11
+   a5db7:	je     a5ee3 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x147>
+   a5dbd:	mov    rcx,QWORD PTR [rbp+0x40]
+   a5dc1:	mov    rdx,rax
+   a5dc4:	mov    rsi,rcx
+   a5dc7:	lea    rdi,[rbp-0x98]
+   a5dce:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5dd0:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   a5dd1:	lea    rsi,[rbp+0x10]
+   a5dd5:	lea    rdi,[rbp-0x88]
+   a5ddc:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5dde:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5de0:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5de2:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5de4:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   a5de5:	lea    rsi,[rbp+0x10]
+   a5de9:	lea    rdi,[rbp-0x48]
+   a5ded:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5def:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5df1:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5df3:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5df5:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   a5df6:	movss  xmm0,DWORD PTR [rbp-0x98]
+   a5dfe:	movss  DWORD PTR [rbp-0x20],xmm0
+   a5e03:	movss  xmm1,DWORD PTR [rbp-0x94]
+   a5e0b:	movss  DWORD PTR [rbp-0x1c],xmm1
+   a5e10:	movss  xmm2,DWORD PTR [rbp-0x90]
+   a5e18:	movss  DWORD PTR [rbp-0x18],xmm2
+   a5e1d:	movss  xmm3,DWORD PTR [rbp+0x18]
+   a5e22:	mulss  xmm3,xmm2
+   a5e26:	movss  xmm4,DWORD PTR [rbp+0x10]
+   a5e2b:	movss  xmm0,DWORD PTR [rbp-0x20]
+   a5e30:	mulss  xmm4,xmm0
+   a5e34:	movss  xmm1,DWORD PTR [rbp+0x14]
+   a5e39:	movss  xmm5,DWORD PTR [rbp-0x1c]
+   a5e3e:	mulss  xmm1,xmm5
+   a5e42:	addss  xmm4,xmm1
+   a5e46:	addss  xmm3,xmm4
+   a5e4a:	movss  DWORD PTR [rbp-0x60],xmm3
+   a5e4f:	movss  xmm3,DWORD PTR [rbp+0x24]
+   a5e54:	mulss  xmm3,xmm2
+   a5e58:	movss  xmm4,DWORD PTR [rbp+0x1c]
+   a5e5d:	mulss  xmm4,xmm0
+   a5e61:	movss  xmm6,DWORD PTR [rbp+0x20]
+   a5e66:	mulss  xmm6,xmm5
+   a5e6a:	addss  xmm4,xmm6
+   a5e6e:	addss  xmm3,xmm4
+   a5e72:	movss  DWORD PTR [rbp-0x5c],xmm3
+   a5e77:	movss  xmm1,DWORD PTR [rbp+0x30]
+   a5e7c:	mulss  xmm1,xmm2
+   a5e80:	movss  xmm2,DWORD PTR [rbp+0x28]
+   a5e85:	mulss  xmm2,xmm0
+   a5e89:	movss  xmm0,DWORD PTR [rbp+0x2c]
+   a5e8e:	mulss  xmm0,xmm5
+   a5e92:	addss  xmm2,xmm0
+   a5e96:	addss  xmm1,xmm2
+   a5e9a:	movss  DWORD PTR [rbp-0x58],xmm1
+   a5e9f:	cmp    r8,r9
+   a5ea2:	jae    a5ee8 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x14c>
+   a5ea4:	movss  xmm0,DWORD PTR [rbp-0x60]
+   a5ea9:	movss  DWORD PTR [rbp-0x10],xmm0
+   a5eae:	movss  xmm1,DWORD PTR [rbp-0x5c]
+   a5eb3:	movss  DWORD PTR [rbp-0xc],xmm1
+   a5eb8:	movss  xmm2,DWORD PTR [rbp-0x58]
+   a5ebd:	movss  DWORD PTR [rbp-0x8],xmm2
+   a5ec2:	lea    rsi,[rbp-0x10]
+   a5ec6:	mov    rdi,rdx
+   a5ec9:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   a5ecb:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   a5ecc:	mov    eax,0xc
+   a5ed1:	add    rcx,rax
+   a5ed4:	add    rdx,rax
+   a5ed7:	inc    r8
+   a5eda:	cmp    r8,r11
+   a5edd:	jb     a5dc4 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x28>
+   a5ee3:	mov    rsp,rbp
+   a5ee6:	pop    rbp
+   a5ee7:	ret
+   a5ee8:	mov    rcx,r9
+   a5eeb:	mov    rdx,r8
+   a5eee:	mov    esi,0x59
+   a5ef3:	lea    rdi,[rip+0x65946]        # 10b840 <_TMP0>
+   a5efa:	call   c9040 <_d_arraybounds_indexp>
+   a5eff:	mov    rsp,rbp
+   a5f02:	pop    rbp
+   a5f03:	ret
+
+Disassembly of section .fini:
