@@ -146,7 +146,7 @@ private immutable Matrix3!double[11] machadoDeutanTable =
     Matrix3!double(.367322,.860646,-.227968,.280085,.672501,.047413,-.011820,.042940,.968881)
 ];
 
-private const Matrix3!double[] machadoTable(uint deficiency)
+private const(Matrix3!double[]) machadoTable(uint deficiency)
 @safe pure nothrow @nogc
 {
     assert(deficiency < 2);
