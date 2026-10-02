@@ -662,3 +662,45 @@ Acceptance guards:
 
 This directly tests whether the previously observed alignment sensitivity follows
 caller/call-site placement rather than the callee entry.
+
+
+## Caller-local fixed-envelope diagnostic — phase 8 result
+
+The XPS phase-8 run completed successfully with the fixed-envelope caller probe.
+
+All isolation guards passed:
+
+- `candidates.indexedVienotBatch!float` remained fixed at address `0x97824`
+  (mod-64 36) in all variants;
+- `bench.batch!float` alone moved through mod-64 positions 0, 16, 32 and 48;
+- the fixed envelope remained 852 bytes in every variant;
+- only cycles and instructions were measured, avoiding counter multiplexing.
+
+The result is strongly localized:
+
+| caller mod64 | time / baseline | cycles / baseline | instructions / baseline |
+| ---: | ---: | ---: | ---: |
+| 0  | 1.0000 | 1.0000 | 1.0000 |
+| 16 | ~1.0011 | ~1.0019 | ~1.0002 |
+| 32 | ~0.9982 | ~0.9988 | ~1.0000 |
+| 48 | ~0.8453 | ~0.7548 | ~0.9998 |
+
+The mod-64=48 result is not a single outlier. Across four balanced repetitions
+in both benchmark directions, its time ratio stayed approximately 0.823-0.851
+and its cycle ratio approximately 0.729-0.767, while instructions remained
+essentially unchanged.
+
+This is the strongest causal evidence in the investigation so far. Moving only
+the caller/call-site section is sufficient to reproduce a large fraction of the
+earlier timing movement while the callee candidate address is held fixed.
+
+Decision: the supported explanation is now a DMD 2.113.0/x86-64
+caller/call-site code-layout sensitivity in the indexed-float Viénot benchmark
+path. The callee-entry hypothesis was falsified by phase 7. No production
+alignment workaround is adopted yet because the exact sensitive instruction
+region inside `bench.batch!float` is still unidentified.
+
+A final fine caller sweep should move only the caller by 8-byte increments
+through the full 64-byte window, preserving the same fixed envelope and fixed
+candidate address. This will map the favorable phase precisely before
+instruction-level branch/fetch-boundary inspection.
