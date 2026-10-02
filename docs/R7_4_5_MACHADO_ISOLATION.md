@@ -354,3 +354,48 @@ The goals are:
 3. compare Viénot with unchanged Brettel/prepared/lookup controls;
 4. provide enough evidence to design a later function-local alignment probe
    rather than adopting global text padding as a workaround.
+
+
+## Fine alignment diagnostic — phase 4 result
+
+The XPS fine alignment sweep completed successfully at revision
+`b7a0ab2dffebe1981c0d70c1efb368a9fae5dd6d` with DMD 2.113.0.
+
+Integrity and controls:
+
+- status: passed;
+- 8,064 timing groups;
+- all 12 targeted symbols changed address modulo 64;
+- zero FP control-state changes;
+- the only FP control state remained MXCSR control `0x1f80` and x87
+  control word `0x037f`;
+- 288 MXCSR changes were sticky precision-status changes only;
+- the host still used the powersave governor with turbo and SMT enabled and
+  reached approximately 99 C on the hottest observed sensor.
+
+For Viénot, after first taking the median across the three blocks for each
+logical scalar/deficiency/size/direction case, the padding-to-p0 ratios were:
+
+| family | scalar | p8 | p16 | p24 | p32 | p40 | p48 | p56 |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| indexed | float | 1.013 | 0.682 | 0.674 | 1.008 | 1.008 | 0.677 | 0.685 |
+| indexed | double | 1.000 | 0.673 | 0.674 | 1.000 | 0.984 | 0.680 | 0.673 |
+| reference | float | 1.000 | 1.000 | 1.000 | 0.997 | 0.997 | 1.000 | 1.000 |
+| reference | double | 1.005 | 0.655 | 0.666 | 1.004 | 1.000 | 0.662 | 0.663 |
+
+Thus the affected Viénot kernels have a broad fast window at +16/+24 bytes and
+again at +48/+56 bytes, separated by slow/baseline windows at +0/+8 and
++32/+40. This is consistent with a 32-byte-periodic layout effect with an
+approximately 16-byte-wide favorable phase.
+
+However the fine sweep also shows that the global text padding affects other
+kernels. In particular Brettel exhibits a related 32-byte-periodic movement in
+several scalar/family combinations, while lookup, prepared and lookup+apply are
+mostly much less sensitive. Therefore the current evidence supports a
+front-end/code-layout effect but does not establish that the Viénot batch
+function itself is the sole responsible code region.
+
+Decision: do not introduce a production alignment workaround. The next probe
+must vary one measured kernel's local layout while keeping downstream/global
+text layout as constant as practical, and must verify the resulting symbol
+addresses and normalized code before timing.
