@@ -436,3 +436,54 @@ run the diagnostic as the normal user, and restore the original value
 immediately afterwards. Do not make the setting persistent for this research
 probe and do not run the benchmark itself under sudo, because changing the
 execution user would introduce another variable.
+
+
+## Hardware-counter alignment diagnostic — phase 5 result
+
+The XPS phase-5 run completed successfully at revision
+`67c403298c30bc00ff733cda770e41dba8c6953b` with DMD 2.113.0 after
+temporarily lowering `kernel.perf_event_paranoid` for the measurement.
+
+Available events were `task-clock`, `cycles`, `instructions`,
+`branches`, `branch-misses`, `cache-references`, and `cache-misses`.
+The generic `stalled-cycles-frontend` and `stalled-cycles-backend` aliases
+were not available on this host.
+
+The process-level matched p16/p0 result confirms that the alignment effect is
+visible in hardware cycles rather than only in wall-clock accounting:
+
+- isolated reference Viénot: task-clock/cycles median approximately 0.82
+  forward and 0.85 reverse;
+- instructions remained much closer to unity (approximately 0.98 and 0.99);
+- isolated indexed Viénot was approximately neutral in both cycles and
+  task-clock;
+- isolated Brettel p16 was slower by roughly 9–11% in cycles/task-clock.
+
+Parsing the benchmark's own per-scalar timing inside those same perf processes
+shows why the reference Viénot process improves: reference-double p16 has a
+median timing ratio of approximately 0.71 while reference-float is approximately
+0.99. Indexed float/double are both approximately neutral in this reduced
+binary. Thus the relevant phase is tied to the concrete code addresses in each
+binary, not to the abstract label p16.
+
+Because phase 5 multiplexed seven events in the same perf invocation, small
+departures of the scaled instruction estimate from exactly 1.0 are not treated
+as semantic/code-path changes. The next counter probe uses only cycles and
+instructions to avoid unnecessary multiplexing.
+
+Decision: the alignment effect is reflected in CPU-cycle consumption and is
+compatible with a front-end/code-layout mechanism. The process-level counter
+probe still contains both scalar instantiations, so the next step isolates one
+kernel and one scalar per executable.
+
+## Single-kernel/single-scalar alignment diagnostic — phase 6
+
+`single_kernel_alignment_diagnostic.py` builds only the Viénot benchmark path
+and only one scalar type per executable. It sweeps 0/8/16/24/32/40/48/56-byte
+global padding, records the exact Viénot batch entry address modulo 64 and 4096,
+and measures only `cycles` plus `instructions` to avoid counter
+multiplexing.
+
+The purpose is to correlate the measured fast/slow phase directly with the
+active float or double Viénot kernel's concrete address. This is still research
+evidence, not a production alignment workaround.
