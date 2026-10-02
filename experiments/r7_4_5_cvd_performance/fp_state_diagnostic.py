@@ -84,9 +84,11 @@ def main():
                         if reverse: argv.append("reverse")
                         run(argv,work,f"raw/{block}-{n}-{variant}-{int(reverse)}.csv")
             meta["observations"].append(replay.observe(cpu))
-        groups=defaultdict(list); fp_rows=[]; fp_changes=[]
+        groups=defaultdict(list); fp_rows=[]; fp_control_changes=[]; fp_flag_changes=[]
+        observed_controls=set()
         for path in sorted((root/"raw").glob("*.csv")):
-            block,n,variant,reverse=path.stem.split("-")
+            block,n,tail=path.stem.split("-",2)
+            variant,reverse=tail.rsplit("-",1)
             rows=list(csv.reader(path.open()))
             for r in rows:
                 if not r: continue
@@ -104,7 +106,14 @@ def main():
                 elif r[1]=="after":
                     before=pending.pop(key,None)
                     if before is None: raise RuntimeError("FP-state after without before")
-                    if before!=(r[7],r[8]): fp_changes.append([path.name,*key,*before,r[7],r[8]])
+                    bm,bx=(int(before[0],16),int(before[1],16))
+                    am,ax=(int(r[7],16),int(r[8],16))
+                    observed_controls.add((bm & 0xffffffc0,bx))
+                    observed_controls.add((am & 0xffffffc0,ax))
+                    if (bm & 0xffffffc0)!=(am & 0xffffffc0) or bx!=ax:
+                        fp_control_changes.append([path.name,*key,before[0],before[1],r[7],r[8]])
+                    if (bm & 0x3f)!=(am & 0x3f):
+                        fp_flag_changes.append([path.name,*key,before[0],r[7]])
             if pending: raise RuntimeError("FP-state before without after")
         if any(len(v)!=9 for v in groups.values()): raise RuntimeError("unexpected timing round count")
         with (root/"summary.csv").open("w",newline="") as f:
@@ -112,10 +121,13 @@ def main():
             for k,v in sorted(groups.items()): w.writerow([*k,len(v),min(v),statistics.median(v),max(v)])
         with (root/"fp-state.csv").open("w",newline="") as f:
             w=csv.writer(f); w.writerow(["file","phase","scalar","mode","deficiency","n","reverse","mxcsr","x87"]); w.writerows(fp_rows)
-        with (root/"fp-state-changes.csv").open("w",newline="") as f:
-            w=csv.writer(f); w.writerow(["file","scalar","mode","deficiency","n","reverse","before_mxcsr","before_x87","after_mxcsr","after_x87"]); w.writerows(fp_changes)
+        with (root/"fp-control-changes.csv").open("w",newline="") as f:
+            w=csv.writer(f); w.writerow(["file","scalar","mode","deficiency","n","reverse","before_mxcsr","before_x87","after_mxcsr","after_x87"]); w.writerows(fp_control_changes)
+        with (root/"fp-flag-changes.csv").open("w",newline="") as f:
+            w=csv.writer(f); w.writerow(["file","scalar","mode","deficiency","n","reverse","before_mxcsr","after_mxcsr"]); w.writerows(fp_flag_changes)
         meta.update(status="passed",timing_groups=len(groups),fp_state_rows=len(fp_rows),
-                    fp_state_changes=len(fp_changes),
+                    fp_control_changes=len(fp_control_changes),fp_flag_changes=len(fp_flag_changes),
+                    observed_fp_controls=[{"mxcsr_control":f"0x{m:08x}","x87_control":f"0x{x:04x}"} for m,x in sorted(observed_controls)],
                     interpretation="Phase-1 diagnostic only; no performance winner or production policy selected")
     except BaseException as e:
         meta.update(status="failed",error=str(e)); raise
