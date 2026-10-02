@@ -421,3 +421,18 @@ change would support a frontend/layout explanation; a corresponding movement in
 frontend-stall counters would strengthen that interpretation. Absence of such a
 counter signature would narrow, but not by itself disprove, the alignment
 effect observed in wall-clock timing.
+
+
+### XPS perf permission preflight
+
+The first phase-5 XPS invocation did not reach benchmark execution because the
+host had `kernel.perf_event_paranoid=4`. Under that policy even the required
+`cycles` and `instructions` events were unavailable to the unprivileged
+research process.
+
+This is an environment/policy blocker, not a benchmark failure. For the
+hardware-counter run, temporarily lower `kernel.perf_event_paranoid` to 0,
+run the diagnostic as the normal user, and restore the original value
+immediately afterwards. Do not make the setting persistent for this research
+probe and do not run the benchmark itself under sudo, because changing the
+execution user would introduce another variable.
