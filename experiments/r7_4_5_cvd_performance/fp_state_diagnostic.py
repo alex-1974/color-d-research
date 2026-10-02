@@ -24,6 +24,7 @@ def main():
     p.add_argument("--compiler", default="dmd")
     p.add_argument("--cc", default="gcc")
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--expected-dmd", default="2.113.0")
     a=p.parse_args()
     root=a.output.resolve(); root.mkdir(parents=True, exist_ok=False)
     repo=Path(capture(["git","rev-parse","--show-toplevel"],Path(__file__).parent).decode().strip())
@@ -33,7 +34,12 @@ def main():
     compiler=shutil.which(a.compiler); cc=shutil.which(a.cc)
     if not compiler or not cc: raise RuntimeError("compiler or C compiler missing")
     version=capture([compiler,"--version"],repo).decode()
-    if "DMD" not in version.upper(): raise RuntimeError("phase 1 is intentionally pinned to DMD")
+    match=re.search(r"Compiler v([0-9]+(?:\\.[0-9]+)+)", version)
+    if "DMD" not in version.upper() or not match:
+        raise RuntimeError("phase 1 is intentionally pinned to DMD")
+    dmd_version=match.group(1)
+    if dmd_version != a.expected_dmd:
+        raise RuntimeError(f"expected DMD {a.expected_dmd}, found {dmd_version}: {compiler}")
     meta={"revision":rev,"cpu":cpu,"compiler_version":version,"variants":VARIANTS,
           "sizes":SIZES,"blocks":3,"purpose":"A/A reproducibility + read-only MXCSR/x87 capture",
           "expected_dmd":a.expected_dmd,"status":"running","observations":[replay.observe(cpu)]}
