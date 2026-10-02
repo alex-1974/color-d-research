@@ -115,3 +115,38 @@ The inspector's optional third positional argument supplies an expected source r
 Keep the separate measurement programs and paired-source runner as research diagnostics. The previous multifold movements remain unexplained and are not used to select an integrated winner. No production policy or compiler support promise changes.
 
 A useful next slice measures floating-point state before and after individual cases and deliberately varies code placement on one host with one fixed compiler. It should retain the original/reference control pair and explicit per-direction/block evidence. Those are hypotheses to test; no floating-point-state, compiler-defect or microarchitectural cause is established here. An unchanged consumer rerun is not requested.
+
+
+## XPS FP-state / placement diagnostic — phase 1
+
+The next investigation is implemented on branch `research/163-fp-placement-diagnostic`
+without changing production policy or accepted CVD kernels. Phase 1 deliberately
+precedes any placement perturbation.
+
+`fp_state_diagnostic.py` builds the indexed and reference Viénot controls twice
+from the same tracked source with DMD, records fixed binary hashes and disassembly,
+pins every timed process to one CPU, and runs three balanced forward/reverse blocks
+at 1024, 8191 and 65536 items. The duplicate A/A builds establish whether rebuild
+identity and timing are quiet enough before a placement experiment is interpreted.
+
+With `FpStateDiagnostic`, `bench.d` records MXCSR and the x87 control word
+immediately before and after each benchmark case. The reads are outside the timed
+region and use the small x86 helper `fp_state.c`. The driver retains every state
+row in `fp-state.csv` and separately records any before/after mutation in
+`fp-state-changes.csv`. It does not modify FTZ, DAZ or rounding mode in phase 1.
+
+Run on the XPS with the fixed compiler selected for this diagnosis:
+
+```sh
+python3 experiments/r7_4_5_cvd_performance/fp_state_diagnostic.py \
+  --compiler dmd \
+  --output /tmp/color-cvd-fp-state
+```
+
+Acceptance for moving to phase 2 is diagnostic, not a production performance
+gate: the run must complete with fixed binaries, complete FP-state pairs and no
+unexplained within-case FP-state mutation. A/A timing dispersion and binary
+identity are evidence to inspect, not assumptions. Phase 2 will then vary code
+placement deliberately while preserving the same kernels, FP state, workload,
+affinity and output checksums. Only after placement is isolated should explicit
+FTZ/DAZ state variation be combined with placement.
