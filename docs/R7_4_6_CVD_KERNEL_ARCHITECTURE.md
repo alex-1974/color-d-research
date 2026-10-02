@@ -171,4 +171,16 @@ batch output, but this research slice does not freeze names or API.
 
 ## Status
 
-Implementation complete; performance evidence pending.
+Implementation and CI smoke qualification are complete at
+`49bc475d165aeb972545a630e7a6ce3cf4be93bb`.
+
+GitHub Actions run 37076556756 passed for both DMD 2.113.0 and LDC 1.43.0:
+
+- release DUB semantic preflight: PASS;
+- matched D/C++ replay smoke at n=1024: PASS;
+- D/C++ checksum pairing: PASS;
+- pooled-summary cardinality/sample-count checks: PASS.
+
+Shared-runner timings are smoke evidence only and are not used for performance
+selection. Controlled XPS replay over 1024/8191/65536 and balanced blocks is
+still pending.
