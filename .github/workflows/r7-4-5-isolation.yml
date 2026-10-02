@@ -19,6 +19,8 @@ jobs:
         compiler: [dmd-2.111.0, dmd-2.113.0, ldc-1.41.0, ldc-1.43.0]
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: dlang-community/setup-dlang@v2
         with:
           compiler: ${{ matrix.compiler }}
