@@ -591,3 +591,52 @@ The revised probe rejects the run unless:
 
 Only after those controls pass are cycles, instructions and wall-clock samples
 collected.
+
+
+## Function-local fixed-envelope placement diagnostic — phase 7 result
+
+The revised phase-7 XPS run completed successfully at revision
+`5df34b770b21d9e932a8478e4a36c8a90ab87e4e` with DMD 2.113.0.
+
+All archive hashes verified.
+
+The fixed-envelope controls passed:
+
+- candidate addresses were 0x66800, 0x66810, 0x66820 and 0x66830,
+  corresponding to mod-64 positions 0, 16, 32 and 48;
+- the outer `bench.batch!float` address remained exactly 0x876c4
+  (mod-64 4) in every variant;
+- the generated `.color_d_probe` output section was constant at 0x350 bytes
+  (848 bytes) in every variant.
+
+The CSV `envelope_size` field incorrectly recorded zero because the first
+parser version selected the wrong hexadecimal token from `readelf -SW`.
+The raw section records show the correct invariant size of 0x350. This is a
+harness-reporting bug only and does not affect placement or timing evidence.
+
+With the outer wrapper fixed and only the candidate moved locally, the large
+alignment effect disappeared:
+
+| candidate mod64 | time / baseline | cycles / baseline | instructions / baseline |
+| ---: | ---: | ---: | ---: |
+| 0  | 1.0000 | 1.0000 | 1.0000 |
+| 16 | ~0.9957 | ~0.9994 | ~1.0000 |
+| 32 | ~0.9950 | ~0.9999 | ~1.0002 |
+| 48 | ~1.0013 | ~0.9988 | ~0.9998 |
+
+Therefore the previously observed ~1.47x indexed-float movement is **not**
+caused by the entry address or local placement of
+`indexedVienotBatch!float` alone.
+
+This falsifies the narrow candidate-entry hypothesis. The earlier global
+padding experiments moved the caller, candidate and other text sections
+together; the causal factor must depend on some broader layout relationship.
+Plausible remaining targets include caller/call-site placement, relative
+caller-to-callee geometry, another inlined/out-of-line code region, or a
+front-end interaction involving multiple code regions.
+
+Decision: do not add function-alignment attributes or linker workarounds to
+production. The next experiment should hold the candidate fixed and vary only
+the outer `bench.batch!float`/call-site section (or vice versa), using the same
+fixed-envelope technique. This directly tests whether the effect follows the
+caller/call-site geometry rather than the callee entry.
