@@ -1,0 +1,86 @@
+
+isolation-work/paired-isolation-ldc-1.43.0/benchmark-reference:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000274b0 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb>:
+   274b0:	push   rax
+   274b1:	mov    r8,rsi
+   274b4:	mulss  xmm0,DWORD PTR [rip+0x739e0]        # 9ae9c <_fini+0x227c>
+   274bc:	cvttss2si rax,xmm0
+   274c1:	mov    rsi,rax
+   274c4:	movaps xmm1,xmm0
+   274c7:	subss  xmm1,DWORD PTR [rip+0x739d1]        # 9aea0 <_fini+0x2280>
+   274cf:	cvttss2si rcx,xmm1
+   274d4:	sar    rsi,0x3f
+   274d8:	and    rcx,rsi
+   274db:	or     rcx,rax
+   274de:	cmp    rcx,0xa
+   274e2:	jb     27511 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb+0x61>
+   274e4:	cmp    r8,0xb
+   274e8:	jb     2758f <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb+0xdf>
+   274ee:	mov    eax,DWORD PTR [rdx+0x188]
+   274f4:	mov    DWORD PTR [rdi+0x20],eax
+   274f7:	movups xmm0,XMMWORD PTR [rdx+0x168]
+   274fe:	movups xmm1,XMMWORD PTR [rdx+0x178]
+   27505:	movups XMMWORD PTR [rdi+0x10],xmm1
+   27509:	movups XMMWORD PTR [rdi],xmm0
+   2750c:	mov    rax,rdi
+   2750f:	pop    rcx
+   27510:	ret
+   27511:	cmp    r8,rcx
+   27514:	jbe    275aa <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb+0xfa>
+   2751a:	lea    rax,[rcx+0x1]
+   2751e:	cmp    rax,r8
+   27521:	jae    275c0 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb+0x110>
+   27527:	xorps  xmm1,xmm1
+   2752a:	cvtsi2ss xmm1,rcx
+   2752f:	subss  xmm0,xmm1
+   27533:	lea    rcx,[rcx+rcx*8]
+   27537:	movss  xmm1,DWORD PTR [rdx+rcx*4+0x20]
+   2753d:	lea    rax,[rax+rax*8]
+   27541:	movss  xmm2,DWORD PTR [rdx+rax*4+0x20]
+   27547:	movups xmm3,XMMWORD PTR [rdx+rcx*4]
+   2754b:	movups xmm4,XMMWORD PTR [rdx+rax*4]
+   2754f:	subps  xmm4,xmm3
+   27552:	movaps xmm5,xmm0
+   27555:	shufps xmm5,xmm0,0x0
+   27559:	mulps  xmm4,xmm5
+   2755c:	addps  xmm4,xmm3
+   2755f:	movups XMMWORD PTR [rdi],xmm4
+   27562:	movups xmm3,XMMWORD PTR [rdx+rcx*4+0x10]
+   27567:	movups xmm4,XMMWORD PTR [rdx+rax*4+0x10]
+   2756c:	subps  xmm4,xmm3
+   2756f:	mulps  xmm4,xmm5
+   27572:	addps  xmm4,xmm3
+   27575:	movups XMMWORD PTR [rdi+0x10],xmm4
+   27579:	subss  xmm2,xmm1
+   2757d:	mulss  xmm2,xmm0
+   27581:	addss  xmm2,xmm1
+   27585:	movss  DWORD PTR [rdi+0x20],xmm2
+   2758a:	mov    rax,rdi
+   2758d:	pop    rcx
+   2758e:	ret
+   2758f:	lea    rsi,[rip+0x847c4]        # abd5a <_D2ma__T7Matrix3TdZQl6__initZ+0x52>
+   27596:	mov    edi,0xf
+   2759b:	mov    ecx,0xa
+   275a0:	mov    edx,0x30
+   275a5:	call   26b70 <_d_arraybounds_index>
+   275aa:	lea    rsi,[rip+0x847a9]        # abd5a <_D2ma__T7Matrix3TdZQl6__initZ+0x52>
+   275b1:	mov    edi,0xf
+   275b6:	mov    edx,0x32
+   275bb:	call   26b70 <_d_arraybounds_index>
+   275c0:	lea    rsi,[rip+0x84793]        # abd5a <_D2ma__T7Matrix3TdZQl6__initZ+0x52>
+   275c7:	mov    edi,0xf
+   275cc:	mov    edx,0x32
+   275d1:	mov    rcx,rax
+   275d4:	call   26b70 <_d_arraybounds_index>
+
+Disassembly of section .fini:

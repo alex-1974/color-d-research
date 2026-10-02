@@ -1,0 +1,30 @@
+[
+  {
+    "id": 11214020339,
+    "name": "bv-qualification-dmd-2.113.0",
+    "digest": "sha256:0a531cab0720d23ff2d3df05a8d3fb6d43aed7e3f8fff7705737cbae90086af7",
+    "size_in_bytes": 8198891,
+    "expires_at": "2026-12-31T06:53:00Z"
+  },
+  {
+    "id": 11213508005,
+    "name": "bv-qualification-ldc-1.41.0",
+    "digest": "sha256:0e06658d48748b5d2d3da030038237442190b45056f9d36d126150c1fe359ff3",
+    "size_in_bytes": 7152679,
+    "expires_at": "2026-12-31T06:53:00Z"
+  },
+  {
+    "id": 11213018129,
+    "name": "bv-qualification-ldc-1.43.0",
+    "digest": "sha256:d20bd4cf4085e4be0a81c30841a7be61c53dc972b4b8c3ef73985217083091f1",
+    "size_in_bytes": 7685040,
+    "expires_at": "2026-12-31T06:53:00Z"
+  },
+  {
+    "id": 11212803707,
+    "name": "bv-qualification-dmd-2.111.0",
+    "digest": "sha256:d685514d152d1b718a2babbbcee948bb695585d1f2edb16fd06c78137edc3639",
+    "size_in_bytes": 8397926,
+    "expires_at": "2026-12-31T06:53:00Z"
+  }
+]

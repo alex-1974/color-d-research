@@ -1,0 +1,655 @@
+00000000000932f0 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   932f0:	55                   	push   %rbp
+   932f1:	48 8b ec             	mov    %rsp,%rbp
+   932f4:	48 81 ec 50 02 00 00 	sub    $0x250,%rsp
+   932fb:	48 89 9d b8 fd ff ff 	mov    %rbx,-0x248(%rbp)
+   93302:	89 7d e8             	mov    %edi,-0x18(%rbp)
+   93305:	48 89 4d f0          	mov    %rcx,-0x10(%rbp)
+   93309:	4c 89 45 f8          	mov    %r8,-0x8(%rbp)
+   9330d:	48 8b 5d 58          	mov    0x58(%rbp),%rbx
+   93311:	4c 8b 5d f0          	mov    -0x10(%rbp),%r11
+   93315:	4c 89 5d f0          	mov    %r11,-0x10(%rbp)
+   93319:	8b 75 e8             	mov    -0x18(%rbp),%esi
+   9331c:	48 8d bd c0 fd ff ff 	lea    -0x240(%rbp),%rdi
+   93323:	e8 00 6d 01 00       	call   aa028 <_D10candidates__T14prepareBrettelTdZQtFNaNbNiNfkZSQBw__T11BrettelPlanTdZQq>
+   93328:	4c 8b 5d f0          	mov    -0x10(%rbp),%r11
+   9332c:	45 31 c0             	xor    %r8d,%r8d
+   9332f:	48 85 db             	test   %rbx,%rbx
+   93332:	0f 84 9d 01 00 00    	je     934d5 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x1e5>
+   93338:	48 8b 55 60          	mov    0x60(%rbp),%rdx
+   9333c:	4c 8b 4d f8          	mov    -0x8(%rbp),%r9
+   93340:	48 8b f2             	mov    %rdx,%rsi
+   93343:	48 8d bd 70 fe ff ff 	lea    -0x190(%rbp),%rdi
+   9334a:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   9334c:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   9334e:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   93350:	4d 3b c3             	cmp    %r11,%r8
+   93353:	0f 83 88 01 00 00    	jae    934e1 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x1f1>
+   93359:	48 8d b5 c0 fd ff ff 	lea    -0x240(%rbp),%rsi
+   93360:	48 8d bd 90 fe ff ff 	lea    -0x170(%rbp),%rdi
+   93367:	b9 15 00 00 00       	mov    $0x15,%ecx
+   9336c:	f3 48 a5             	rep movsq %ds:(%rsi),%es:(%rdi)
+   9336f:	48 8d b5 70 fe ff ff 	lea    -0x190(%rbp),%rsi
+   93376:	48 8d bd 40 ff ff ff 	lea    -0xc0(%rbp),%rdi
+   9337d:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   9337f:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   93381:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   93383:	f2 0f 10 85 80 fe ff 	movsd  -0x180(%rbp),%xmm0
+   9338a:	ff 
+   9338b:	f2 0f 10 8d 60 fe ff 	movsd  -0x1a0(%rbp),%xmm1
+   93392:	ff 
+   93393:	f2 0f 59 c1          	mulsd  %xmm1,%xmm0
+   93397:	f2 0f 10 95 70 fe ff 	movsd  -0x190(%rbp),%xmm2
+   9339e:	ff 
+   9339f:	f2 0f 10 9d 50 fe ff 	movsd  -0x1b0(%rbp),%xmm3
+   933a6:	ff 
+   933a7:	f2 0f 59 d3          	mulsd  %xmm3,%xmm2
+   933ab:	f2 0f 10 a5 78 fe ff 	movsd  -0x188(%rbp),%xmm4
+   933b2:	ff 
+   933b3:	f2 0f 10 ad 58 fe ff 	movsd  -0x1a8(%rbp),%xmm5
+   933ba:	ff 
+   933bb:	f2 0f 59 e5          	mulsd  %xmm5,%xmm4
+   933bf:	f2 0f 58 d4          	addsd  %xmm4,%xmm2
+   933c3:	f2 0f 58 c2          	addsd  %xmm2,%xmm0
+   933c7:	66 0f 57 c9          	xorpd  %xmm1,%xmm1
+   933cb:	66 0f 2e c8          	ucomisd %xmm0,%xmm1
+   933cf:	77 1a                	ja     933eb <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0xfb>
+   933d1:	7a 18                	jp     933eb <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0xfb>
+   933d3:	48 8d b5 c0 fd ff ff 	lea    -0x240(%rbp),%rsi
+   933da:	48 8d bd 60 ff ff ff 	lea    -0xa0(%rbp),%rdi
+   933e1:	b9 09 00 00 00       	mov    $0x9,%ecx
+   933e6:	f3 48 a5             	rep movsq %ds:(%rsi),%es:(%rdi)
+   933e9:	eb 16                	jmp    93401 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x111>
+   933eb:	48 8d b5 d8 fe ff ff 	lea    -0x128(%rbp),%rsi
+   933f2:	48 8d bd 60 ff ff ff 	lea    -0xa0(%rbp),%rdi
+   933f9:	b9 09 00 00 00       	mov    $0x9,%ecx
+   933fe:	f3 48 a5             	rep movsq %ds:(%rsi),%es:(%rdi)
+   93401:	48 8d b5 70 fe ff ff 	lea    -0x190(%rbp),%rsi
+   93408:	48 8d 7d b0          	lea    -0x50(%rbp),%rdi
+   9340c:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   9340e:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   93410:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   93412:	f2 0f 10 85 70 ff ff 	movsd  -0x90(%rbp),%xmm0
+   93419:	ff 
+   9341a:	f2 0f 10 8d 80 fe ff 	movsd  -0x180(%rbp),%xmm1
+   93421:	ff 
+   93422:	f2 0f 59 c1          	mulsd  %xmm1,%xmm0
+   93426:	f2 0f 10 95 60 ff ff 	movsd  -0xa0(%rbp),%xmm2
+   9342d:	ff 
+   9342e:	f2 0f 10 9d 70 fe ff 	movsd  -0x190(%rbp),%xmm3
+   93435:	ff 
+   93436:	f2 0f 59 d3          	mulsd  %xmm3,%xmm2
+   9343a:	f2 0f 10 a5 68 ff ff 	movsd  -0x98(%rbp),%xmm4
+   93441:	ff 
+   93442:	f2 0f 10 ad 78 fe ff 	movsd  -0x188(%rbp),%xmm5
+   93449:	ff 
+   9344a:	f2 0f 59 e5          	mulsd  %xmm5,%xmm4
+   9344e:	f2 0f 58 d4          	addsd  %xmm4,%xmm2
+   93452:	f2 0f 58 c2          	addsd  %xmm2,%xmm0
+   93456:	f2 48 0f 11 45 d0    	rex.W movsd %xmm0,-0x30(%rbp)
+   9345c:	f2 0f 10 45 88       	movsd  -0x78(%rbp),%xmm0
+   93461:	f2 0f 59 c1          	mulsd  %xmm1,%xmm0
+   93465:	f2 0f 10 95 78 ff ff 	movsd  -0x88(%rbp),%xmm2
+   9346c:	ff 
+   9346d:	f2 0f 59 d3          	mulsd  %xmm3,%xmm2
+   93471:	f2 0f 10 75 80       	movsd  -0x80(%rbp),%xmm6
+   93476:	f2 0f 59 f5          	mulsd  %xmm5,%xmm6
+   9347a:	f2 0f 58 d6          	addsd  %xmm6,%xmm2
+   9347e:	f2 0f 58 c2          	addsd  %xmm2,%xmm0
+   93482:	f2 48 0f 11 45 d8    	rex.W movsd %xmm0,-0x28(%rbp)
+   93488:	f2 0f 10 65 a0       	movsd  -0x60(%rbp),%xmm4
+   9348d:	f2 0f 59 e1          	mulsd  %xmm1,%xmm4
+   93491:	f2 0f 10 4d 90       	movsd  -0x70(%rbp),%xmm1
+   93496:	f2 0f 59 cb          	mulsd  %xmm3,%xmm1
+   9349a:	f2 0f 10 45 98       	movsd  -0x68(%rbp),%xmm0
+   9349f:	f2 0f 59 c5          	mulsd  %xmm5,%xmm0
+   934a3:	f2 0f 58 c8          	addsd  %xmm0,%xmm1
+   934a7:	f2 0f 58 e1          	addsd  %xmm1,%xmm4
+   934ab:	f2 48 0f 11 65 e0    	rex.W movsd %xmm4,-0x20(%rbp)
+   934b1:	48 8d 75 d0          	lea    -0x30(%rbp),%rsi
+   934b5:	49 8b f9             	mov    %r9,%rdi
+   934b8:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   934ba:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   934bc:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   934be:	b8 18 00 00 00       	mov    $0x18,%eax
+   934c3:	48 01 c2             	add    %rax,%rdx
+   934c6:	49 01 c1             	add    %rax,%r9
+   934c9:	49 ff c0             	inc    %r8
+   934cc:	49 39 d8             	cmp    %rbx,%r8
+   934cf:	0f 82 6b fe ff ff    	jb     93340 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x50>
+   934d5:	48 8b 9d b8 fd ff ff 	mov    -0x248(%rbp),%rbx
+   934dc:	48 8b e5             	mov    %rbp,%rsp
+   934df:	5d                   	pop    %rbp
+   934e0:	c3                   	ret
+   934e1:	49 8b cb             	mov    %r11,%rcx
+   934e4:	49 8b d0             	mov    %r8,%rdx
+   934e7:	be 20 00 00 00       	mov    $0x20,%esi
+   934ec:	48 8d 3d fd 52 07 00 	lea    0x752fd(%rip),%rdi        # 1087f0 <_TMP0>
+   934f3:	e8 28 2e 03 00       	call   c6320 <_d_arraybounds_indexp>
+   934f8:	48 8b 9d b8 fd ff ff 	mov    -0x248(%rbp),%rbx
+   934ff:	48 8b e5             	mov    %rbp,%rsp
+   93502:	5d                   	pop    %rbp
+   93503:	c3                   	ret
+
+
+
+00000000000957ac <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   957ac:	55                   	push   %rbp
+   957ad:	48 8b ec             	mov    %rsp,%rbp
+   957b0:	48 81 ec f0 01 00 00 	sub    $0x1f0,%rsp
+   957b7:	4c 89 45 f8          	mov    %r8,-0x8(%rbp)
+   957bb:	48 89 f8             	mov    %rdi,%rax
+   957be:	49 89 c9             	mov    %rcx,%r9
+   957c1:	4c 8b 5d 58          	mov    0x58(%rbp),%r11
+   957c5:	83 f8 01             	cmp    $0x1,%eax
+   957c8:	0f 85 89 00 00 00    	jne    95857 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0xab>
+   957ce:	f2 0f 10 05 92 c3 06 	movsd  0x6c392(%rip),%xmm0        # 101b68 <_TMP1204+0x22c8>
+   957d5:	00 
+   957d6:	f2 48 0f 11 85 b0 fe 	rex.W movsd %xmm0,-0x150(%rbp)
+   957dd:	ff ff 
+   957df:	f2 0f 10 0d 89 c3 06 	movsd  0x6c389(%rip),%xmm1        # 101b70 <_TMP1204+0x22d0>
+   957e6:	00 
+   957e7:	f2 48 0f 11 8d b8 fe 	rex.W movsd %xmm1,-0x148(%rbp)
+   957ee:	ff ff 
+   957f0:	66 0f 57 d2          	xorpd  %xmm2,%xmm2
+   957f4:	f2 48 0f 11 95 c0 fe 	rex.W movsd %xmm2,-0x140(%rbp)
+   957fb:	ff ff 
+   957fd:	f2 48 0f 11 85 c8 fe 	rex.W movsd %xmm0,-0x138(%rbp)
+   95804:	ff ff 
+   95806:	f2 48 0f 11 8d d0 fe 	rex.W movsd %xmm1,-0x130(%rbp)
+   9580d:	ff ff 
+   9580f:	f2 48 0f 11 95 d8 fe 	rex.W movsd %xmm2,-0x128(%rbp)
+   95816:	ff ff 
+   95818:	f2 0f 10 1d 58 c3 06 	movsd  0x6c358(%rip),%xmm3        # 101b78 <_TMP1204+0x22d8>
+   9581f:	00 
+   95820:	f2 48 0f 11 9d e0 fe 	rex.W movsd %xmm3,-0x120(%rbp)
+   95827:	ff ff 
+   95829:	f2 0f 10 25 4f c3 06 	movsd  0x6c34f(%rip),%xmm4        # 101b80 <_TMP1204+0x22e0>
+   95830:	00 
+   95831:	f2 48 0f 11 a5 e8 fe 	rex.W movsd %xmm4,-0x118(%rbp)
+   95838:	ff ff 
+   9583a:	f2 0f 10 05 46 c3 06 	movsd  0x6c346(%rip),%xmm0        # 101b88 <_TMP1204+0x22e8>
+   95841:	00 
+   95842:	f2 48 0f 11 85 f0 fe 	rex.W movsd %xmm0,-0x110(%rbp)
+   95849:	ff ff 
+   9584b:	48 8d b5 b0 fe ff ff 	lea    -0x150(%rbp),%rsi
+   95852:	e9 84 00 00 00       	jmp    958db <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x12f>
+   95857:	f2 0f 10 0d 31 c3 06 	movsd  0x6c331(%rip),%xmm1        # 101b90 <_TMP1204+0x22f0>
+   9585e:	00 
+   9585f:	f2 48 0f 11 8d 00 ff 	rex.W movsd %xmm1,-0x100(%rbp)
+   95866:	ff ff 
+   95868:	f2 0f 10 15 28 c3 06 	movsd  0x6c328(%rip),%xmm2        # 101b98 <_TMP1204+0x22f8>
+   9586f:	00 
+   95870:	f2 48 0f 11 95 08 ff 	rex.W movsd %xmm2,-0xf8(%rbp)
+   95877:	ff ff 
+   95879:	66 0f 57 db          	xorpd  %xmm3,%xmm3
+   9587d:	f2 48 0f 11 9d 10 ff 	rex.W movsd %xmm3,-0xf0(%rbp)
+   95884:	ff ff 
+   95886:	f2 48 0f 11 8d 18 ff 	rex.W movsd %xmm1,-0xe8(%rbp)
+   9588d:	ff ff 
+   9588f:	f2 48 0f 11 95 20 ff 	rex.W movsd %xmm2,-0xe0(%rbp)
+   95896:	ff ff 
+   95898:	f2 48 0f 11 9d 28 ff 	rex.W movsd %xmm3,-0xd8(%rbp)
+   9589f:	ff ff 
+   958a1:	f2 0f 10 05 f7 c2 06 	movsd  0x6c2f7(%rip),%xmm0        # 101ba0 <_TMP1204+0x2300>
+   958a8:	00 
+   958a9:	f2 48 0f 11 85 30 ff 	rex.W movsd %xmm0,-0xd0(%rbp)
+   958b0:	ff ff 
+   958b2:	f2 0f 10 25 ee c2 06 	movsd  0x6c2ee(%rip),%xmm4        # 101ba8 <_TMP1204+0x2308>
+   958b9:	00 
+   958ba:	f2 48 0f 11 a5 38 ff 	rex.W movsd %xmm4,-0xc8(%rbp)
+   958c1:	ff ff 
+   958c3:	f2 0f 10 0d bd c2 06 	movsd  0x6c2bd(%rip),%xmm1        # 101b88 <_TMP1204+0x22e8>
+   958ca:	00 
+   958cb:	f2 48 0f 11 8d 40 ff 	rex.W movsd %xmm1,-0xc0(%rbp)
+   958d2:	ff ff 
+   958d4:	48 8d b5 00 ff ff ff 	lea    -0x100(%rbp),%rsi
+   958db:	48 8d bd 60 fe ff ff 	lea    -0x1a0(%rbp),%rdi
+   958e2:	b9 09 00 00 00       	mov    $0x9,%ecx
+   958e7:	f3 48 a5             	rep movsq %ds:(%rsi),%es:(%rdi)
+   958ea:	f2 0f 10 85 60 fe ff 	movsd  -0x1a0(%rbp),%xmm0
+   958f1:	ff 
+   958f2:	f2 48 0f 11 85 50 ff 	rex.W movsd %xmm0,-0xb0(%rbp)
+   958f9:	ff ff 
+   958fb:	f2 0f 10 95 68 fe ff 	movsd  -0x198(%rbp),%xmm2
+   95902:	ff 
+   95903:	f2 48 0f 11 95 58 ff 	rex.W movsd %xmm2,-0xa8(%rbp)
+   9590a:	ff ff 
+   9590c:	f2 0f 10 8d 70 fe ff 	movsd  -0x190(%rbp),%xmm1
+   95913:	ff 
+   95914:	f2 48 0f 11 8d 60 ff 	rex.W movsd %xmm1,-0xa0(%rbp)
+   9591b:	ff ff 
+   9591d:	f2 0f 10 9d 78 fe ff 	movsd  -0x188(%rbp),%xmm3
+   95924:	ff 
+   95925:	f2 48 0f 11 9d 68 ff 	rex.W movsd %xmm3,-0x98(%rbp)
+   9592c:	ff ff 
+   9592e:	f2 0f 10 a5 80 fe ff 	movsd  -0x180(%rbp),%xmm4
+   95935:	ff 
+   95936:	f2 48 0f 11 a5 70 ff 	rex.W movsd %xmm4,-0x90(%rbp)
+   9593d:	ff ff 
+   9593f:	f2 0f 10 85 88 fe ff 	movsd  -0x178(%rbp),%xmm0
+   95946:	ff 
+   95947:	f2 48 0f 11 85 78 ff 	rex.W movsd %xmm0,-0x88(%rbp)
+   9594e:	ff ff 
+   95950:	f2 0f 10 95 90 fe ff 	movsd  -0x170(%rbp),%xmm2
+   95957:	ff 
+   95958:	f2 48 0f 11 55 80    	rex.W movsd %xmm2,-0x80(%rbp)
+   9595e:	f2 0f 10 8d 98 fe ff 	movsd  -0x168(%rbp),%xmm1
+   95965:	ff 
+   95966:	f2 48 0f 11 4d 88    	rex.W movsd %xmm1,-0x78(%rbp)
+   9596c:	f2 0f 10 9d a0 fe ff 	movsd  -0x160(%rbp),%xmm3
+   95973:	ff 
+   95974:	f2 48 0f 11 5d 90    	rex.W movsd %xmm3,-0x70(%rbp)
+   9597a:	48 8d b5 50 ff ff ff 	lea    -0xb0(%rbp),%rsi
+   95981:	48 8d bd 10 fe ff ff 	lea    -0x1f0(%rbp),%rdi
+   95988:	b9 09 00 00 00       	mov    $0x9,%ecx
+   9598d:	f3 48 a5             	rep movsq %ds:(%rsi),%es:(%rdi)
+   95990:	45 31 c0             	xor    %r8d,%r8d
+   95993:	4d 85 db             	test   %r11,%r11
+   95996:	0f 84 f5 00 00 00    	je     95a91 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2e5>
+   9599c:	48 8b 4d 60          	mov    0x60(%rbp),%rcx
+   959a0:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+   959a4:	48 8b f1             	mov    %rcx,%rsi
+   959a7:	48 8d 7d a0          	lea    -0x60(%rbp),%rdi
+   959ab:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   959ad:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   959af:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   959b1:	4d 3b c1             	cmp    %r9,%r8
+   959b4:	0f 83 dc 00 00 00    	jae    95a96 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2ea>
+   959ba:	48 8d 75 a0          	lea    -0x60(%rbp),%rsi
+   959be:	48 8d 7d c0          	lea    -0x40(%rbp),%rdi
+   959c2:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   959c4:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   959c6:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   959c8:	f2 0f 10 85 20 fe ff 	movsd  -0x1e0(%rbp),%xmm0
+   959cf:	ff 
+   959d0:	f2 0f 10 4d b0       	movsd  -0x50(%rbp),%xmm1
+   959d5:	f2 0f 59 c1          	mulsd  %xmm1,%xmm0
+   959d9:	f2 0f 10 95 10 fe ff 	movsd  -0x1f0(%rbp),%xmm2
+   959e0:	ff 
+   959e1:	f2 0f 10 5d a0       	movsd  -0x60(%rbp),%xmm3
+   959e6:	f2 0f 59 d3          	mulsd  %xmm3,%xmm2
+   959ea:	f2 0f 10 a5 18 fe ff 	movsd  -0x1e8(%rbp),%xmm4
+   959f1:	ff 
+   959f2:	f2 0f 10 6d a8       	movsd  -0x58(%rbp),%xmm5
+   959f7:	f2 0f 59 e5          	mulsd  %xmm5,%xmm4
+   959fb:	f2 0f 58 d4          	addsd  %xmm4,%xmm2
+   959ff:	f2 0f 58 c2          	addsd  %xmm2,%xmm0
+   95a03:	f2 48 0f 11 45 e0    	rex.W movsd %xmm0,-0x20(%rbp)
+   95a09:	f2 0f 10 85 38 fe ff 	movsd  -0x1c8(%rbp),%xmm0
+   95a10:	ff 
+   95a11:	f2 0f 59 c1          	mulsd  %xmm1,%xmm0
+   95a15:	f2 0f 10 95 28 fe ff 	movsd  -0x1d8(%rbp),%xmm2
+   95a1c:	ff 
+   95a1d:	f2 0f 59 d3          	mulsd  %xmm3,%xmm2
+   95a21:	f2 0f 10 b5 30 fe ff 	movsd  -0x1d0(%rbp),%xmm6
+   95a28:	ff 
+   95a29:	f2 0f 59 f5          	mulsd  %xmm5,%xmm6
+   95a2d:	f2 0f 58 d6          	addsd  %xmm6,%xmm2
+   95a31:	f2 0f 58 c2          	addsd  %xmm2,%xmm0
+   95a35:	f2 48 0f 11 45 e8    	rex.W movsd %xmm0,-0x18(%rbp)
+   95a3b:	f2 0f 10 a5 50 fe ff 	movsd  -0x1b0(%rbp),%xmm4
+   95a42:	ff 
+   95a43:	f2 0f 59 e1          	mulsd  %xmm1,%xmm4
+   95a47:	f2 0f 10 8d 40 fe ff 	movsd  -0x1c0(%rbp),%xmm1
+   95a4e:	ff 
+   95a4f:	f2 0f 59 cb          	mulsd  %xmm3,%xmm1
+   95a53:	f2 0f 10 85 48 fe ff 	movsd  -0x1b8(%rbp),%xmm0
+   95a5a:	ff 
+   95a5b:	f2 0f 59 c5          	mulsd  %xmm5,%xmm0
+   95a5f:	f2 0f 58 c8          	addsd  %xmm0,%xmm1
+   95a63:	f2 0f 58 e1          	addsd  %xmm1,%xmm4
+   95a67:	f2 48 0f 11 65 f0    	rex.W movsd %xmm4,-0x10(%rbp)
+   95a6d:	48 8d 75 e0          	lea    -0x20(%rbp),%rsi
+   95a71:	48 8b fa             	mov    %rdx,%rdi
+   95a74:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   95a76:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   95a78:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   95a7a:	b8 18 00 00 00       	mov    $0x18,%eax
+   95a7f:	48 01 c1             	add    %rax,%rcx
+   95a82:	48 01 c2             	add    %rax,%rdx
+   95a85:	49 ff c0             	inc    %r8
+   95a88:	4d 39 d8             	cmp    %r11,%r8
+   95a8b:	0f 82 13 ff ff ff    	jb     959a4 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x1f8>
+   95a91:	48 8b e5             	mov    %rbp,%rsp
+   95a94:	5d                   	pop    %rbp
+   95a95:	c3                   	ret
+   95a96:	49 8b c9             	mov    %r9,%rcx
+   95a99:	49 8b d0             	mov    %r8,%rdx
+   95a9c:	be 2b 00 00 00       	mov    $0x2b,%esi
+   95aa1:	48 8d 3d 48 2d 07 00 	lea    0x72d48(%rip),%rdi        # 1087f0 <_TMP0>
+   95aa8:	e8 73 08 03 00       	call   c6320 <_d_arraybounds_indexp>
+   95aad:	48 8b e5             	mov    %rbp,%rsp
+   95ab0:	5d                   	pop    %rbp
+   95ab1:	c3                   	ret
+	...
+
+
+
+00000000000a5dd4 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   a5dd4:	55                   	push   %rbp
+   a5dd5:	48 8b ec             	mov    %rsp,%rbp
+   a5dd8:	48 81 ec 50 01 00 00 	sub    $0x150,%rsp
+   a5ddf:	48 89 9d b8 fe ff ff 	mov    %rbx,-0x148(%rbp)
+   a5de6:	89 7d e8             	mov    %edi,-0x18(%rbp)
+   a5de9:	48 89 4d f0          	mov    %rcx,-0x10(%rbp)
+   a5ded:	4c 89 45 f8          	mov    %r8,-0x8(%rbp)
+   a5df1:	48 8b 5d 38          	mov    0x38(%rbp),%rbx
+   a5df5:	4c 8b 5d f0          	mov    -0x10(%rbp),%r11
+   a5df9:	4c 89 5d f0          	mov    %r11,-0x10(%rbp)
+   a5dfd:	8b 75 e8             	mov    -0x18(%rbp),%esi
+   a5e00:	48 8d bd c0 fe ff ff 	lea    -0x140(%rbp),%rdi
+   a5e07:	e8 c4 4d 00 00       	call   aabd0 <_D10candidates__T14prepareBrettelTfZQtFNaNbNiNfkZSQBw__T11BrettelPlanTfZQq>
+   a5e0c:	4c 8b 5d f0          	mov    -0x10(%rbp),%r11
+   a5e10:	45 31 c0             	xor    %r8d,%r8d
+   a5e13:	48 85 db             	test   %rbx,%rbx
+   a5e16:	0f 84 78 01 00 00    	je     a5f94 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x1c0>
+   a5e1c:	48 8b 55 40          	mov    0x40(%rbp),%rdx
+   a5e20:	4c 8b 4d f8          	mov    -0x8(%rbp),%r9
+   a5e24:	48 8b f2             	mov    %rdx,%rsi
+   a5e27:	48 8d bd 18 ff ff ff 	lea    -0xe8(%rbp),%rdi
+   a5e2e:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5e30:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a5e31:	4d 3b c3             	cmp    %r11,%r8
+   a5e34:	0f 83 66 01 00 00    	jae    a5fa0 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x1cc>
+   a5e3a:	48 8d b5 c0 fe ff ff 	lea    -0x140(%rbp),%rsi
+   a5e41:	48 8d bd 30 ff ff ff 	lea    -0xd0(%rbp),%rdi
+   a5e48:	b9 15 00 00 00       	mov    $0x15,%ecx
+   a5e4d:	f3 a5                	rep movsl %ds:(%rsi),%es:(%rdi)
+   a5e4f:	48 8d b5 18 ff ff ff 	lea    -0xe8(%rbp),%rsi
+   a5e56:	48 8d 7d 88          	lea    -0x78(%rbp),%rdi
+   a5e5a:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5e5c:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a5e5d:	f3 0f 10 85 20 ff ff 	movss  -0xe0(%rbp),%xmm0
+   a5e64:	ff 
+   a5e65:	f3 0f 10 8d 10 ff ff 	movss  -0xf0(%rbp),%xmm1
+   a5e6c:	ff 
+   a5e6d:	f3 0f 59 c1          	mulss  %xmm1,%xmm0
+   a5e71:	f3 0f 10 95 18 ff ff 	movss  -0xe8(%rbp),%xmm2
+   a5e78:	ff 
+   a5e79:	f3 0f 10 9d 08 ff ff 	movss  -0xf8(%rbp),%xmm3
+   a5e80:	ff 
+   a5e81:	f3 0f 59 d3          	mulss  %xmm3,%xmm2
+   a5e85:	f3 0f 10 a5 1c ff ff 	movss  -0xe4(%rbp),%xmm4
+   a5e8c:	ff 
+   a5e8d:	f3 0f 10 ad 0c ff ff 	movss  -0xf4(%rbp),%xmm5
+   a5e94:	ff 
+   a5e95:	f3 0f 59 e5          	mulss  %xmm5,%xmm4
+   a5e99:	f3 0f 58 d4          	addss  %xmm4,%xmm2
+   a5e9d:	f3 0f 58 c2          	addss  %xmm2,%xmm0
+   a5ea1:	0f 57 c9             	xorps  %xmm1,%xmm1
+   a5ea4:	0f 2e c8             	ucomiss %xmm0,%xmm1
+   a5ea7:	77 18                	ja     a5ec1 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xed>
+   a5ea9:	7a 16                	jp     a5ec1 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xed>
+   a5eab:	48 8d b5 c0 fe ff ff 	lea    -0x140(%rbp),%rsi
+   a5eb2:	48 8d 7d a0          	lea    -0x60(%rbp),%rdi
+   a5eb6:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5eb8:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5eba:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5ebc:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5ebe:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a5ebf:	eb 14                	jmp    a5ed5 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x101>
+   a5ec1:	48 8d b5 54 ff ff ff 	lea    -0xac(%rbp),%rsi
+   a5ec8:	48 8d 7d a0          	lea    -0x60(%rbp),%rdi
+   a5ecc:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5ece:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5ed0:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5ed2:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5ed4:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a5ed5:	48 8d b5 18 ff ff ff 	lea    -0xe8(%rbp),%rsi
+   a5edc:	48 8d 7d c8          	lea    -0x38(%rbp),%rdi
+   a5ee0:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5ee2:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a5ee3:	f3 0f 10 45 a8       	movss  -0x58(%rbp),%xmm0
+   a5ee8:	f3 0f 10 8d 20 ff ff 	movss  -0xe0(%rbp),%xmm1
+   a5eef:	ff 
+   a5ef0:	f3 0f 59 c1          	mulss  %xmm1,%xmm0
+   a5ef4:	f3 0f 10 55 a0       	movss  -0x60(%rbp),%xmm2
+   a5ef9:	f3 0f 10 9d 18 ff ff 	movss  -0xe8(%rbp),%xmm3
+   a5f00:	ff 
+   a5f01:	f3 0f 59 d3          	mulss  %xmm3,%xmm2
+   a5f05:	f3 0f 10 65 a4       	movss  -0x5c(%rbp),%xmm4
+   a5f0a:	f3 0f 10 ad 1c ff ff 	movss  -0xe4(%rbp),%xmm5
+   a5f11:	ff 
+   a5f12:	f3 0f 59 e5          	mulss  %xmm5,%xmm4
+   a5f16:	f3 0f 58 d4          	addss  %xmm4,%xmm2
+   a5f1a:	f3 0f 58 c2          	addss  %xmm2,%xmm0
+   a5f1e:	f3 0f 11 45 d8       	movss  %xmm0,-0x28(%rbp)
+   a5f23:	f3 0f 10 45 b4       	movss  -0x4c(%rbp),%xmm0
+   a5f28:	f3 0f 59 c1          	mulss  %xmm1,%xmm0
+   a5f2c:	f3 0f 10 55 ac       	movss  -0x54(%rbp),%xmm2
+   a5f31:	f3 0f 59 d3          	mulss  %xmm3,%xmm2
+   a5f35:	f3 0f 10 75 b0       	movss  -0x50(%rbp),%xmm6
+   a5f3a:	f3 0f 59 f5          	mulss  %xmm5,%xmm6
+   a5f3e:	f3 0f 58 d6          	addss  %xmm6,%xmm2
+   a5f42:	f3 0f 58 c2          	addss  %xmm2,%xmm0
+   a5f46:	f3 0f 11 45 dc       	movss  %xmm0,-0x24(%rbp)
+   a5f4b:	f3 0f 10 65 c0       	movss  -0x40(%rbp),%xmm4
+   a5f50:	f3 0f 59 e1          	mulss  %xmm1,%xmm4
+   a5f54:	f3 0f 10 4d b8       	movss  -0x48(%rbp),%xmm1
+   a5f59:	f3 0f 59 cb          	mulss  %xmm3,%xmm1
+   a5f5d:	f3 0f 10 45 bc       	movss  -0x44(%rbp),%xmm0
+   a5f62:	f3 0f 59 c5          	mulss  %xmm5,%xmm0
+   a5f66:	f3 0f 58 c8          	addss  %xmm0,%xmm1
+   a5f6a:	f3 0f 58 e1          	addss  %xmm1,%xmm4
+   a5f6e:	f3 0f 11 65 e0       	movss  %xmm4,-0x20(%rbp)
+   a5f73:	48 8d 75 d8          	lea    -0x28(%rbp),%rsi
+   a5f77:	49 8b f9             	mov    %r9,%rdi
+   a5f7a:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a5f7c:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a5f7d:	b8 0c 00 00 00       	mov    $0xc,%eax
+   a5f82:	48 01 c2             	add    %rax,%rdx
+   a5f85:	49 01 c1             	add    %rax,%r9
+   a5f88:	49 ff c0             	inc    %r8
+   a5f8b:	49 39 d8             	cmp    %rbx,%r8
+   a5f8e:	0f 82 90 fe ff ff    	jb     a5e24 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x50>
+   a5f94:	48 8b 9d b8 fe ff ff 	mov    -0x148(%rbp),%rbx
+   a5f9b:	48 8b e5             	mov    %rbp,%rsp
+   a5f9e:	5d                   	pop    %rbp
+   a5f9f:	c3                   	ret
+   a5fa0:	49 8b cb             	mov    %r11,%rcx
+   a5fa3:	49 8b d0             	mov    %r8,%rdx
+   a5fa6:	be 20 00 00 00       	mov    $0x20,%esi
+   a5fab:	48 8d 3d 3e 28 06 00 	lea    0x6283e(%rip),%rdi        # 1087f0 <_TMP0>
+   a5fb2:	e8 69 03 02 00       	call   c6320 <_d_arraybounds_indexp>
+   a5fb7:	48 8b 9d b8 fe ff ff 	mov    -0x148(%rbp),%rbx
+   a5fbe:	48 8b e5             	mov    %rbp,%rsp
+   a5fc1:	5d                   	pop    %rbp
+   a5fc2:	c3                   	ret
+	...
+
+
+
+00000000000a8274 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   a8274:	55                   	push   %rbp
+   a8275:	48 8b ec             	mov    %rsp,%rbp
+   a8278:	48 81 ec 80 01 00 00 	sub    $0x180,%rsp
+   a827f:	4c 89 45 f8          	mov    %r8,-0x8(%rbp)
+   a8283:	48 89 f8             	mov    %rdi,%rax
+   a8286:	49 89 c9             	mov    %rcx,%r9
+   a8289:	4c 8b 5d 38          	mov    0x38(%rbp),%r11
+   a828d:	83 f8 01             	cmp    $0x1,%eax
+   a8290:	0f 85 86 00 00 00    	jne    a831c <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xa8>
+   a8296:	f2 0f 10 05 02 c4 05 	movsd  0x5c402(%rip),%xmm0        # 1046a0 <_TMP1204+0x4e00>
+   a829d:	00 
+   a829e:	f2 48 0f 11 85 00 ff 	rex.W movsd %xmm0,-0x100(%rbp)
+   a82a5:	ff ff 
+   a82a7:	f2 0f 10 0d f9 c3 05 	movsd  0x5c3f9(%rip),%xmm1        # 1046a8 <_TMP1204+0x4e08>
+   a82ae:	00 
+   a82af:	f2 48 0f 11 8d 08 ff 	rex.W movsd %xmm1,-0xf8(%rbp)
+   a82b6:	ff ff 
+   a82b8:	66 0f 57 d2          	xorpd  %xmm2,%xmm2
+   a82bc:	f2 48 0f 11 95 10 ff 	rex.W movsd %xmm2,-0xf0(%rbp)
+   a82c3:	ff ff 
+   a82c5:	f2 48 0f 11 85 18 ff 	rex.W movsd %xmm0,-0xe8(%rbp)
+   a82cc:	ff ff 
+   a82ce:	f2 48 0f 11 8d 20 ff 	rex.W movsd %xmm1,-0xe0(%rbp)
+   a82d5:	ff ff 
+   a82d7:	f2 48 0f 11 95 28 ff 	rex.W movsd %xmm2,-0xd8(%rbp)
+   a82de:	ff ff 
+   a82e0:	f2 0f 10 1d c8 c3 05 	movsd  0x5c3c8(%rip),%xmm3        # 1046b0 <_TMP1204+0x4e10>
+   a82e7:	00 
+   a82e8:	f2 48 0f 11 9d 30 ff 	rex.W movsd %xmm3,-0xd0(%rbp)
+   a82ef:	ff ff 
+   a82f1:	f2 0f 10 25 bf c3 05 	movsd  0x5c3bf(%rip),%xmm4        # 1046b8 <_TMP1204+0x4e18>
+   a82f8:	00 
+   a82f9:	f2 48 0f 11 a5 38 ff 	rex.W movsd %xmm4,-0xc8(%rbp)
+   a8300:	ff ff 
+   a8302:	f2 0f 10 05 b6 c3 05 	movsd  0x5c3b6(%rip),%xmm0        # 1046c0 <_TMP1204+0x4e20>
+   a8309:	00 
+   a830a:	f2 48 0f 11 85 40 ff 	rex.W movsd %xmm0,-0xc0(%rbp)
+   a8311:	ff ff 
+   a8313:	48 8d b5 00 ff ff ff 	lea    -0x100(%rbp),%rsi
+   a831a:	eb 7b                	jmp    a8397 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x123>
+   a831c:	f2 0f 10 0d a4 c3 05 	movsd  0x5c3a4(%rip),%xmm1        # 1046c8 <_TMP1204+0x4e28>
+   a8323:	00 
+   a8324:	f2 48 0f 11 8d 50 ff 	rex.W movsd %xmm1,-0xb0(%rbp)
+   a832b:	ff ff 
+   a832d:	f2 0f 10 15 9b c3 05 	movsd  0x5c39b(%rip),%xmm2        # 1046d0 <_TMP1204+0x4e30>
+   a8334:	00 
+   a8335:	f2 48 0f 11 95 58 ff 	rex.W movsd %xmm2,-0xa8(%rbp)
+   a833c:	ff ff 
+   a833e:	66 0f 57 db          	xorpd  %xmm3,%xmm3
+   a8342:	f2 48 0f 11 9d 60 ff 	rex.W movsd %xmm3,-0xa0(%rbp)
+   a8349:	ff ff 
+   a834b:	f2 48 0f 11 8d 68 ff 	rex.W movsd %xmm1,-0x98(%rbp)
+   a8352:	ff ff 
+   a8354:	f2 48 0f 11 95 70 ff 	rex.W movsd %xmm2,-0x90(%rbp)
+   a835b:	ff ff 
+   a835d:	f2 48 0f 11 9d 78 ff 	rex.W movsd %xmm3,-0x88(%rbp)
+   a8364:	ff ff 
+   a8366:	f2 0f 10 05 6a c3 05 	movsd  0x5c36a(%rip),%xmm0        # 1046d8 <_TMP1204+0x4e38>
+   a836d:	00 
+   a836e:	f2 48 0f 11 45 80    	rex.W movsd %xmm0,-0x80(%rbp)
+   a8374:	f2 0f 10 25 64 c3 05 	movsd  0x5c364(%rip),%xmm4        # 1046e0 <_TMP1204+0x4e40>
+   a837b:	00 
+   a837c:	f2 48 0f 11 65 88    	rex.W movsd %xmm4,-0x78(%rbp)
+   a8382:	f2 0f 10 0d 36 c3 05 	movsd  0x5c336(%rip),%xmm1        # 1046c0 <_TMP1204+0x4e20>
+   a8389:	00 
+   a838a:	f2 48 0f 11 4d 90    	rex.W movsd %xmm1,-0x70(%rbp)
+   a8390:	48 8d b5 50 ff ff ff 	lea    -0xb0(%rbp),%rsi
+   a8397:	48 8d bd b0 fe ff ff 	lea    -0x150(%rbp),%rdi
+   a839e:	b9 09 00 00 00       	mov    $0x9,%ecx
+   a83a3:	f3 48 a5             	rep movsq %ds:(%rsi),%es:(%rdi)
+   a83a6:	f2 0f 10 85 b0 fe ff 	movsd  -0x150(%rbp),%xmm0
+   a83ad:	ff 
+   a83ae:	f2 0f 5a d0          	cvtsd2ss %xmm0,%xmm2
+   a83b2:	f3 0f 11 55 a0       	movss  %xmm2,-0x60(%rbp)
+   a83b7:	f2 0f 10 8d b8 fe ff 	movsd  -0x148(%rbp),%xmm1
+   a83be:	ff 
+   a83bf:	f2 0f 5a d9          	cvtsd2ss %xmm1,%xmm3
+   a83c3:	f3 0f 11 5d a4       	movss  %xmm3,-0x5c(%rbp)
+   a83c8:	f2 0f 10 a5 c0 fe ff 	movsd  -0x140(%rbp),%xmm4
+   a83cf:	ff 
+   a83d0:	f2 0f 5a c4          	cvtsd2ss %xmm4,%xmm0
+   a83d4:	f3 0f 11 45 a8       	movss  %xmm0,-0x58(%rbp)
+   a83d9:	f2 0f 10 95 c8 fe ff 	movsd  -0x138(%rbp),%xmm2
+   a83e0:	ff 
+   a83e1:	f2 0f 5a ca          	cvtsd2ss %xmm2,%xmm1
+   a83e5:	f3 0f 11 4d ac       	movss  %xmm1,-0x54(%rbp)
+   a83ea:	f2 0f 10 9d d0 fe ff 	movsd  -0x130(%rbp),%xmm3
+   a83f1:	ff 
+   a83f2:	f2 0f 5a e3          	cvtsd2ss %xmm3,%xmm4
+   a83f6:	f3 0f 11 65 b0       	movss  %xmm4,-0x50(%rbp)
+   a83fb:	f2 0f 10 85 d8 fe ff 	movsd  -0x128(%rbp),%xmm0
+   a8402:	ff 
+   a8403:	f2 0f 5a d0          	cvtsd2ss %xmm0,%xmm2
+   a8407:	f3 0f 11 55 b4       	movss  %xmm2,-0x4c(%rbp)
+   a840c:	f2 0f 10 8d e0 fe ff 	movsd  -0x120(%rbp),%xmm1
+   a8413:	ff 
+   a8414:	f2 0f 5a d9          	cvtsd2ss %xmm1,%xmm3
+   a8418:	f3 0f 11 5d b8       	movss  %xmm3,-0x48(%rbp)
+   a841d:	f2 0f 10 a5 e8 fe ff 	movsd  -0x118(%rbp),%xmm4
+   a8424:	ff 
+   a8425:	f2 0f 5a c4          	cvtsd2ss %xmm4,%xmm0
+   a8429:	f3 0f 11 45 bc       	movss  %xmm0,-0x44(%rbp)
+   a842e:	f2 0f 10 95 f0 fe ff 	movsd  -0x110(%rbp),%xmm2
+   a8435:	ff 
+   a8436:	f2 0f 5a ca          	cvtsd2ss %xmm2,%xmm1
+   a843a:	f3 0f 11 4d c0       	movss  %xmm1,-0x40(%rbp)
+   a843f:	48 8d 75 a0          	lea    -0x60(%rbp),%rsi
+   a8443:	48 8d bd 80 fe ff ff 	lea    -0x180(%rbp),%rdi
+   a844a:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a844c:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a844e:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a8450:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a8452:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a8453:	45 31 c0             	xor    %r8d,%r8d
+   a8456:	4d 85 db             	test   %r11,%r11
+   a8459:	0f 84 e9 00 00 00    	je     a8548 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x2d4>
+   a845f:	48 8b 4d 40          	mov    0x40(%rbp),%rcx
+   a8463:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+   a8467:	48 8b f1             	mov    %rcx,%rsi
+   a846a:	48 8d 7d c8          	lea    -0x38(%rbp),%rdi
+   a846e:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a8470:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a8471:	4d 3b c1             	cmp    %r9,%r8
+   a8474:	0f 83 d3 00 00 00    	jae    a854d <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x2d9>
+   a847a:	48 8d 75 c8          	lea    -0x38(%rbp),%rsi
+   a847e:	48 8d 7d d8          	lea    -0x28(%rbp),%rdi
+   a8482:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a8484:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a8485:	f3 0f 10 85 88 fe ff 	movss  -0x178(%rbp),%xmm0
+   a848c:	ff 
+   a848d:	f3 0f 10 4d d0       	movss  -0x30(%rbp),%xmm1
+   a8492:	f3 0f 59 c1          	mulss  %xmm1,%xmm0
+   a8496:	f3 0f 10 95 80 fe ff 	movss  -0x180(%rbp),%xmm2
+   a849d:	ff 
+   a849e:	f3 0f 10 5d c8       	movss  -0x38(%rbp),%xmm3
+   a84a3:	f3 0f 59 d3          	mulss  %xmm3,%xmm2
+   a84a7:	f3 0f 10 a5 84 fe ff 	movss  -0x17c(%rbp),%xmm4
+   a84ae:	ff 
+   a84af:	f3 0f 10 6d cc       	movss  -0x34(%rbp),%xmm5
+   a84b4:	f3 0f 59 e5          	mulss  %xmm5,%xmm4
+   a84b8:	f3 0f 58 d4          	addss  %xmm4,%xmm2
+   a84bc:	f3 0f 58 c2          	addss  %xmm2,%xmm0
+   a84c0:	f3 0f 11 45 e8       	movss  %xmm0,-0x18(%rbp)
+   a84c5:	f3 0f 10 85 94 fe ff 	movss  -0x16c(%rbp),%xmm0
+   a84cc:	ff 
+   a84cd:	f3 0f 59 c1          	mulss  %xmm1,%xmm0
+   a84d1:	f3 0f 10 95 8c fe ff 	movss  -0x174(%rbp),%xmm2
+   a84d8:	ff 
+   a84d9:	f3 0f 59 d3          	mulss  %xmm3,%xmm2
+   a84dd:	f3 0f 10 b5 90 fe ff 	movss  -0x170(%rbp),%xmm6
+   a84e4:	ff 
+   a84e5:	f3 0f 59 f5          	mulss  %xmm5,%xmm6
+   a84e9:	f3 0f 58 d6          	addss  %xmm6,%xmm2
+   a84ed:	f3 0f 58 c2          	addss  %xmm2,%xmm0
+   a84f1:	f3 0f 11 45 ec       	movss  %xmm0,-0x14(%rbp)
+   a84f6:	f3 0f 10 a5 a0 fe ff 	movss  -0x160(%rbp),%xmm4
+   a84fd:	ff 
+   a84fe:	f3 0f 59 e1          	mulss  %xmm1,%xmm4
+   a8502:	f3 0f 10 8d 98 fe ff 	movss  -0x168(%rbp),%xmm1
+   a8509:	ff 
+   a850a:	f3 0f 59 cb          	mulss  %xmm3,%xmm1
+   a850e:	f3 0f 10 85 9c fe ff 	movss  -0x164(%rbp),%xmm0
+   a8515:	ff 
+   a8516:	f3 0f 59 c5          	mulss  %xmm5,%xmm0
+   a851a:	f3 0f 58 c8          	addss  %xmm0,%xmm1
+   a851e:	f3 0f 58 e1          	addss  %xmm1,%xmm4
+   a8522:	f3 0f 11 65 f0       	movss  %xmm4,-0x10(%rbp)
+   a8527:	48 8d 75 e8          	lea    -0x18(%rbp),%rsi
+   a852b:	48 8b fa             	mov    %rdx,%rdi
+   a852e:	48 a5                	movsq  %ds:(%rsi),%es:(%rdi)
+   a8530:	a5                   	movsl  %ds:(%rsi),%es:(%rdi)
+   a8531:	b8 0c 00 00 00       	mov    $0xc,%eax
+   a8536:	48 01 c1             	add    %rax,%rcx
+   a8539:	48 01 c2             	add    %rax,%rdx
+   a853c:	49 ff c0             	inc    %r8
+   a853f:	4d 39 d8             	cmp    %r11,%r8
+   a8542:	0f 82 1f ff ff ff    	jb     a8467 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x1f3>
+   a8548:	48 8b e5             	mov    %rbp,%rsp
+   a854b:	5d                   	pop    %rbp
+   a854c:	c3                   	ret
+   a854d:	49 8b c9             	mov    %r9,%rcx
+   a8550:	49 8b d0             	mov    %r8,%rdx
+   a8553:	be 2b 00 00 00       	mov    $0x2b,%esi
+   a8558:	48 8d 3d 91 02 06 00 	lea    0x60291(%rip),%rdi        # 1087f0 <_TMP0>
+   a855f:	e8 bc dd 01 00       	call   c6320 <_d_arraybounds_indexp>
+   a8564:	48 8b e5             	mov    %rbp,%rsp
+   a8567:	5d                   	pop    %rbp
+   a8568:	c3                   	ret
+   a8569:	00 00                	add    %al,(%rax)
+	...
+
+

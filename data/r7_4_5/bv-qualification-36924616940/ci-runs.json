@@ -1,0 +1,24 @@
+{
+  "source": "2a896ea470d7aacfe5791e7239605ac4435d5332",
+  "runs": [
+    {
+      "id": 36924616881,
+      "name": "R7.4.5 consumer replay smoke",
+      "conclusion": "success",
+      "url": "https://github.com/alex-1974/color-d-research/actions/runs/36924616881"
+    },
+    {
+      "id": 36924616973,
+      "name": "R7.4.5 CVD performance baseline",
+      "conclusion": "success",
+      "url": "https://github.com/alex-1974/color-d-research/actions/runs/36924616973"
+    },
+    {
+      "id": 36924616940,
+      "name": "R7.4.5 combined BV qualification",
+      "conclusion": "success",
+      "url": "https://github.com/alex-1974/color-d-research/actions/runs/36924616940"
+    }
+  ],
+  "note": "Four jobs per workflow; source equivalence and performance measurement availability do not close production gates."
+}

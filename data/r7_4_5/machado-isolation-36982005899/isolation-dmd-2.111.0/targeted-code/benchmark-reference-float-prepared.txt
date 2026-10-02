@@ -1,0 +1,112 @@
+
+isolation-work/paired-isolation-dmd-2.111.0/benchmark-reference:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+00000000000aa09c <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   aa09c:	push   rbp
+   aa09d:	mov    rbp,rsp
+   aa0a0:	sub    rsp,0xb0
+   aa0a7:	mov    r9,rcx
+   aa0aa:	mov    rax,r8
+   aa0ad:	mov    r11,QWORD PTR [rbp+0x38]
+   aa0b1:	xor    r8d,r8d
+   aa0b4:	test   r11,r11
+   aa0b7:	je     aa1ee <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x152>
+   aa0bd:	mov    rcx,QWORD PTR [rbp+0x40]
+   aa0c1:	mov    rdx,rax
+   aa0c4:	mov    rsi,rcx
+   aa0c7:	lea    rdi,[rbp-0xa8]
+   aa0ce:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0d0:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   aa0d1:	lea    rsi,[rbp+0x10]
+   aa0d5:	lea    rdi,[rbp-0x98]
+   aa0dc:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0de:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0e0:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0e2:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0e4:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   aa0e5:	lea    rsi,[rbp+0x10]
+   aa0e9:	lea    rdi,[rbp-0x58]
+   aa0ed:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0ef:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0f1:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0f3:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa0f5:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   aa0f6:	movss  xmm0,DWORD PTR [rbp-0xa8]
+   aa0fe:	movss  DWORD PTR [rbp-0x30],xmm0
+   aa103:	movss  xmm1,DWORD PTR [rbp-0xa4]
+   aa10b:	movss  DWORD PTR [rbp-0x2c],xmm1
+   aa110:	movss  xmm2,DWORD PTR [rbp-0xa0]
+   aa118:	movss  DWORD PTR [rbp-0x28],xmm2
+   aa11d:	movss  xmm3,DWORD PTR [rbp+0x18]
+   aa122:	mulss  xmm3,xmm2
+   aa126:	movss  xmm4,DWORD PTR [rbp+0x10]
+   aa12b:	movss  xmm0,DWORD PTR [rbp-0x30]
+   aa130:	mulss  xmm4,xmm0
+   aa134:	movss  xmm1,DWORD PTR [rbp+0x14]
+   aa139:	movss  xmm5,DWORD PTR [rbp-0x2c]
+   aa13e:	mulss  xmm1,xmm5
+   aa142:	addss  xmm4,xmm1
+   aa146:	addss  xmm3,xmm4
+   aa14a:	movss  DWORD PTR [rbp-0x20],xmm3
+   aa14f:	movss  xmm3,DWORD PTR [rbp+0x24]
+   aa154:	mulss  xmm3,xmm2
+   aa158:	movss  xmm4,DWORD PTR [rbp+0x1c]
+   aa15d:	mulss  xmm4,xmm0
+   aa161:	movss  xmm6,DWORD PTR [rbp+0x20]
+   aa166:	mulss  xmm6,xmm5
+   aa16a:	addss  xmm4,xmm6
+   aa16e:	addss  xmm3,xmm4
+   aa172:	movss  DWORD PTR [rbp-0x1c],xmm3
+   aa177:	movss  xmm1,DWORD PTR [rbp+0x30]
+   aa17c:	mulss  xmm1,xmm2
+   aa180:	movss  xmm2,DWORD PTR [rbp+0x28]
+   aa185:	mulss  xmm2,xmm0
+   aa189:	movss  xmm0,DWORD PTR [rbp+0x2c]
+   aa18e:	mulss  xmm0,xmm5
+   aa192:	addss  xmm2,xmm0
+   aa196:	addss  xmm1,xmm2
+   aa19a:	movss  DWORD PTR [rbp-0x18],xmm1
+   aa19f:	lea    rsi,[rbp-0x20]
+   aa1a3:	lea    rdi,[rbp-0x70]
+   aa1a7:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa1a9:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   aa1aa:	cmp    r8,r9
+   aa1ad:	jae    aa1f3 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x157>
+   aa1af:	movss  xmm0,DWORD PTR [rbp-0x20]
+   aa1b4:	movss  DWORD PTR [rbp-0x10],xmm0
+   aa1b9:	movss  xmm1,DWORD PTR [rbp-0x1c]
+   aa1be:	movss  DWORD PTR [rbp-0xc],xmm1
+   aa1c3:	movss  xmm2,DWORD PTR [rbp-0x18]
+   aa1c8:	movss  DWORD PTR [rbp-0x8],xmm2
+   aa1cd:	lea    rsi,[rbp-0x10]
+   aa1d1:	mov    rdi,rdx
+   aa1d4:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   aa1d6:	movs   DWORD PTR es:[rdi],DWORD PTR ds:[rsi]
+   aa1d7:	mov    eax,0xc
+   aa1dc:	add    rcx,rax
+   aa1df:	add    rdx,rax
+   aa1e2:	inc    r8
+   aa1e5:	cmp    r8,r11
+   aa1e8:	jb     aa0c4 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x28>
+   aa1ee:	mov    rsp,rbp
+   aa1f1:	pop    rbp
+   aa1f2:	ret
+   aa1f3:	mov    rcx,r9
+   aa1f6:	mov    rdx,r8
+   aa1f9:	mov    esi,0x59
+   aa1fe:	lea    rdi,[rip+0x6848b]        # 112690 <_TMP0>
+   aa205:	call   d37cc <_d_arraybounds_indexp>
+   aa20a:	mov    rsp,rbp
+   aa20d:	pop    rbp
+   aa20e:	ret
+
+Disassembly of section .fini:

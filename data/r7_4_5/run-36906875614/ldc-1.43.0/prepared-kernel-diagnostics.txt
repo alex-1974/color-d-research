@@ -1,0 +1,61 @@
+0000000000040eb0 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   41252:	66 41 0f 59 c5       	mulpd  %xmm13,%xmm0
+   41260:	66 41 0f 59 ca       	mulpd  %xmm10,%xmm1
+   41265:	66 0f 58 c8          	addpd  %xmm0,%xmm1
+   41272:	66 41 0f 59 c6       	mulpd  %xmm14,%xmm0
+   41277:	66 0f 58 c1          	addpd  %xmm1,%xmm0
+   41394:	66 41 0f 59 cd       	mulpd  %xmm13,%xmm1
+   41399:	66 41 0f 59 c2       	mulpd  %xmm10,%xmm0
+   4139e:	66 0f 58 c1          	addpd  %xmm1,%xmm0
+   413a2:	66 45 0f 59 fe       	mulpd  %xmm14,%xmm15
+   413a7:	66 44 0f 58 f8       	addpd  %xmm0,%xmm15
+   413ac:	66 41 0f 59 d5       	mulpd  %xmm13,%xmm2
+   413b1:	66 41 0f 59 da       	mulpd  %xmm10,%xmm3
+   413b6:	66 0f 58 da          	addpd  %xmm2,%xmm3
+   413ba:	66 45 0f 59 ce       	mulpd  %xmm14,%xmm9
+   413bf:	66 44 0f 58 cb       	addpd  %xmm3,%xmm9
+   413c4:	66 41 0f 59 e5       	mulpd  %xmm13,%xmm4
+   413c9:	66 41 0f 59 f2       	mulpd  %xmm10,%xmm6
+   413ce:	66 0f 58 f4          	addpd  %xmm4,%xmm6
+   413d2:	66 41 0f 59 ee       	mulpd  %xmm14,%xmm5
+   413d7:	66 0f 58 ee          	addpd  %xmm6,%xmm5
+   4143d:	66 45 0f 59 fa       	mulpd  %xmm10,%xmm15
+   41442:	66 44 0f 59 f4       	mulpd  %xmm4,%xmm14
+   41447:	66 45 0f 58 f7       	addpd  %xmm15,%xmm14
+   41456:	66 0f 59 e2          	mulpd  %xmm2,%xmm4
+   4145a:	66 41 0f 58 e6       	addpd  %xmm14,%xmm4
+   414be:	66 41 0f 59 c6       	mulpd  %xmm14,%xmm0
+   41597:	e8 d4 55 fe ff       	call   26b70 <_d_arraybounds_index>
+
+00000000000415a0 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   416ac:	66 44 0f 59 d7       	mulpd  %xmm7,%xmm10
+   416b6:	66 45 0f 59 d8       	mulpd  %xmm8,%xmm11
+   416bb:	66 45 0f 58 da       	addpd  %xmm10,%xmm11
+   416c0:	66 45 0f 58 d9       	addpd  %xmm9,%xmm11
+   416c5:	66 44 0f 59 ce       	mulpd  %xmm6,%xmm9
+   416cf:	66 45 0f 59 d0       	mulpd  %xmm8,%xmm10
+   416d4:	66 44 0f 59 c2       	mulpd  %xmm2,%xmm8
+   416de:	66 44 0f 59 e7       	mulpd  %xmm7,%xmm12
+   416e3:	66 45 0f 58 e2       	addpd  %xmm10,%xmm12
+   416e8:	66 0f 59 fb          	mulpd  %xmm3,%xmm7
+   416ec:	66 41 0f 58 f8       	addpd  %xmm8,%xmm7
+   416f1:	66 45 0f 58 e1       	addpd  %xmm9,%xmm12
+   416f6:	66 41 0f 58 f9       	addpd  %xmm9,%xmm7
+   41764:	66 0f 59 e2          	mulpd  %xmm2,%xmm4
+   4176c:	66 0f 59 eb          	mulpd  %xmm3,%xmm5
+   41775:	66 0f 59 d8          	mulpd  %xmm0,%xmm3
+   41779:	66 0f 58 dd          	addpd  %xmm5,%xmm3
+   4177d:	66 0f 58 dc          	addpd  %xmm4,%xmm3
+   417ae:	e8 bd 53 fe ff       	call   26b70 <_d_arraybounds_index>
+
+000000000004a910 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   4aaba:	41 0f 59 cd          	mulps  %xmm13,%xmm1
+   4aac3:	45 0f 59 ea          	mulps  %xmm10,%xmm13
+   4aac7:	44 0f 58 e9          	addps  %xmm1,%xmm13
+   4aad3:	0f 59 ca             	mulps  %xmm2,%xmm1
+   4aad6:	41 0f 58 cd          	addps  %xmm13,%xmm1
+   4ab43:	41 0f 59 cd          	mulps  %xmm13,%xmm1
+   4abf4:	e8 77 bf fd ff       	call   26b70 <_d_arraybounds_index>
+
+000000000004ac00 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   4acf3:	e8 78 be fd ff       	call   26b70 <_d_arraybounds_index>

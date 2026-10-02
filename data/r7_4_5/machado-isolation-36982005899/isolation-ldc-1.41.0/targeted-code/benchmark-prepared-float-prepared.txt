@@ -1,0 +1,66 @@
+
+isolation-work/paired-isolation-ldc-1.41.0/benchmark-prepared:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000040490 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   40490:	push   rax
+   40491:	test   rdi,rdi
+   40494:	je     40542 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xb2>
+   4049a:	mov    r8,rdx
+   4049d:	lea    rax,[rsp+0x10]
+   404a2:	mov    edx,0x8
+   404a7:	xor    r9d,r9d
+   404aa:	nop    WORD PTR [rax+rax*1+0x0]
+   404b0:	cmp    r8,r9
+   404b3:	je     40544 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xb4>
+   404b9:	movss  xmm0,DWORD PTR [rsi+rdx*1]
+   404be:	movaps xmm2,xmm0
+   404c1:	shufps xmm2,xmm0,0x0
+   404c5:	movups xmm1,XMMWORD PTR [rax]
+   404c8:	movsd  xmm3,QWORD PTR [rax+0x10]
+   404cd:	movaps xmm4,xmm3
+   404d0:	shufps xmm4,xmm1,0xe5
+   404d4:	shufps xmm4,xmm4,0xe2
+   404d8:	mulps  xmm4,xmm2
+   404db:	movsd  xmm2,QWORD PTR [rsi+rdx*1-0x8]
+   404e1:	movaps xmm5,xmm2
+   404e4:	shufps xmm5,xmm2,0xe1
+   404e8:	movaps xmm6,xmm1
+   404eb:	shufps xmm6,xmm1,0xed
+   404ef:	mulps  xmm6,xmm5
+   404f2:	unpcklps xmm1,xmm3
+   404f5:	mulps  xmm1,xmm2
+   404f8:	addps  xmm1,xmm6
+   404fb:	movss  xmm3,DWORD PTR [rax+0x18]
+   40500:	mulss  xmm3,xmm2
+   40504:	shufps xmm2,xmm2,0x55
+   40508:	mulss  xmm2,DWORD PTR [rax+0x1c]
+   4050d:	addps  xmm1,xmm4
+   40510:	addss  xmm2,xmm3
+   40514:	mulss  xmm0,DWORD PTR [rax+0x20]
+   40519:	addss  xmm0,xmm2
+   4051d:	movss  DWORD PTR [rcx+rdx*1-0x8],xmm1
+   40523:	shufps xmm1,xmm1,0x55
+   40527:	movss  DWORD PTR [rcx+rdx*1-0x4],xmm1
+   4052d:	movss  DWORD PTR [rcx+rdx*1],xmm0
+   40532:	inc    r9
+   40535:	add    rdx,0xc
+   40539:	cmp    rdi,r9
+   4053c:	jne    404b0 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x20>
+   40542:	pop    rax
+   40543:	ret
+   40544:	lea    rsi,[rip+0x5581d]        # 95d68 <_D2ma__T7Matrix3TdZQl6__initZ+0x90>
+   4054b:	mov    edi,0x7
+   40550:	mov    edx,0x59
+   40555:	mov    rcx,r8
+   40558:	call   25bc0 <_d_arraybounds_index>
+
+Disassembly of section .fini:

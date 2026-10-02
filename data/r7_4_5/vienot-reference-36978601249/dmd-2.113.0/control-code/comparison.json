@@ -1,0 +1,57 @@
+{
+  "normalization": "Discard instruction addresses; normalize relative call/jump targets and RIP displacements while retaining symbols and offsets; normalize generated _TMP numeric identities. No arithmetic or branch condition is discarded.",
+  "binary_hashes": {
+    "benchmark-bv_vienot_ref": "2ea5d1f6ba1c0afa82e9ba993f59dc863c96fe7a9e3b3a87bac3f05f51f37bcc",
+    "benchmark-bv_vienot_index": "f3467e7198406a38edc245ce5da96eecd77e3d986076d7175bc0ab4619a624ec"
+  },
+  "functions": [
+    {
+      "selector": "lookupBatchTf",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "cd3482a9e752964da4b1fd8a2566b9ed1f10478f83c6f91096e75797b14d6b56",
+        "cd3482a9e752964da4b1fd8a2566b9ed1f10478f83c6f91096e75797b14d6b56"
+      ]
+    },
+    {
+      "selector": "batchTfVEQt4Modei3",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "175dba0525fa5f88de633f3e8f6c921924267a6754f8d17eeb48f8619876c4d6",
+        "175dba0525fa5f88de633f3e8f6c921924267a6754f8d17eeb48f8619876c4d6"
+      ]
+    },
+    {
+      "selector": "matrixAtSeverityTf",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "8b5f94b685e4d37e304e7936ec5ad48f009757f18953a2a911af4cd5f14b9fc5",
+        "8b5f94b685e4d37e304e7936ec5ad48f009757f18953a2a911af4cd5f14b9fc5"
+      ]
+    },
+    {
+      "selector": "lookupBatchTd",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "a132c652377d2cf2c74d3aee229c7406c2be4454904c7aa9d92d32b30f6765ec",
+        "a132c652377d2cf2c74d3aee229c7406c2be4454904c7aa9d92d32b30f6765ec"
+      ]
+    },
+    {
+      "selector": "batchTdVEQt4Modei3",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "0c6a99d8a320b31bbdbc2979a966bebacab6a7048ccc3968487a5284faed7a84",
+        "0c6a99d8a320b31bbdbc2979a966bebacab6a7048ccc3968487a5284faed7a84"
+      ]
+    },
+    {
+      "selector": "matrixAtSeverityTd",
+      "normalized_equal": true,
+      "normalized_sha256": [
+        "408ff4739b29abb31a7855054d94748ba10c042c443195fc7f74b68a22dc188b",
+        "408ff4739b29abb31a7855054d94748ba10c042c443195fc7f74b68a22dc188b"
+      ]
+    }
+  ]
+}

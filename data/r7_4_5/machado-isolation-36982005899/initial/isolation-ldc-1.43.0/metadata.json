@@ -1,0 +1,100 @@
+{
+  "revision": "f2b0237f905e37f38b79da7d6e1bb4792a0e89d5",
+  "cpu": 0,
+  "blocks": 3,
+  "sizes": [
+    1024,
+    8191,
+    65536
+  ],
+  "variants": {
+    "index": "IndexedVienot",
+    "reference": "ReferenceVienot",
+    "lookup": "IsolateLookup",
+    "prepared": "IsolatePrepared"
+  },
+  "observations": [
+    {
+      "time_utc": "2026-10-02T07:54:14.754305+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:26.309490+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:35.152762+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:35.153024+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:43.719814+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:43.720076+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:52.293297+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/smt/active": "1"
+    }
+  ],
+  "status": "passed",
+  "compiler_version": "LDC - the LLVM D compiler (1.43.0):\n  based on DMD v2.113.0 and LLVM 22.1.8\n  built with LDC - the LLVM D compiler (1.43.0)\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: znver3\n  https://dlang.org - https://wiki.dlang.org/LDC\n\n\n  Registered Targets:\n    aarch64     - AArch64 (little endian)\n    aarch64_32  - AArch64 (little endian ILP32)\n    aarch64_be  - AArch64 (big endian)\n    amdgcn      - AMD GCN GPUs\n    arm         - ARM\n    arm64       - ARM64 (little endian)\n    arm64_32    - ARM64 (little endian ILP32)\n    armeb       - ARM (big endian)\n    avr         - Atmel AVR Microcontroller\n    bpf         - BPF (host endian)\n    bpfeb       - BPF (big endian)\n    bpfel       - BPF (little endian)\n    hexagon     - Hexagon\n    lanai       - Lanai\n    loongarch32 - 32-bit LoongArch\n    loongarch64 - 64-bit LoongArch\n    mips        - MIPS (32-bit big endian)\n    mips64      - MIPS (64-bit big endian)\n    mips64el    - MIPS (64-bit little endian)\n    mipsel      - MIPS (32-bit little endian)\n    msp430      - MSP430 [experimental]\n    nvptx       - NVIDIA PTX 32-bit\n    nvptx64     - NVIDIA PTX 64-bit\n    ppc32       - PowerPC 32\n    ppc32le     - PowerPC 32 LE\n    ppc64       - PowerPC 64\n    ppc64le     - PowerPC 64 LE\n    r600        - AMD GPUs HD2XXX-HD6XXX\n    riscv32     - 32-bit RISC-V\n    riscv32be   - 32-bit big endian RISC-V\n    riscv64     - 64-bit RISC-V\n    riscv64be   - 64-bit big endian RISC-V\n    sparc       - Sparc\n    sparcel     - Sparc LE\n    sparcv9     - Sparc V9\n    spirv       - SPIR-V Logical\n    spirv32     - SPIR-V 32-bit\n    spirv64     - SPIR-V 64-bit\n    systemz     - SystemZ\n    thumb       - Thumb\n    thumbeb     - Thumb (big endian)\n    ve          - VE\n    wasm32      - WebAssembly 32-bit\n    wasm64      - WebAssembly 64-bit\n    x86         - 32-bit X86: Pentium-Pro and above\n    x86-64      - 64-bit X86: EM64T and AMD64\n    xcore       - XCore\n    xtensa      - Xtensa 32\n",
+  "binary_sha256": {
+    "index": "55496c33bd41ae182d9ea2cc654c43908413aa248d3b53c20ebbfd9d5060de37",
+    "reference": "1f6ea409e16080ddbeabb37356c8cd5c0481e24178d56f4109903ef68463d1f5",
+    "lookup": "5f3bb6dfd75ca86f55e6f8e1b884619f06043a3a0fd1a247033d5dcd94ad4754",
+    "prepared": "7462e5bb87a21a4343920ad4f03762e5e19584e70130f29a45d2ee2ba5a4c4ed"
+  },
+  "raw_rows": 11016,
+  "summary_rows": 1224,
+  "control_checksums": "exact agreement; sampled outputs only",
+  "interpretation": "Placement and prior-case diagnostic; no C++ performance acceptance claim"
+}

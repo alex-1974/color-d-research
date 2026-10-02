@@ -1,0 +1,382 @@
+{
+  "archive_sha256": "4b7015af7881e1bf50cc43a9134a9eba41dbace9a1e250d3266d9d0c2b3e23a0",
+  "archive_bytes": 7752279,
+  "manifest_entries": 827,
+  "commands": 331,
+  "raw_sample_rows": 63504,
+  "checksum_max_abs": {
+    "float": 0.0,
+    "double": 0.0
+  },
+  "metadata": {
+    "revision": "b2267e17ad45c5b47e3f1fa5922b55de83236b61",
+    "cpu": 0,
+    "sizes": [
+      1024,
+      8191,
+      65536
+    ],
+    "blocks": 3,
+    "variants": [
+      "default",
+      "bv_direct",
+      "bv_split",
+      "bv_portable",
+      "bv_compiler",
+      "bv_vienot_index",
+      "bv_vienot_static"
+    ],
+    "notes": "Integrated BV policy; shared CI clocks/thermals/SMT uncontrolled",
+    "compilers": [
+      {
+        "executable": "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+        "family": "ldc",
+        "version": "LDC - the LLVM D compiler (1.43.0):\n  based on DMD v2.113.0 and LLVM 22.1.8\n  built with LDC - the LLVM D compiler (1.43.0)\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: icelake-server\n  https://dlang.org - https://wiki.dlang.org/LDC\n\n\n  Registered Targets:\n    aarch64     - AArch64 (little endian)\n    aarch64_32  - AArch64 (little endian ILP32)\n    aarch64_be  - AArch64 (big endian)\n    amdgcn      - AMD GCN GPUs\n    arm         - ARM\n    arm64       - ARM64 (little endian)\n    arm64_32    - ARM64 (little endian ILP32)\n    armeb       - ARM (big endian)\n    avr         - Atmel AVR Microcontroller\n    bpf         - BPF (host endian)\n    bpfeb       - BPF (big endian)\n    bpfel       - BPF (little endian)\n    hexagon     - Hexagon\n    lanai       - Lanai\n    loongarch32 - 32-bit LoongArch\n    loongarch64 - 64-bit LoongArch\n    mips        - MIPS (32-bit big endian)\n    mips64      - MIPS (64-bit big endian)\n    mips64el    - MIPS (64-bit little endian)\n    mipsel      - MIPS (32-bit little endian)\n    msp430      - MSP430 [experimental]\n    nvptx       - NVIDIA PTX 32-bit\n    nvptx64     - NVIDIA PTX 64-bit\n    ppc32       - PowerPC 32\n    ppc32le     - PowerPC 32 LE\n    ppc64       - PowerPC 64\n    ppc64le     - PowerPC 64 LE\n    r600        - AMD GPUs HD2XXX-HD6XXX\n    riscv32     - 32-bit RISC-V\n    riscv32be   - 32-bit big endian RISC-V\n    riscv64     - 64-bit RISC-V\n    riscv64be   - 64-bit big endian RISC-V\n    sparc       - Sparc\n    sparcel     - Sparc LE\n    sparcv9     - Sparc V9\n    spirv       - SPIR-V Logical\n    spirv32     - SPIR-V 32-bit\n    spirv64     - SPIR-V 64-bit\n    systemz     - SystemZ\n    thumb       - Thumb\n    thumbeb     - Thumb (big endian)\n    ve          - VE\n    wasm32      - WebAssembly 32-bit\n    wasm64      - WebAssembly 64-bit\n    x86         - 32-bit X86: Pentium-Pro and above\n    x86-64      - 64-bit X86: EM64T and AMD64\n    xcore       - XCore\n    xtensa      - Xtensa 32\n"
+      }
+    ],
+    "gcc_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "uname": [
+      "Linux",
+      "runnervm8df0l",
+      "6.17.0-1022-azure",
+      "#22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026",
+      "x86_64"
+    ],
+    "controls": "CPU affinity applied; frequency/turbo/SMT/thermals observed, not changed",
+    "observations": [
+      {
+        "time_utc": "2026-10-02T06:53:19.883173+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3426824",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:53:44.972232+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3487462",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:54:36.961971+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3517083",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:54:36.962286+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3517083",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:55:28.809126+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3609913",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:55:28.809469+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3609913",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:56:20.501550+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3490970",
+        "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+        "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+        "/sys/devices/system/cpu/smt/active": "1"
+      }
+    ],
+    "status": "passed",
+    "interpretation": "Replay checks passed; performance acceptance and independent model qualification remain separate."
+  },
+  "source_hashes": {
+    "source/experiments/r7_2_brettel_vienot_reference/source/app.d": "1ebbd9e9227a20fee096f5d13bf80efe84198c24d158441a203960927e9e3a79",
+    "source/experiments/r7_3_machado_2009_reference/source/app.d": "f2e714358502fbb4265a8866f1dbec57f0c4c69b9b4da437d04ee8dfe0f79b04",
+    "source/experiments/r7_4_5_cvd_performance/_generated/bv.d": "9da462fb72982c5b8c55614e2441a19bfc6490675c388d71196fbd5a29ec0827",
+    "source/experiments/r7_4_5_cvd_performance/_generated/coefficients.hpp": "05f1b86646323adc0241426f4dc68de45a1b02435adde632b6cbd6af7ae621b0",
+    "source/experiments/r7_4_5_cvd_performance/_generated/ma.d": "160c98aca44d3facf6dd3ab4722d0229e5c78f34c27196b19ceaab5825531918",
+    "source/experiments/r7_4_5_cvd_performance/bench.d": "53b25e61eb44f48c85d2dfa0c7a006a0a0401f7ca9dfe178cc55e38c349d6d2c",
+    "source/experiments/r7_4_5_cvd_performance/bv_policy.d": "1a06cba2f95630a176385fdab5e6c55de0adbb9b2747b92919d9fd1fc21aa186",
+    "source/experiments/r7_4_5_cvd_performance/bv_qualification.d": "71829a7a6712de42eafc39187d261b7120db0069b493cbc1637915c8ed94b215",
+    "source/experiments/r7_4_5_cvd_performance/candidates.d": "9d7e2ef7f30b545edfe144aef88b96568646f6f47fb5d5f622317b32710de955",
+    "source/experiments/r7_4_5_cvd_performance/machado_candidates.d": "8cc646a5950d862dfbacfc83f286db95eee1d4aca1074c2bac46ceae905233d0",
+    "source/experiments/r7_4_5_cvd_performance/prepare.py": "265bcedede07f7a599f83cc85a00fe016fd5b2fd26365bf0b63c8a6d74890659",
+    "source/experiments/r7_4_5_cvd_performance/reference.cpp": "62464ad880c1569edcc1739f84886a60e1b8ddab6374cdebf5d537a9f5df0cf2",
+    "source/experiments/r7_4_5_cvd_performance/replay.py": "4776abc61fc368cb1a270726e6ba1f63478d51d759e374d8fd571acf6ad84dec",
+    "source/experiments/r7_4_5_cvd_performance/summarize.py": "4d2968c60818ebf468b36ad037cc16f6ec779ac28c415e6fc0d94e11141b13c8"
+  },
+  "binary_hashes": {
+    "compiler-0-ldc/benchmark-bv_compiler": "84f745262604c6d954db10a73fc187a56385c66e4916fe64f4b4c38dc3d4c5d3",
+    "compiler-0-ldc/benchmark-bv_direct": "879f606021fdc835ed9e494be92c251342a3be811b5b36e79540647108268cca",
+    "compiler-0-ldc/benchmark-bv_portable": "84f745262604c6d954db10a73fc187a56385c66e4916fe64f4b4c38dc3d4c5d3",
+    "compiler-0-ldc/benchmark-bv_split": "ab5f1fb7fb6b95a0fbaf7e846b84f3d7d1627b94c52776240ca392fc790f00cb",
+    "compiler-0-ldc/benchmark-bv_vienot_index": "366c1bdd1bc22bff4ea2f75b70eadbe7a329df6932ebdfc51b8aa9eb76cd4fed",
+    "compiler-0-ldc/benchmark-bv_vienot_static": "255f19bd4472d1c0113c4a0323924aae5f9dcf7b1d457cb3c0923efe28fe0432",
+    "compiler-0-ldc/benchmark-default": "d2a444b9c6cd103cddb67f677d225599798bf788904853d91bc4f064878c8cb0",
+    "cpp-benchmark": "b01f08fe98a87bc3646d7377f100ec7bf658c0cb05615c6d857cca66c9cb9f55"
+  },
+  "verified_codegen_binaries": 4,
+  "verified_timed_affinity_commands": 252,
+  "build_commands": [
+    [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O3",
+      "-ffp-contract=off",
+      "-fno-fast-math",
+      "reference.cpp",
+      "-o",
+      "/home/runner/work/_temp/bv-replay/cpp-benchmark"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-g",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/bv-qualification-debug",
+      "bv_qualification.d",
+      "candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-O3",
+      "-fp-contract=off",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/bv-qualification-release",
+      "bv_qualification.d",
+      "candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-g",
+      "-boundscheck=on",
+      "-d-version=Preflight",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/preflight",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-O3",
+      "-fp-contract=off",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/benchmark-default",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-O3",
+      "-fp-contract=off",
+      "-d-version=DirectCvd",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/benchmark-bv_direct",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-O3",
+      "-fp-contract=off",
+      "-d-version=SplitCvd",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/benchmark-bv_split",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-O3",
+      "-fp-contract=off",
+      "-d-version=PortableBvPolicy",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/benchmark-bv_portable",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-O3",
+      "-fp-contract=off",
+      "-d-version=CompilerBvPolicy",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/benchmark-bv_compiler",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-O3",
+      "-fp-contract=off",
+      "-d-version=IndexedVienot",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/benchmark-bv_vienot_index",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/ldc2/1.43.0/x64/ldc2-1.43.0-linux-x86_64/bin/ldc2",
+      "-O3",
+      "-fp-contract=off",
+      "-d-version=StaticVienot",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-ldc/benchmark-bv_vienot_static",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ]
+  ],
+  "source_git_blobs": [
+    {
+      "path": "experiments/r7_2_brettel_vienot_reference/source/app.d",
+      "sha": "d50237f89ae7d07f239c56093c4c7668723ee85e"
+    },
+    {
+      "path": "experiments/r7_3_machado_2009_reference/source/app.d",
+      "sha": "dd7756dc71f05b38cbbf8ae78eb46be15716c3c4"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bench.d",
+      "sha": "7a5ae184b16d89977ec293a3b054f7e97437a726"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_policy.d",
+      "sha": "1734b56bb1bff9bc78ffdead9e0851c18a80c9c8"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_qualification.d",
+      "sha": "4d2804283017b8cf40eaca2878998895281274e2"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/candidates.d",
+      "sha": "5181ac1e6ce86b36f3cc9e97d8ff69fa0be83b41"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/machado_candidates.d",
+      "sha": "4e80d9d6c4433055d41eb99a2ae20a5736cf2ced"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/prepare.py",
+      "sha": "4f1b305c33353c0ac80d004bfb7a11aaa5857f1c"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/reference.cpp",
+      "sha": "e8a798a07a90c3b941c96169792f5f2606bace4b"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/replay.py",
+      "sha": "b5d48fdda6899f80d5440a7b603131910aa3a00e"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/summarize.py",
+      "sha": "6d6f93f6b1ed45e0874ef4040973a37ce1d0dfe7"
+    }
+  ],
+  "source_identity": "All eleven archived tracked source Git blob hashes were independently matched to GitHub at the recorded source revision; all four archives have identical tracked and generated source hashes."
+}

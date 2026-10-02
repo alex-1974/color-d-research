@@ -1,0 +1,2 @@
+qualification,float,inputs=5839,extended/IEEE/selection/in-place/CTFE/attributes=PASS
+qualification,double,inputs=5839,extended/IEEE/selection/in-place/CTFE/attributes=PASS

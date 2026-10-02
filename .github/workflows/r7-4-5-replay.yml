@@ -1,0 +1,47 @@
+name: R7.4.5 consumer replay smoke
+on:
+  push:
+    branches: [research/163-cvd-transformations]
+    paths:
+      - experiments/r7_4_5_cvd_performance/**
+      - experiments/r7_2_brettel_vienot_reference/**
+      - experiments/r7_3_machado_2009_reference/**
+      - .github/workflows/r7-4-5-replay.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [dmd-2.111.0, ldc-1.41.0, dmd-2.113.0, ldc-1.43.0]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+      - name: Exercise tracked replay driver and archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 experiments/r7_4_5_cvd_performance/replay.py --compilers "$DC" --sizes 64 1024 --blocks 2 --output "$RUNNER_TEMP/cvd-replay"
+          python3 - "$RUNNER_TEMP/cvd-replay" <<'PY'
+          import csv, json, pathlib, sys
+          root = pathlib.Path(sys.argv[1])
+          metadata = json.loads((root/'metadata.json').read_text())
+          assert metadata['status'] == 'passed'
+          with (root/'pooled-summary.csv').open() as stream:
+              rows = list(csv.DictReader(stream))
+          assert len(rows) == 13*2*28
+          assert all(int(r['samples_per_language']) == 36 for r in rows)
+          assert pathlib.Path(str(root)+'.tar.gz').is_file()
+          print('Replay complete matrix, pooled report and archive: PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cvd-replay-${{ matrix.compiler }}
+          path: ${{ runner.temp }}/cvd-replay.tar.gz

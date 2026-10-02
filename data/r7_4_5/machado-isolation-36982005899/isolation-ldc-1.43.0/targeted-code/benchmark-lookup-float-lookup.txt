@@ -1,0 +1,67 @@
+
+isolation-work/paired-isolation-ldc-1.43.0/benchmark-lookup:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000041e00 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv>:
+   41e00:	test   rdi,rdi
+   41e03:	je     41ead <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0xad>
+   41e09:	push   rbp
+   41e0a:	push   r15
+   41e0c:	push   r14
+   41e0e:	push   r13
+   41e10:	push   r12
+   41e12:	push   rbx
+   41e13:	sub    rsp,0x28
+   41e17:	mov    rbx,rcx
+   41e1a:	mov    r14,rdx
+   41e1d:	mov    r15,rsi
+   41e20:	mov    r12,rdi
+   41e23:	mov    r13d,r8d
+   41e26:	lea    rbp,[rsp+0x4]
+   41e2b:	nop    DWORD PTR [rax+rax*1+0x0]
+   41e30:	mov    rax,r13
+   41e33:	movabs rcx,0x5e1d27a3ee9c011
+   41e3d:	mul    rcx
+   41e40:	mov    rax,r13
+   41e43:	sub    rax,rdx
+   41e46:	shr    rax,1
+   41e49:	add    rax,rdx
+   41e4c:	shr    rax,0x9
+   41e50:	imul   eax,eax,0x3e9
+   41e56:	mov    ecx,r13d
+   41e59:	sub    ecx,eax
+   41e5b:	xorps  xmm0,xmm0
+   41e5e:	cvtsi2ss xmm0,ecx
+   41e62:	divss  xmm0,DWORD PTR [rip+0x4deea]        # 8fd54 <_fini+0x2594>
+   41e6a:	mov    rdi,rbp
+   41e6d:	mov    rsi,r14
+   41e70:	mov    rdx,rbx
+   41e73:	call   274b0 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb>
+   41e78:	mov    eax,DWORD PTR [rsp+0x24]
+   41e7c:	mov    DWORD PTR [r15+0x20],eax
+   41e80:	movups xmm0,XMMWORD PTR [rsp+0x4]
+   41e85:	movups xmm1,XMMWORD PTR [rsp+0x14]
+   41e8a:	movups XMMWORD PTR [r15+0x10],xmm1
+   41e8f:	movups XMMWORD PTR [r15],xmm0
+   41e93:	inc    r13
+   41e96:	add    r15,0x24
+   41e9a:	dec    r12
+   41e9d:	jne    41e30 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv+0x30>
+   41e9f:	add    rsp,0x28
+   41ea3:	pop    rbx
+   41ea4:	pop    r12
+   41ea6:	pop    r13
+   41ea8:	pop    r14
+   41eaa:	pop    r15
+   41eac:	pop    rbp
+   41ead:	ret
+
+Disassembly of section .fini:

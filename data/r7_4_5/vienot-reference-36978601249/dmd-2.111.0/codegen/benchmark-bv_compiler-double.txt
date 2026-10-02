@@ -1,0 +1,141 @@
+
+/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_compiler:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000096cec <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   96cec:	push   rbp
+   96ced:	mov    rbp,rsp
+   96cf0:	sub    rsp,0x1b0
+   96cf7:	mov    QWORD PTR [rbp-0x8],r8
+   96cfb:	mov    rax,rdi
+   96cfe:	mov    r9,rcx
+   96d01:	mov    r11,QWORD PTR [rbp+0x58]
+   96d05:	cmp    eax,0x1
+   96d08:	jne    96d97 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0xab>
+   96d0e:	movsd  xmm0,QWORD PTR [rip+0x74e52]        # 10bb68 <_TMP1146+0x22c8>
+   96d16:	rex.W movsd QWORD PTR [rbp-0x110],xmm0
+   96d1f:	movsd  xmm1,QWORD PTR [rip+0x74e49]        # 10bb70 <_TMP1146+0x22d0>
+   96d27:	rex.W movsd QWORD PTR [rbp-0x108],xmm1
+   96d30:	xorpd  xmm2,xmm2
+   96d34:	rex.W movsd QWORD PTR [rbp-0x100],xmm2
+   96d3d:	rex.W movsd QWORD PTR [rbp-0xf8],xmm0
+   96d46:	rex.W movsd QWORD PTR [rbp-0xf0],xmm1
+   96d4f:	rex.W movsd QWORD PTR [rbp-0xe8],xmm2
+   96d58:	movsd  xmm3,QWORD PTR [rip+0x74e18]        # 10bb78 <_TMP1146+0x22d8>
+   96d60:	rex.W movsd QWORD PTR [rbp-0xe0],xmm3
+   96d69:	movsd  xmm4,QWORD PTR [rip+0x74e0f]        # 10bb80 <_TMP1146+0x22e0>
+   96d71:	rex.W movsd QWORD PTR [rbp-0xd8],xmm4
+   96d7a:	movsd  xmm0,QWORD PTR [rip+0x74e06]        # 10bb88 <_TMP1146+0x22e8>
+   96d82:	rex.W movsd QWORD PTR [rbp-0xd0],xmm0
+   96d8b:	lea    rsi,[rbp-0x110]
+   96d92:	jmp    96e18 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x12c>
+   96d97:	movsd  xmm1,QWORD PTR [rip+0x74df1]        # 10bb90 <_TMP1146+0x22f0>
+   96d9f:	rex.W movsd QWORD PTR [rbp-0xc0],xmm1
+   96da8:	movsd  xmm2,QWORD PTR [rip+0x74de8]        # 10bb98 <_TMP1146+0x22f8>
+   96db0:	rex.W movsd QWORD PTR [rbp-0xb8],xmm2
+   96db9:	xorpd  xmm3,xmm3
+   96dbd:	rex.W movsd QWORD PTR [rbp-0xb0],xmm3
+   96dc6:	rex.W movsd QWORD PTR [rbp-0xa8],xmm1
+   96dcf:	rex.W movsd QWORD PTR [rbp-0xa0],xmm2
+   96dd8:	rex.W movsd QWORD PTR [rbp-0x98],xmm3
+   96de1:	movsd  xmm0,QWORD PTR [rip+0x74db7]        # 10bba0 <_TMP1146+0x2300>
+   96de9:	rex.W movsd QWORD PTR [rbp-0x90],xmm0
+   96df2:	movsd  xmm4,QWORD PTR [rip+0x74dae]        # 10bba8 <_TMP1146+0x2308>
+   96dfa:	rex.W movsd QWORD PTR [rbp-0x88],xmm4
+   96e03:	movsd  xmm1,QWORD PTR [rip+0x74d7d]        # 10bb88 <_TMP1146+0x22e8>
+   96e0b:	rex.W movsd QWORD PTR [rbp-0x80],xmm1
+   96e11:	lea    rsi,[rbp-0xc0]
+   96e18:	lea    rdi,[rbp-0x160]
+   96e1f:	mov    ecx,0x9
+   96e24:	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   96e27:	movsd  xmm0,QWORD PTR [rbp-0x160]
+   96e2f:	rex.W movsd QWORD PTR [rbp-0x70],xmm0
+   96e35:	movsd  xmm2,QWORD PTR [rbp-0x158]
+   96e3d:	rex.W movsd QWORD PTR [rbp-0x68],xmm2
+   96e43:	movsd  xmm1,QWORD PTR [rbp-0x150]
+   96e4b:	rex.W movsd QWORD PTR [rbp-0x60],xmm1
+   96e51:	movsd  xmm3,QWORD PTR [rbp-0x148]
+   96e59:	rex.W movsd QWORD PTR [rbp-0x58],xmm3
+   96e5f:	movsd  xmm4,QWORD PTR [rbp-0x140]
+   96e67:	rex.W movsd QWORD PTR [rbp-0x50],xmm4
+   96e6d:	movsd  xmm0,QWORD PTR [rbp-0x138]
+   96e75:	rex.W movsd QWORD PTR [rbp-0x48],xmm0
+   96e7b:	movsd  xmm2,QWORD PTR [rbp-0x130]
+   96e83:	rex.W movsd QWORD PTR [rbp-0x40],xmm2
+   96e89:	movsd  xmm1,QWORD PTR [rbp-0x128]
+   96e91:	rex.W movsd QWORD PTR [rbp-0x38],xmm1
+   96e97:	movsd  xmm3,QWORD PTR [rbp-0x120]
+   96e9f:	rex.W movsd QWORD PTR [rbp-0x30],xmm3
+   96ea5:	lea    rsi,[rbp-0x70]
+   96ea9:	lea    rdi,[rbp-0x1b0]
+   96eb0:	mov    ecx,0x9
+   96eb5:	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   96eb8:	xor    r8d,r8d
+   96ebb:	test   r11,r11
+   96ebe:	je     96f9d <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2b1>
+   96ec4:	mov    rdx,QWORD PTR [rbp+0x60]
+   96ec8:	mov    rcx,QWORD PTR [rbp-0x8]
+   96ecc:	mov    rsi,rdx
+   96ecf:	lea    rdi,[rbp-0x20]
+   96ed3:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   96ed5:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   96ed7:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   96ed9:	cmp    r8,r9
+   96edc:	jae    96fa2 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2b6>
+   96ee2:	movsd  xmm4,QWORD PTR [rbp-0x20]
+   96ee7:	movsd  xmm5,QWORD PTR [rbp-0x18]
+   96eec:	movsd  xmm3,QWORD PTR [rbp-0x10]
+   96ef1:	movsd  xmm0,QWORD PTR [rbp-0x1a0]
+   96ef9:	mulsd  xmm0,xmm3
+   96efd:	movsd  xmm1,QWORD PTR [rbp-0x1b0]
+   96f05:	mulsd  xmm1,xmm4
+   96f09:	movsd  xmm2,QWORD PTR [rbp-0x1a8]
+   96f11:	mulsd  xmm2,xmm5
+   96f15:	addsd  xmm1,xmm2
+   96f19:	addsd  xmm0,xmm1
+   96f1d:	rex.W movsd QWORD PTR [rcx],xmm0
+   96f22:	movsd  xmm6,QWORD PTR [rbp-0x188]
+   96f2a:	mulsd  xmm6,xmm3
+   96f2e:	movsd  xmm7,QWORD PTR [rbp-0x198]
+   96f36:	mulsd  xmm7,xmm4
+   96f3a:	movsd  xmm0,QWORD PTR [rbp-0x190]
+   96f42:	mulsd  xmm0,xmm5
+   96f46:	addsd  xmm7,xmm0
+   96f4a:	addsd  xmm6,xmm7
+   96f4e:	rex.W movsd QWORD PTR [rcx+0x8],xmm6
+   96f54:	movsd  xmm1,QWORD PTR [rbp-0x170]
+   96f5c:	mulsd  xmm1,xmm3
+   96f60:	movsd  xmm2,QWORD PTR [rbp-0x180]
+   96f68:	mulsd  xmm2,xmm4
+   96f6c:	movsd  xmm6,QWORD PTR [rbp-0x178]
+   96f74:	mulsd  xmm6,xmm5
+   96f78:	addsd  xmm2,xmm6
+   96f7c:	addsd  xmm1,xmm2
+   96f80:	rex.W movsd QWORD PTR [rcx+0x10],xmm1
+   96f86:	mov    eax,0x18
+   96f8b:	add    rdx,rax
+   96f8e:	add    rcx,rax
+   96f91:	inc    r8
+   96f94:	cmp    r8,r11
+   96f97:	jb     96ecc <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x1e0>
+   96f9d:	mov    rsp,rbp
+   96fa0:	pop    rbp
+   96fa1:	ret
+   96fa2:	mov    rcx,r9
+   96fa5:	mov    rdx,r8
+   96fa8:	mov    esi,0x2e
+   96fad:	lea    rdi,[rip+0x7c4d9]        # 11348d <_TMP2622>
+   96fb4:	call   d382c <_d_arraybounds_indexp>
+   96fb9:	mov    rsp,rbp
+   96fbc:	pop    rbp
+   96fbd:	ret
+
+Disassembly of section .fini:

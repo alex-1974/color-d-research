@@ -1,0 +1,396 @@
+0000000000041910 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   41910:	55                   	push   %rbp
+   41911:	41 57                	push   %r15
+   41913:	41 56                	push   %r14
+   41915:	41 55                	push   %r13
+   41917:	41 54                	push   %r12
+   41919:	53                   	push   %rbx
+   4191a:	48 83 ec 58          	sub    $0x58,%rsp
+   4191e:	48 85 ff             	test   %rdi,%rdi
+   41921:	74 7a                	je     4199d <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x8d>
+   41923:	49 89 ce             	mov    %rcx,%r14
+   41926:	48 89 d3             	mov    %rdx,%rbx
+   41929:	49 89 f7             	mov    %rsi,%r15
+   4192c:	49 89 fc             	mov    %rdi,%r12
+   4192f:	31 ed                	xor    %ebp,%ebp
+   41931:	45 31 ed             	xor    %r13d,%r13d
+   41934:	66 66 66 2e 0f 1f 84 	data16 data16 cs nopw 0x0(%rax,%rax,1)
+   4193b:	00 00 00 00 00 
+   41940:	4c 39 eb             	cmp    %r13,%rbx
+   41943:	74 67                	je     419ac <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x9c>
+   41945:	49 8b 44 2f 10       	mov    0x10(%r15,%rbp,1),%rax
+   4194a:	48 89 44 24 30       	mov    %rax,0x30(%rsp)
+   4194f:	41 0f 10 04 2f       	movups (%r15,%rbp,1),%xmm0
+   41954:	0f 29 44 24 20       	movaps %xmm0,0x20(%rsp)
+   41959:	48 8b 44 24 30       	mov    0x30(%rsp),%rax
+   4195e:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
+   41963:	0f 28 44 24 20       	movaps 0x20(%rsp),%xmm0
+   41968:	0f 11 04 24          	movups %xmm0,(%rsp)
+   4196c:	48 8d 7c 24 40       	lea    0x40(%rsp),%rdi
+   41971:	8b b4 24 d8 00 00 00 	mov    0xd8(%rsp),%esi
+   41978:	e8 23 5d fe ff       	call   276a0 <_D2bv__T12brettelProbeTdZQrFNaNbNiNfSQBj__T3RgbTdZQhkZQs>
+   4197d:	48 8b 44 24 50       	mov    0x50(%rsp),%rax
+   41982:	49 89 44 2e 10       	mov    %rax,0x10(%r14,%rbp,1)
+   41987:	0f 10 44 24 40       	movups 0x40(%rsp),%xmm0
+   4198c:	41 0f 11 04 2e       	movups %xmm0,(%r14,%rbp,1)
+   41991:	49 ff c5             	inc    %r13
+   41994:	48 83 c5 18          	add    $0x18,%rbp
+   41998:	4d 39 ec             	cmp    %r13,%r12
+   4199b:	75 a3                	jne    41940 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x30>
+   4199d:	48 83 c4 58          	add    $0x58,%rsp
+   419a1:	5b                   	pop    %rbx
+   419a2:	41 5c                	pop    %r12
+   419a4:	41 5d                	pop    %r13
+   419a6:	41 5e                	pop    %r14
+   419a8:	41 5f                	pop    %r15
+   419aa:	5d                   	pop    %rbp
+   419ab:	c3                   	ret
+   419ac:	48 8d 35 45 82 06 00 	lea    0x68245(%rip),%rsi        # a9bf8 <_D2ma__T7Matrix3TdZQl6__initZ+0x90>
+   419b3:	bf 07 00 00 00       	mov    $0x7,%edi
+   419b8:	ba 32 00 00 00       	mov    $0x32,%edx
+   419bd:	48 89 d9             	mov    %rbx,%rcx
+   419c0:	49 89 d8             	mov    %rbx,%r8
+   419c3:	e8 a8 51 fe ff       	call   26b70 <_d_arraybounds_index>
+   419c8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   419cf:	00 
+
+
+
+00000000000419d0 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   419d0:	50                   	push   %rax
+   419d1:	48 85 ff             	test   %rdi,%rdi
+   419d4:	0f 84 ee 02 00 00    	je     41cc8 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2f8>
+   419da:	49 89 d0             	mov    %rdx,%r8
+   419dd:	48 8d 57 ff          	lea    -0x1(%rdi),%rdx
+   419e1:	49 39 d0             	cmp    %rdx,%r8
+   419e4:	48 89 d0             	mov    %rdx,%rax
+   419e7:	49 0f 42 c0          	cmovb  %r8,%rax
+   419eb:	4c 8d 48 01          	lea    0x1(%rax),%r9
+   419ef:	83 7c 24 58 01       	cmpl   $0x1,0x58(%rsp)
+   419f4:	75 3a                	jne    41a30 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x60>
+   419f6:	49 83 f9 05          	cmp    $0x5,%r9
+   419fa:	72 2d                	jb     41a29 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x59>
+   419fc:	49 39 d0             	cmp    %rdx,%r8
+   419ff:	49 0f 42 d0          	cmovb  %r8,%rdx
+   41a03:	48 8d 14 52          	lea    (%rdx,%rdx,2),%rdx
+   41a07:	4c 8d 0c d1          	lea    (%rcx,%rdx,8),%r9
+   41a0b:	49 83 c1 18          	add    $0x18,%r9
+   41a0f:	48 8d 14 d6          	lea    (%rsi,%rdx,8),%rdx
+   41a13:	48 83 c2 18          	add    $0x18,%rdx
+   41a17:	48 39 d1             	cmp    %rdx,%rcx
+   41a1a:	0f 92 c2             	setb   %dl
+   41a1d:	4c 39 ce             	cmp    %r9,%rsi
+   41a20:	41 0f 92 c1          	setb   %r9b
+   41a24:	44 84 ca             	test   %r9b,%dl
+   41a27:	74 45                	je     41a6e <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x9e>
+   41a29:	31 c0                	xor    %eax,%eax
+   41a2b:	e9 f5 00 00 00       	jmp    41b25 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x155>
+   41a30:	49 83 f9 04          	cmp    $0x4,%r9
+   41a34:	76 31                	jbe    41a67 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x97>
+   41a36:	49 39 d0             	cmp    %rdx,%r8
+   41a39:	49 0f 42 d0          	cmovb  %r8,%rdx
+   41a3d:	48 8d 14 52          	lea    (%rdx,%rdx,2),%rdx
+   41a41:	4c 8d 0c d1          	lea    (%rcx,%rdx,8),%r9
+   41a45:	49 83 c1 18          	add    $0x18,%r9
+   41a49:	48 8d 14 d6          	lea    (%rsi,%rdx,8),%rdx
+   41a4d:	48 83 c2 18          	add    $0x18,%rdx
+   41a51:	48 39 d1             	cmp    %rdx,%rcx
+   41a54:	0f 92 c2             	setb   %dl
+   41a57:	4c 39 ce             	cmp    %r9,%rsi
+   41a5a:	41 0f 92 c1          	setb   %r9b
+   41a5e:	44 84 ca             	test   %r9b,%dl
+   41a61:	0f 84 3a 01 00 00    	je     41ba1 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x1d1>
+   41a67:	31 c0                	xor    %eax,%eax
+   41a69:	e9 e7 01 00 00       	jmp    41c55 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x285>
+   41a6e:	48 83 e0 fe          	and    $0xfffffffffffffffe,%rax
+   41a72:	31 d2                	xor    %edx,%edx
+   41a74:	66 0f 28 05 74 6b 05 	movapd 0x56b74(%rip),%xmm0        # 985f0 <_fini+0x1b50>
+   41a7b:	00 
+   41a7c:	66 0f 28 0d 7c 6b 05 	movapd 0x56b7c(%rip),%xmm1        # 98600 <_fini+0x1b60>
+   41a83:	00 
+   41a84:	66 0f 57 d2          	xorpd  %xmm2,%xmm2
+   41a88:	66 0f 28 1d 80 6b 05 	movapd 0x56b80(%rip),%xmm3        # 98610 <_fini+0x1b70>
+   41a8f:	00 
+   41a90:	66 0f 28 25 88 6b 05 	movapd 0x56b88(%rip),%xmm4        # 98620 <_fini+0x1b80>
+   41a97:	00 
+   41a98:	49 89 c1             	mov    %rax,%r9
+   41a9b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   41aa0:	f2 0f 10 2c 16       	movsd  (%rsi,%rdx,1),%xmm5
+   41aa5:	f2 0f 10 74 16 08    	movsd  0x8(%rsi,%rdx,1),%xmm6
+   41aab:	f2 0f 10 7c 16 10    	movsd  0x10(%rsi,%rdx,1),%xmm7
+   41ab1:	66 0f 16 7c 16 28    	movhpd 0x28(%rsi,%rdx,1),%xmm7
+   41ab7:	66 0f 16 74 16 20    	movhpd 0x20(%rsi,%rdx,1),%xmm6
+   41abd:	66 0f 16 6c 16 18    	movhpd 0x18(%rsi,%rdx,1),%xmm5
+   41ac3:	66 44 0f 28 c5       	movapd %xmm5,%xmm8
+   41ac8:	66 44 0f 59 c0       	mulpd  %xmm0,%xmm8
+   41acd:	66 44 0f 28 ce       	movapd %xmm6,%xmm9
+   41ad2:	66 44 0f 59 c9       	mulpd  %xmm1,%xmm9
+   41ad7:	66 45 0f 58 c8       	addpd  %xmm8,%xmm9
+   41adc:	66 44 0f 58 cf       	addpd  %xmm7,%xmm9
+   41ae1:	66 0f 59 fa          	mulpd  %xmm2,%xmm7
+   41ae5:	66 0f 59 f3          	mulpd  %xmm3,%xmm6
+   41ae9:	66 0f 59 ec          	mulpd  %xmm4,%xmm5
+   41aed:	66 0f 58 ee          	addpd  %xmm6,%xmm5
+   41af1:	66 0f 58 ef          	addpd  %xmm7,%xmm5
+   41af5:	66 0f 28 f5          	movapd %xmm5,%xmm6
+   41af9:	f2 41 0f 10 f1       	movsd  %xmm9,%xmm6
+   41afe:	44 0f 12 cd          	movhlps %xmm5,%xmm9
+   41b02:	66 0f 14 ed          	unpcklpd %xmm5,%xmm5
+   41b06:	44 0f 11 4c 11 20    	movups %xmm9,0x20(%rcx,%rdx,1)
+   41b0c:	66 0f 11 74 11 10    	movupd %xmm6,0x10(%rcx,%rdx,1)
+   41b12:	66 0f 11 2c 11       	movupd %xmm5,(%rcx,%rdx,1)
+   41b17:	48 83 c2 30          	add    $0x30,%rdx
+   41b1b:	49 83 c1 fe          	add    $0xfffffffffffffffe,%r9
+   41b1f:	0f 85 7b ff ff ff    	jne    41aa0 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0xd0>
+   41b25:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   41b2c:	00 
+   41b2d:	48 8d 14 52          	lea    (%rdx,%rdx,2),%rdx
+   41b31:	66 0f 57 c0          	xorpd  %xmm0,%xmm0
+   41b35:	66 0f 16 05 73 70 05 	movhpd 0x57073(%rip),%xmm0        # 98bb0 <_fini+0x2110>
+   41b3c:	00 
+   41b3d:	66 0f 28 0d db 5f 05 	movapd 0x55fdb(%rip),%xmm1        # 97b20 <_fini+0x1080>
+   41b44:	00 
+   41b45:	66 0f 28 15 f3 5f 05 	movapd 0x55ff3(%rip),%xmm2        # 97b40 <_fini+0x10a0>
+   41b4c:	00 
+   41b4d:	0f 1f 00             	nopl   (%rax)
+   41b50:	49 39 c0             	cmp    %rax,%r8
+   41b53:	0f 84 71 01 00 00    	je     41cca <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2fa>
+   41b59:	66 0f 10 1c 16       	movupd (%rsi,%rdx,1),%xmm3
+   41b5e:	f2 0f 10 64 16 10    	movsd  0x10(%rsi,%rdx,1),%xmm4
+   41b64:	66 0f 14 e4          	unpcklpd %xmm4,%xmm4
+   41b68:	66 0f 59 e0          	mulpd  %xmm0,%xmm4
+   41b6c:	66 0f 28 eb          	movapd %xmm3,%xmm5
+   41b70:	66 0f c6 eb 01       	shufpd $0x1,%xmm3,%xmm5
+   41b75:	66 0f 59 e9          	mulpd  %xmm1,%xmm5
+   41b79:	66 0f 59 da          	mulpd  %xmm2,%xmm3
+   41b7d:	66 0f 58 dd          	addpd  %xmm5,%xmm3
+   41b81:	66 0f 58 dc          	addpd  %xmm4,%xmm3
+   41b85:	66 0f 13 1c 11       	movlpd %xmm3,(%rcx,%rdx,1)
+   41b8a:	66 0f 11 5c 11 08    	movupd %xmm3,0x8(%rcx,%rdx,1)
+   41b90:	48 ff c0             	inc    %rax
+   41b93:	48 83 c2 18          	add    $0x18,%rdx
+   41b97:	48 39 c7             	cmp    %rax,%rdi
+   41b9a:	75 b4                	jne    41b50 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x180>
+   41b9c:	e9 27 01 00 00       	jmp    41cc8 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2f8>
+   41ba1:	48 83 e0 fe          	and    $0xfffffffffffffffe,%rax
+   41ba5:	31 d2                	xor    %edx,%edx
+   41ba7:	66 0f 28 05 01 6a 05 	movapd 0x56a01(%rip),%xmm0        # 985b0 <_fini+0x1b10>
+   41bae:	00 
+   41baf:	66 0f 28 0d 09 6a 05 	movapd 0x56a09(%rip),%xmm1        # 985c0 <_fini+0x1b20>
+   41bb6:	00 
+   41bb7:	66 0f 57 d2          	xorpd  %xmm2,%xmm2
+   41bbb:	66 0f 28 1d 0d 6a 05 	movapd 0x56a0d(%rip),%xmm3        # 985d0 <_fini+0x1b30>
+   41bc2:	00 
+   41bc3:	66 0f 28 25 15 6a 05 	movapd 0x56a15(%rip),%xmm4        # 985e0 <_fini+0x1b40>
+   41bca:	00 
+   41bcb:	49 89 c1             	mov    %rax,%r9
+   41bce:	66 90                	xchg   %ax,%ax
+   41bd0:	f2 0f 10 2c 16       	movsd  (%rsi,%rdx,1),%xmm5
+   41bd5:	f2 0f 10 74 16 08    	movsd  0x8(%rsi,%rdx,1),%xmm6
+   41bdb:	f2 0f 10 7c 16 10    	movsd  0x10(%rsi,%rdx,1),%xmm7
+   41be1:	66 0f 16 7c 16 28    	movhpd 0x28(%rsi,%rdx,1),%xmm7
+   41be7:	66 0f 16 74 16 20    	movhpd 0x20(%rsi,%rdx,1),%xmm6
+   41bed:	66 0f 16 6c 16 18    	movhpd 0x18(%rsi,%rdx,1),%xmm5
+   41bf3:	66 44 0f 28 c5       	movapd %xmm5,%xmm8
+   41bf8:	66 44 0f 59 c0       	mulpd  %xmm0,%xmm8
+   41bfd:	66 44 0f 28 ce       	movapd %xmm6,%xmm9
+   41c02:	66 44 0f 59 c9       	mulpd  %xmm1,%xmm9
+   41c07:	66 45 0f 58 c8       	addpd  %xmm8,%xmm9
+   41c0c:	66 44 0f 58 cf       	addpd  %xmm7,%xmm9
+   41c11:	66 0f 59 fa          	mulpd  %xmm2,%xmm7
+   41c15:	66 0f 59 f3          	mulpd  %xmm3,%xmm6
+   41c19:	66 0f 59 ec          	mulpd  %xmm4,%xmm5
+   41c1d:	66 0f 58 ee          	addpd  %xmm6,%xmm5
+   41c21:	66 0f 58 ef          	addpd  %xmm7,%xmm5
+   41c25:	66 0f 28 f5          	movapd %xmm5,%xmm6
+   41c29:	f2 41 0f 10 f1       	movsd  %xmm9,%xmm6
+   41c2e:	44 0f 12 cd          	movhlps %xmm5,%xmm9
+   41c32:	66 0f 14 ed          	unpcklpd %xmm5,%xmm5
+   41c36:	44 0f 11 4c 11 20    	movups %xmm9,0x20(%rcx,%rdx,1)
+   41c3c:	66 0f 11 74 11 10    	movupd %xmm6,0x10(%rcx,%rdx,1)
+   41c42:	66 0f 11 2c 11       	movupd %xmm5,(%rcx,%rdx,1)
+   41c47:	48 83 c2 30          	add    $0x30,%rdx
+   41c4b:	49 83 c1 fe          	add    $0xfffffffffffffffe,%r9
+   41c4f:	0f 85 7b ff ff ff    	jne    41bd0 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x200>
+   41c55:	48 8d 14 c5 00 00 00 	lea    0x0(,%rax,8),%rdx
+   41c5c:	00 
+   41c5d:	48 8d 14 52          	lea    (%rdx,%rdx,2),%rdx
+   41c61:	66 0f 57 c0          	xorpd  %xmm0,%xmm0
+   41c65:	66 0f 16 05 43 6f 05 	movhpd 0x56f43(%rip),%xmm0        # 98bb0 <_fini+0x2110>
+   41c6c:	00 
+   41c6d:	66 0f 28 0d bb 5e 05 	movapd 0x55ebb(%rip),%xmm1        # 97b30 <_fini+0x1090>
+   41c74:	00 
+   41c75:	66 0f 28 15 d3 5e 05 	movapd 0x55ed3(%rip),%xmm2        # 97b50 <_fini+0x10b0>
+   41c7c:	00 
+   41c7d:	0f 1f 00             	nopl   (%rax)
+   41c80:	49 39 c0             	cmp    %rax,%r8
+   41c83:	74 45                	je     41cca <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2fa>
+   41c85:	66 0f 10 1c 16       	movupd (%rsi,%rdx,1),%xmm3
+   41c8a:	f2 0f 10 64 16 10    	movsd  0x10(%rsi,%rdx,1),%xmm4
+   41c90:	66 0f 14 e4          	unpcklpd %xmm4,%xmm4
+   41c94:	66 0f 59 e0          	mulpd  %xmm0,%xmm4
+   41c98:	66 0f 28 eb          	movapd %xmm3,%xmm5
+   41c9c:	66 0f c6 eb 01       	shufpd $0x1,%xmm3,%xmm5
+   41ca1:	66 0f 59 e9          	mulpd  %xmm1,%xmm5
+   41ca5:	66 0f 59 da          	mulpd  %xmm2,%xmm3
+   41ca9:	66 0f 58 dd          	addpd  %xmm5,%xmm3
+   41cad:	66 0f 58 dc          	addpd  %xmm4,%xmm3
+   41cb1:	66 0f 13 1c 11       	movlpd %xmm3,(%rcx,%rdx,1)
+   41cb6:	66 0f 11 5c 11 08    	movupd %xmm3,0x8(%rcx,%rdx,1)
+   41cbc:	48 ff c0             	inc    %rax
+   41cbf:	48 83 c2 18          	add    $0x18,%rdx
+   41cc3:	48 39 c7             	cmp    %rax,%rdi
+   41cc6:	75 b8                	jne    41c80 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2b0>
+   41cc8:	58                   	pop    %rax
+   41cc9:	c3                   	ret
+   41cca:	48 8d 35 27 7f 06 00 	lea    0x67f27(%rip),%rsi        # a9bf8 <_D2ma__T7Matrix3TdZQl6__initZ+0x90>
+   41cd1:	bf 07 00 00 00       	mov    $0x7,%edi
+   41cd6:	ba 34 00 00 00       	mov    $0x34,%edx
+   41cdb:	4c 89 c1             	mov    %r8,%rcx
+   41cde:	e8 8d 4e fe ff       	call   26b70 <_d_arraybounds_index>
+   41ce3:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+   41cea:	00 00 00 
+   41ced:	0f 1f 00             	nopl   (%rax)
+
+
+
+000000000004af80 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   4af80:	55                   	push   %rbp
+   4af81:	41 57                	push   %r15
+   4af83:	41 56                	push   %r14
+   4af85:	41 55                	push   %r13
+   4af87:	41 54                	push   %r12
+   4af89:	53                   	push   %rbx
+   4af8a:	50                   	push   %rax
+   4af8b:	48 85 ff             	test   %rdi,%rdi
+   4af8e:	74 54                	je     4afe4 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x64>
+   4af90:	49 89 ce             	mov    %rcx,%r14
+   4af93:	48 89 d3             	mov    %rdx,%rbx
+   4af96:	49 89 f7             	mov    %rsi,%r15
+   4af99:	49 89 fc             	mov    %rdi,%r12
+   4af9c:	41 bd 08 00 00 00    	mov    $0x8,%r13d
+   4afa2:	31 ed                	xor    %ebp,%ebp
+   4afa4:	66 66 66 2e 0f 1f 84 	data16 data16 cs nopw 0x0(%rax,%rax,1)
+   4afab:	00 00 00 00 00 
+   4afb0:	48 39 eb             	cmp    %rbp,%rbx
+   4afb3:	74 3e                	je     4aff3 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x73>
+   4afb5:	f3 43 0f 10 0c 2f    	movss  (%r15,%r13,1),%xmm1
+   4afbb:	f2 43 0f 10 44 2f f8 	movsd  -0x8(%r15,%r13,1),%xmm0
+   4afc2:	8b 7c 24 68          	mov    0x68(%rsp),%edi
+   4afc6:	e8 35 ca fd ff       	call   27a00 <_D2bv__T12brettelProbeTfZQrFNaNbNiNfSQBj__T3RgbTfZQhkZQs>
+   4afcb:	f2 43 0f 11 44 2e f8 	movsd  %xmm0,-0x8(%r14,%r13,1)
+   4afd2:	f3 43 0f 11 0c 2e    	movss  %xmm1,(%r14,%r13,1)
+   4afd8:	48 ff c5             	inc    %rbp
+   4afdb:	49 83 c5 0c          	add    $0xc,%r13
+   4afdf:	49 39 ec             	cmp    %rbp,%r12
+   4afe2:	75 cc                	jne    4afb0 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x30>
+   4afe4:	48 83 c4 08          	add    $0x8,%rsp
+   4afe8:	5b                   	pop    %rbx
+   4afe9:	41 5c                	pop    %r12
+   4afeb:	41 5d                	pop    %r13
+   4afed:	41 5e                	pop    %r14
+   4afef:	41 5f                	pop    %r15
+   4aff1:	5d                   	pop    %rbp
+   4aff2:	c3                   	ret
+   4aff3:	48 8d 35 fe eb 05 00 	lea    0x5ebfe(%rip),%rsi        # a9bf8 <_D2ma__T7Matrix3TdZQl6__initZ+0x90>
+   4affa:	bf 07 00 00 00       	mov    $0x7,%edi
+   4afff:	ba 32 00 00 00       	mov    $0x32,%edx
+   4b004:	48 89 d9             	mov    %rbx,%rcx
+   4b007:	49 89 d8             	mov    %rbx,%r8
+   4b00a:	e8 61 bb fd ff       	call   26b70 <_d_arraybounds_index>
+   4b00f:	90                   	nop
+
+
+
+000000000004b010 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   4b010:	50                   	push   %rax
+   4b011:	48 85 ff             	test   %rdi,%rdi
+   4b014:	0f 84 53 01 00 00    	je     4b16d <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x15d>
+   4b01a:	49 89 d0             	mov    %rdx,%r8
+   4b01d:	b8 08 00 00 00       	mov    $0x8,%eax
+   4b022:	31 d2                	xor    %edx,%edx
+   4b024:	83 7c 24 38 01       	cmpl   $0x1,0x38(%rsp)
+   4b029:	0f 85 a7 00 00 00    	jne    4b0d6 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xc6>
+   4b02f:	f3 0f 10 05 91 dd 04 	movss  0x4dd91(%rip),%xmm0        # 98dc8 <_fini+0x2328>
+   4b036:	00 
+   4b037:	f3 0f 10 0d 8d dd 04 	movss  0x4dd8d(%rip),%xmm1        # 98dcc <_fini+0x232c>
+   4b03e:	00 
+   4b03f:	0f 57 d2             	xorps  %xmm2,%xmm2
+   4b042:	f3 0f 10 1d 86 dd 04 	movss  0x4dd86(%rip),%xmm3        # 98dd0 <_fini+0x2330>
+   4b049:	00 
+   4b04a:	f3 0f 10 25 82 dd 04 	movss  0x4dd82(%rip),%xmm4        # 98dd4 <_fini+0x2334>
+   4b051:	00 
+   4b052:	66 66 66 66 66 2e 0f 	data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
+   4b059:	1f 84 00 00 00 00 00 
+   4b060:	49 39 d0             	cmp    %rdx,%r8
+   4b063:	0f 84 06 01 00 00    	je     4b16f <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x15f>
+   4b069:	f3 0f 10 2c 06       	movss  (%rsi,%rax,1),%xmm5
+   4b06e:	f3 0f 10 74 06 f8    	movss  -0x8(%rsi,%rax,1),%xmm6
+   4b074:	f3 0f 10 7c 06 fc    	movss  -0x4(%rsi,%rax,1),%xmm7
+   4b07a:	44 0f 28 c6          	movaps %xmm6,%xmm8
+   4b07e:	f3 44 0f 59 c0       	mulss  %xmm0,%xmm8
+   4b083:	44 0f 28 cf          	movaps %xmm7,%xmm9
+   4b087:	f3 44 0f 59 c9       	mulss  %xmm1,%xmm9
+   4b08c:	f3 45 0f 58 c8       	addss  %xmm8,%xmm9
+   4b091:	f3 0f 59 f3          	mulss  %xmm3,%xmm6
+   4b095:	f3 0f 59 fc          	mulss  %xmm4,%xmm7
+   4b099:	f3 0f 58 fe          	addss  %xmm6,%xmm7
+   4b09d:	f3 0f 58 fd          	addss  %xmm5,%xmm7
+   4b0a1:	f3 0f 59 ea          	mulss  %xmm2,%xmm5
+   4b0a5:	f3 41 0f 58 e9       	addss  %xmm9,%xmm5
+   4b0aa:	f3 0f 11 2c 24       	movss  %xmm5,(%rsp)
+   4b0af:	f3 0f 11 6c 24 04    	movss  %xmm5,0x4(%rsp)
+   4b0b5:	f2 0f 10 2c 24       	movsd  (%rsp),%xmm5
+   4b0ba:	f2 0f 11 6c 01 f8    	movsd  %xmm5,-0x8(%rcx,%rax,1)
+   4b0c0:	f3 0f 11 3c 01       	movss  %xmm7,(%rcx,%rax,1)
+   4b0c5:	48 ff c2             	inc    %rdx
+   4b0c8:	48 83 c0 0c          	add    $0xc,%rax
+   4b0cc:	48 39 d7             	cmp    %rdx,%rdi
+   4b0cf:	75 8f                	jne    4b060 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x50>
+   4b0d1:	e9 97 00 00 00       	jmp    4b16d <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x15d>
+   4b0d6:	f3 0f 10 05 fa dc 04 	movss  0x4dcfa(%rip),%xmm0        # 98dd8 <_fini+0x2338>
+   4b0dd:	00 
+   4b0de:	f3 0f 10 0d f6 dc 04 	movss  0x4dcf6(%rip),%xmm1        # 98ddc <_fini+0x233c>
+   4b0e5:	00 
+   4b0e6:	0f 57 d2             	xorps  %xmm2,%xmm2
+   4b0e9:	f3 0f 10 1d ef dc 04 	movss  0x4dcef(%rip),%xmm3        # 98de0 <_fini+0x2340>
+   4b0f0:	00 
+   4b0f1:	f3 0f 10 25 eb dc 04 	movss  0x4dceb(%rip),%xmm4        # 98de4 <_fini+0x2344>
+   4b0f8:	00 
+   4b0f9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   4b100:	49 39 d0             	cmp    %rdx,%r8
+   4b103:	74 6a                	je     4b16f <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0x15f>
+   4b105:	f3 0f 10 2c 06       	movss  (%rsi,%rax,1),%xmm5
+   4b10a:	f3 0f 10 74 06 f8    	movss  -0x8(%rsi,%rax,1),%xmm6
+   4b110:	f3 0f 10 7c 06 fc    	movss  -0x4(%rsi,%rax,1),%xmm7
+   4b116:	44 0f 28 c6          	movaps %xmm6,%xmm8
+   4b11a:	f3 44 0f 59 c0       	mulss  %xmm0,%xmm8
+   4b11f:	44 0f 28 cf          	movaps %xmm7,%xmm9
+   4b123:	f3 44 0f 59 c9       	mulss  %xmm1,%xmm9
+   4b128:	f3 45 0f 58 c8       	addss  %xmm8,%xmm9
+   4b12d:	f3 0f 59 f3          	mulss  %xmm3,%xmm6
+   4b131:	f3 0f 59 fc          	mulss  %xmm4,%xmm7
+   4b135:	f3 0f 58 fe          	addss  %xmm6,%xmm7
+   4b139:	f3 0f 58 fd          	addss  %xmm5,%xmm7
+   4b13d:	f3 0f 59 ea          	mulss  %xmm2,%xmm5
+   4b141:	f3 41 0f 58 e9       	addss  %xmm9,%xmm5
+   4b146:	f3 0f 11 2c 24       	movss  %xmm5,(%rsp)
+   4b14b:	f3 0f 11 6c 24 04    	movss  %xmm5,0x4(%rsp)
+   4b151:	f2 0f 10 2c 24       	movsd  (%rsp),%xmm5
+   4b156:	f2 0f 11 6c 01 f8    	movsd  %xmm5,-0x8(%rcx,%rax,1)
+   4b15c:	f3 0f 11 3c 01       	movss  %xmm7,(%rcx,%rax,1)
+   4b161:	48 ff c2             	inc    %rdx
+   4b164:	48 83 c0 0c          	add    $0xc,%rax
+   4b168:	48 39 d7             	cmp    %rdx,%rdi
+   4b16b:	75 93                	jne    4b100 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv+0xf0>
+   4b16d:	58                   	pop    %rax
+   4b16e:	c3                   	ret
+   4b16f:	48 8d 35 82 ea 05 00 	lea    0x5ea82(%rip),%rsi        # a9bf8 <_D2ma__T7Matrix3TdZQl6__initZ+0x90>
+   4b176:	bf 07 00 00 00       	mov    $0x7,%edi
+   4b17b:	ba 34 00 00 00       	mov    $0x34,%edx
+   4b180:	4c 89 c1             	mov    %r8,%rcx
+   4b183:	e8 e8 b9 fd ff       	call   26b70 <_d_arraybounds_index>
+   4b188:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   4b18f:	00 
+
+

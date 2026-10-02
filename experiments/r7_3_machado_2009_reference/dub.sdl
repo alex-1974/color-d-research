@@ -1,0 +1,4 @@
+name "r7_3_machado_2009_reference"
+description "R7.3 Machado 2009 severity reference"
+targetType "executable"
+sourcePaths "source"

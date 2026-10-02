@@ -1,0 +1,64 @@
+name: R7.4.4 CVD qualification
+
+on:
+  push:
+    branches: [research/163-cvd-transformations]
+    paths:
+      - experiments/r7_2_brettel_vienot_reference/**
+      - experiments/r7_3_machado_2009_reference/**
+      - .github/workflows/r7-4-4-qualification.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [dmd-2.111.0, ldc-1.41.0, dmd-2.113.0, ldc-1.43.0]
+        experiment: [r7_2_brettel_vienot_reference, r7_3_machado_2009_reference]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+      - name: Identity and assertion canary
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          "$DC" --version
+          dub --version
+          printf '%s\n' 'void main() { assert(false, "expected assertion canary failure"); }' > assertion_canary.d
+          if "$DC" -run assertion_canary.d > assertion-canary.txt 2>&1; then
+            echo "Assertion canary unexpectedly passed" >&2
+            exit 1
+          fi
+          if ! grep -q 'core.exception.AssertError' assertion-canary.txt; then
+            cat assertion-canary.txt
+            echo 'Canary did not reach a runtime assertion' >&2
+            exit 1
+          fi
+          cat assertion-canary.txt
+      - name: Assert-enabled qualification
+        working-directory: experiments/${{ matrix.experiment }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          dub run --compiler="$DC" --build=debug --force | tee qualification-debug.txt
+      - name: Release compile and execution smoke
+        working-directory: experiments/${{ matrix.experiment }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          dub run --compiler="$DC" --build=release --force | tee qualification-release.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r7-4-4-${{ matrix.compiler }}-${{ matrix.experiment }}
+          path: |
+            assertion-canary.txt
+            experiments/${{ matrix.experiment }}/qualification-*.txt

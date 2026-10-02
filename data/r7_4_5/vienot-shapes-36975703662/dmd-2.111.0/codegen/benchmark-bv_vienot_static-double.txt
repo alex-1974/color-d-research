@@ -1,0 +1,226 @@
+
+/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_vienot_static:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+0000000000096cec <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   96cec:	push   rbp
+   96ced:	mov    rbp,rsp
+   96cf0:	push   rax
+   96cf1:	push   rbx
+   96cf2:	mov    r11,rcx
+   96cf5:	mov    rbx,r8
+   96cf8:	mov    r9,QWORD PTR [rbp+0x58]
+   96cfc:	mov    rsi,QWORD PTR [rbp+0x60]
+   96d00:	cmp    edi,0x1
+   96d03:	jne    96e27 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x13b>
+   96d09:	xor    r8d,r8d
+   96d0c:	test   r9,r9
+   96d0f:	je     96f40 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x254>
+   96d15:	mov    rdx,rsi
+   96d18:	cmp    r8,r9
+   96d1b:	jae    96f46 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x25a>
+   96d21:	movsd  xmm4,QWORD PTR [rdx]
+   96d25:	cmp    r8,r9
+   96d28:	jae    96f46 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x25a>
+   96d2e:	movsd  xmm5,QWORD PTR [rdx+0x8]
+   96d33:	cmp    r8,r9
+   96d36:	jae    96f46 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x25a>
+   96d3c:	movsd  xmm6,QWORD PTR [rdx+0x10]
+   96d41:	cmp    r8,r11
+   96d44:	jae    96f63 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x277>
+   96d4a:	movsd  xmm0,xmm6
+   96d4e:	xorpd  xmm1,xmm1
+   96d52:	mulsd  xmm0,xmm1
+   96d56:	movsd  xmm2,xmm4
+   96d5a:	movsd  xmm3,QWORD PTR [rip+0x74e06]        # 10bb68 <_TMP1146+0x22c8>
+   96d62:	mulsd  xmm2,xmm3
+   96d66:	movsd  xmm7,xmm5
+   96d6a:	movsd  xmm1,QWORD PTR [rip+0x74dfe]        # 10bb70 <_TMP1146+0x22d0>
+   96d72:	mulsd  xmm7,xmm1
+   96d76:	addsd  xmm2,xmm7
+   96d7a:	addsd  xmm0,xmm2
+   96d7e:	lea    rcx,[rdx+rbx*1]
+   96d82:	sub    rcx,rsi
+   96d85:	rex.W movsd QWORD PTR [rcx],xmm0
+   96d8a:	cmp    r8,r11
+   96d8d:	jae    96f80 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x294>
+   96d93:	movsd  xmm0,xmm6
+   96d97:	xorpd  xmm1,xmm1
+   96d9b:	mulsd  xmm0,xmm1
+   96d9f:	movsd  xmm2,xmm4
+   96da3:	movsd  xmm3,QWORD PTR [rip+0x74dbd]        # 10bb68 <_TMP1146+0x22c8>
+   96dab:	mulsd  xmm2,xmm3
+   96daf:	movsd  xmm7,xmm5
+   96db3:	movsd  xmm1,QWORD PTR [rip+0x74db5]        # 10bb70 <_TMP1146+0x22d0>
+   96dbb:	mulsd  xmm7,xmm1
+   96dbf:	addsd  xmm2,xmm7
+   96dc3:	addsd  xmm0,xmm2
+   96dc7:	lea    rcx,[rbx+rdx*1+0x8]
+   96dcc:	sub    rcx,rsi
+   96dcf:	rex.W movsd QWORD PTR [rcx],xmm0
+   96dd4:	cmp    r8,r11
+   96dd7:	jae    96f9d <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2b1>
+   96ddd:	movsd  xmm0,xmm4
+   96de1:	movsd  xmm1,QWORD PTR [rip+0x74d8f]        # 10bb78 <_TMP1146+0x22d8>
+   96de9:	mulsd  xmm0,xmm1
+   96ded:	movsd  xmm2,xmm5
+   96df1:	movsd  xmm3,QWORD PTR [rip+0x74d87]        # 10bb80 <_TMP1146+0x22e0>
+   96df9:	mulsd  xmm2,xmm3
+   96dfd:	addsd  xmm0,xmm2
+   96e01:	addsd  xmm0,xmm6
+   96e05:	lea    rcx,[rbx+rdx*1+0x10]
+   96e0a:	sub    rcx,rsi
+   96e0d:	rex.W movsd QWORD PTR [rcx],xmm0
+   96e12:	add    rdx,0x18
+   96e16:	inc    r8
+   96e19:	cmp    r8,r9
+   96e1c:	jb     96d18 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2c>
+   96e22:	jmp    96f40 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x254>
+   96e27:	xor    r8d,r8d
+   96e2a:	test   r9,r9
+   96e2d:	je     96f40 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x254>
+   96e33:	mov    rdx,rsi
+   96e36:	cmp    r8,r9
+   96e39:	jae    96fba <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2ce>
+   96e3f:	movsd  xmm4,QWORD PTR [rdx]
+   96e43:	cmp    r8,r9
+   96e46:	jae    96fba <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2ce>
+   96e4c:	movsd  xmm5,QWORD PTR [rdx+0x8]
+   96e51:	cmp    r8,r9
+   96e54:	jae    96fba <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2ce>
+   96e5a:	movsd  xmm6,QWORD PTR [rdx+0x10]
+   96e5f:	cmp    r8,r11
+   96e62:	jae    96fd7 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2eb>
+   96e68:	movsd  xmm0,xmm6
+   96e6c:	xorpd  xmm1,xmm1
+   96e70:	mulsd  xmm0,xmm1
+   96e74:	movsd  xmm2,xmm4
+   96e78:	movsd  xmm3,QWORD PTR [rip+0x74d10]        # 10bb90 <_TMP1146+0x22f0>
+   96e80:	mulsd  xmm2,xmm3
+   96e84:	movsd  xmm7,xmm5
+   96e88:	movsd  xmm1,QWORD PTR [rip+0x74d08]        # 10bb98 <_TMP1146+0x22f8>
+   96e90:	mulsd  xmm7,xmm1
+   96e94:	addsd  xmm2,xmm7
+   96e98:	addsd  xmm0,xmm2
+   96e9c:	lea    rcx,[rdx+rbx*1]
+   96ea0:	sub    rcx,rsi
+   96ea3:	rex.W movsd QWORD PTR [rcx],xmm0
+   96ea8:	cmp    r8,r11
+   96eab:	jae    96ff4 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x308>
+   96eb1:	movsd  xmm0,xmm6
+   96eb5:	xorpd  xmm1,xmm1
+   96eb9:	mulsd  xmm0,xmm1
+   96ebd:	movsd  xmm2,xmm4
+   96ec1:	movsd  xmm3,QWORD PTR [rip+0x74cc7]        # 10bb90 <_TMP1146+0x22f0>
+   96ec9:	mulsd  xmm2,xmm3
+   96ecd:	movsd  xmm7,xmm5
+   96ed1:	movsd  xmm1,QWORD PTR [rip+0x74cbf]        # 10bb98 <_TMP1146+0x22f8>
+   96ed9:	mulsd  xmm7,xmm1
+   96edd:	addsd  xmm2,xmm7
+   96ee1:	addsd  xmm0,xmm2
+   96ee5:	lea    rcx,[rbx+rdx*1+0x8]
+   96eea:	sub    rcx,rsi
+   96eed:	rex.W movsd QWORD PTR [rcx],xmm0
+   96ef2:	cmp    r8,r11
+   96ef5:	jae    97011 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x325>
+   96efb:	movsd  xmm0,xmm4
+   96eff:	movsd  xmm1,QWORD PTR [rip+0x74c99]        # 10bba0 <_TMP1146+0x2300>
+   96f07:	mulsd  xmm0,xmm1
+   96f0b:	movsd  xmm2,xmm5
+   96f0f:	movsd  xmm3,QWORD PTR [rip+0x74c91]        # 10bba8 <_TMP1146+0x2308>
+   96f17:	mulsd  xmm2,xmm3
+   96f1b:	addsd  xmm0,xmm2
+   96f1f:	addsd  xmm0,xmm6
+   96f23:	lea    rcx,[rbx+rdx*1+0x10]
+   96f28:	sub    rcx,rsi
+   96f2b:	rex.W movsd QWORD PTR [rcx],xmm0
+   96f30:	add    rdx,0x18
+   96f34:	inc    r8
+   96f37:	cmp    r8,r9
+   96f3a:	jb     96e36 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x14a>
+   96f40:	pop    rbx
+   96f41:	mov    rsp,rbp
+   96f44:	pop    rbp
+   96f45:	ret
+   96f46:	mov    rcx,r9
+   96f49:	mov    rdx,r8
+   96f4c:	mov    esi,0xce
+   96f51:	lea    rdi,[rip+0x7c548]        # 1134a0 <_TMP2966>
+   96f58:	call   d3c14 <_d_arraybounds_indexp>
+   96f5d:	pop    rbx
+   96f5e:	mov    rsp,rbp
+   96f61:	pop    rbp
+   96f62:	ret
+   96f63:	mov    rcx,r11
+   96f66:	mov    rdx,r8
+   96f69:	mov    esi,0xd0
+   96f6e:	lea    rdi,[rip+0x7c52b]        # 1134a0 <_TMP2966>
+   96f75:	call   d3c14 <_d_arraybounds_indexp>
+   96f7a:	pop    rbx
+   96f7b:	mov    rsp,rbp
+   96f7e:	pop    rbp
+   96f7f:	ret
+   96f80:	mov    rcx,r11
+   96f83:	mov    rdx,r8
+   96f86:	mov    esi,0xd1
+   96f8b:	lea    rdi,[rip+0x7c50e]        # 1134a0 <_TMP2966>
+   96f92:	call   d3c14 <_d_arraybounds_indexp>
+   96f97:	pop    rbx
+   96f98:	mov    rsp,rbp
+   96f9b:	pop    rbp
+   96f9c:	ret
+   96f9d:	mov    rcx,r11
+   96fa0:	mov    rdx,r8
+   96fa3:	mov    esi,0xd2
+   96fa8:	lea    rdi,[rip+0x7c4f1]        # 1134a0 <_TMP2966>
+   96faf:	call   d3c14 <_d_arraybounds_indexp>
+   96fb4:	pop    rbx
+   96fb5:	mov    rsp,rbp
+   96fb8:	pop    rbp
+   96fb9:	ret
+   96fba:	mov    rcx,r9
+   96fbd:	mov    rdx,r8
+   96fc0:	mov    esi,0xce
+   96fc5:	lea    rdi,[rip+0x7c4d4]        # 1134a0 <_TMP2966>
+   96fcc:	call   d3c14 <_d_arraybounds_indexp>
+   96fd1:	pop    rbx
+   96fd2:	mov    rsp,rbp
+   96fd5:	pop    rbp
+   96fd6:	ret
+   96fd7:	mov    rcx,r11
+   96fda:	mov    rdx,r8
+   96fdd:	mov    esi,0xd0
+   96fe2:	lea    rdi,[rip+0x7c4b7]        # 1134a0 <_TMP2966>
+   96fe9:	call   d3c14 <_d_arraybounds_indexp>
+   96fee:	pop    rbx
+   96fef:	mov    rsp,rbp
+   96ff2:	pop    rbp
+   96ff3:	ret
+   96ff4:	mov    rcx,r11
+   96ff7:	mov    rdx,r8
+   96ffa:	mov    esi,0xd1
+   96fff:	lea    rdi,[rip+0x7c49a]        # 1134a0 <_TMP2966>
+   97006:	call   d3c14 <_d_arraybounds_indexp>
+   9700b:	pop    rbx
+   9700c:	mov    rsp,rbp
+   9700f:	pop    rbp
+   97010:	ret
+   97011:	mov    rcx,r11
+   97014:	mov    rdx,r8
+   97017:	mov    esi,0xd2
+   9701c:	lea    rdi,[rip+0x7c47d]        # 1134a0 <_TMP2966>
+   97023:	call   d3c14 <_d_arraybounds_indexp>
+   97028:	pop    rbx
+   97029:	mov    rsp,rbp
+   9702c:	pop    rbp
+   9702d:	ret
+
+Disassembly of section .fini:

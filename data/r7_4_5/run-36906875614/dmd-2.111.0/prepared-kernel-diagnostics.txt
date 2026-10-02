@@ -1,0 +1,13 @@
+0000000000093ed0 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   93f03:	e8 ec 01 02 00       	call   b40f4 <_D10candidates__T14prepareBrettelTdZQtFNaNbNiNfkZSQBw__T11BrettelPlanTdZQq>
+   940d3:	e8 5c cb 03 00       	call   d0c34 <_d_arraybounds_indexp>
+
+0000000000095d74 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   96070:	e8 bf ab 03 00       	call   d0c34 <_d_arraybounds_indexp>
+
+00000000000aa69c <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   aa6cf:	e8 00 a5 00 00       	call   b4bd4 <_D10candidates__T14prepareBrettelTfZQtFNaNbNiNfkZSQBw__T11BrettelPlanTfZQq>
+   aa87c:	e8 b3 63 02 00       	call   d0c34 <_d_arraybounds_indexp>
+
+00000000000ac514 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   ac7ff:	e8 30 44 02 00       	call   d0c34 <_d_arraybounds_indexp>

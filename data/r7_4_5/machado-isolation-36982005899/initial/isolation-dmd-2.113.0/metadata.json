@@ -1,0 +1,135 @@
+{
+  "revision": "f2b0237f905e37f38b79da7d6e1bb4792a0e89d5",
+  "cpu": 0,
+  "blocks": 3,
+  "sizes": [
+    1024,
+    8191,
+    65536
+  ],
+  "variants": {
+    "index": "IndexedVienot",
+    "reference": "ReferenceVienot",
+    "lookup": "IsolateLookup",
+    "prepared": "IsolatePrepared"
+  },
+  "observations": [
+    {
+      "time_utc": "2026-10-02T07:54:11.849187+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3490388",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+      "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:54:18.660880+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3491830",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+      "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:55:04.209077+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3491630",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+      "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:55:04.209401+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3491630",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+      "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:55:49.978888+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3489437",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+      "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:55:49.979197+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3489437",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+      "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+      "/sys/devices/system/cpu/smt/active": "1"
+    },
+    {
+      "time_utc": "2026-10-02T07:56:35.077996+00:00",
+      "affinity": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq": "800000",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "performance",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "3489547",
+      "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq": "2800000",
+      "/sys/devices/system/cpu/intel_pstate/no_turbo": "0",
+      "/sys/devices/system/cpu/smt/active": "1"
+    }
+  ],
+  "status": "passed",
+  "compiler_version": "DMD64 D Compiler v2.113.0\nCopyright (C) 1999-2026 by The D Language Foundation, All Rights Reserved written by Walter Bright\n",
+  "binary_sha256": {
+    "index": "74913e748cd714f83998af08ccf0a283b799e04c34b429aec32c54928de88fb5",
+    "reference": "c03fbd3d940783dfa9d43e7a7d9bb39ed5dd7429d203d43894bf393d4ed29411",
+    "lookup": "25fdde912547e94b1dd081181b5ba60941c5ce1a8a3153dee71a2d116fdb01ad",
+    "prepared": "9b940602023165c12f83f7bb7ca5181ee48e6fee41740678cbc0995197061084"
+  },
+  "raw_rows": 11016,
+  "summary_rows": 1224,
+  "control_checksums": "exact agreement; sampled outputs only",
+  "interpretation": "Placement and prior-case diagnostic; no C++ performance acceptance claim"
+}

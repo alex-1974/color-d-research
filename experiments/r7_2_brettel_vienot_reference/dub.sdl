@@ -1,0 +1,4 @@
+name "r7_2_brettel_vienot_reference"
+description "R7.2 Brettel and Vienot CVD reference transforms"
+targetType "executable"
+sourcePaths "source"

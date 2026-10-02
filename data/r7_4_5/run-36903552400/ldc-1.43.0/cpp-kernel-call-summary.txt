@@ -1,0 +1,31 @@
+Diagnostic excerpts from complete CI assembly; not a full disassembly.
+
+0000000000001400 <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+instruction_lines=257; selected_packed_fp_ops=35
+
+00000000000017f0 <_Z5batchIfL4Mode0EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+instruction_lines=1339; selected_packed_fp_ops=138
+
+0000000000002dd0 <_Z5batchIfL4Mode2EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+instruction_lines=251; selected_packed_fp_ops=35
+
+00000000000031c0 <_Z5batchIdL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+instruction_lines=196; selected_packed_fp_ops=15
+
+0000000000003530 <_Z5batchIdL4Mode0EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+instruction_lines=965; selected_packed_fp_ops=108
+
+0000000000004530 <_Z5batchIdL4Mode2EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+instruction_lines=192; selected_packed_fp_ops=15
+
+0000000000004890 <_Z6lookupIdEvRSt6vectorI6MatrixIT_ESaIS3_EERKSt5arrayIS3_Lm11EEj.isra.0>:
+instruction_lines=117; selected_packed_fp_ops=8
+
+0000000000004a70 <_Z6lookupIfEvRSt6vectorI6MatrixIT_ESaIS3_EERKSt5arrayIS3_Lm11EEj.isra.0>:
+instruction_lines=99; selected_packed_fp_ops=4
+
+0000000000004bf0 <_Z5batchIdL4Mode3EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+instruction_lines=159; selected_packed_fp_ops=11
+
+0000000000004eb0 <_Z5batchIfL4Mode3EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+instruction_lines=160; selected_packed_fp_ops=11

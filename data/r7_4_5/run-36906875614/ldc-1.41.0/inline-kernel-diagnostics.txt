@@ -1,0 +1,54 @@
+000000000003cf50 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   3d2d0:	66 0f 59 c7          	mulpd  %xmm7,%xmm0
+   3d2dd:	66 41 0f 59 df       	mulpd  %xmm15,%xmm3
+   3d2e2:	66 0f 58 d8          	addpd  %xmm0,%xmm3
+   3d2ef:	66 41 0f 59 c1       	mulpd  %xmm9,%xmm0
+   3d2f4:	66 0f 58 c3          	addpd  %xmm3,%xmm0
+   3d417:	66 0f 59 f7          	mulpd  %xmm7,%xmm6
+   3d41b:	66 45 0f 59 f7       	mulpd  %xmm15,%xmm14
+   3d420:	66 44 0f 58 f6       	addpd  %xmm6,%xmm14
+   3d425:	66 45 0f 59 c1       	mulpd  %xmm9,%xmm8
+   3d42a:	66 45 0f 58 c6       	addpd  %xmm14,%xmm8
+   3d42f:	66 44 0f 59 d7       	mulpd  %xmm7,%xmm10
+   3d434:	66 41 0f 59 df       	mulpd  %xmm15,%xmm3
+   3d439:	66 41 0f 58 da       	addpd  %xmm10,%xmm3
+   3d43e:	66 45 0f 59 d9       	mulpd  %xmm9,%xmm11
+   3d443:	66 44 0f 58 db       	addpd  %xmm3,%xmm11
+   3d448:	66 0f 59 e7          	mulpd  %xmm7,%xmm4
+   3d44c:	66 41 0f 59 c7       	mulpd  %xmm15,%xmm0
+   3d451:	66 0f 58 c4          	addpd  %xmm4,%xmm0
+   3d455:	66 41 0f 59 e9       	mulpd  %xmm9,%xmm5
+   3d45a:	66 0f 58 e8          	addpd  %xmm0,%xmm5
+   3d540:	66 44 0f 59 df       	mulpd  %xmm7,%xmm11
+   3d545:	66 41 0f 59 da       	mulpd  %xmm10,%xmm3
+   3d54a:	66 41 0f 58 db       	addpd  %xmm11,%xmm3
+   3d559:	66 41 0f 59 c9       	mulpd  %xmm9,%xmm1
+   3d55e:	66 0f 58 cb          	addpd  %xmm3,%xmm1
+   3d5b9:	66 0f 59 c3          	mulpd  %xmm3,%xmm0
+   3d653:	e8 68 85 fe ff       	call   25bc0 <_d_arraybounds_index>
+
+000000000003d660 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   3d76c:	66 44 0f 59 d7       	mulpd  %xmm7,%xmm10
+   3d776:	66 45 0f 59 d8       	mulpd  %xmm8,%xmm11
+   3d77b:	66 45 0f 58 da       	addpd  %xmm10,%xmm11
+   3d780:	66 45 0f 58 d9       	addpd  %xmm9,%xmm11
+   3d785:	66 44 0f 59 ce       	mulpd  %xmm6,%xmm9
+   3d78f:	66 45 0f 59 d0       	mulpd  %xmm8,%xmm10
+   3d794:	66 44 0f 59 c2       	mulpd  %xmm2,%xmm8
+   3d79e:	66 44 0f 59 e7       	mulpd  %xmm7,%xmm12
+   3d7a3:	66 45 0f 58 e2       	addpd  %xmm10,%xmm12
+   3d7a8:	66 0f 59 fb          	mulpd  %xmm3,%xmm7
+   3d7ac:	66 41 0f 58 f8       	addpd  %xmm8,%xmm7
+   3d7b1:	66 45 0f 58 e1       	addpd  %xmm9,%xmm12
+   3d7b6:	66 41 0f 58 f9       	addpd  %xmm9,%xmm7
+   3d821:	66 0f 59 f0          	mulpd  %xmm0,%xmm6
+   3d825:	66 0f 59 e9          	mulpd  %xmm1,%xmm5
+   3d829:	66 0f 58 ee          	addpd  %xmm6,%xmm5
+   3d831:	66 0f 58 e5          	addpd  %xmm5,%xmm4
+   3d862:	e8 59 83 fe ff       	call   25bc0 <_d_arraybounds_index>
+
+0000000000046000 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   462ff:	e8 bc f8 fd ff       	call   25bc0 <_d_arraybounds_index>
+
+0000000000046310 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   46403:	e8 b8 f7 fd ff       	call   25bc0 <_d_arraybounds_index>

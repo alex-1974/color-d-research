@@ -1,0 +1,45 @@
+Diagnostic excerpts from complete CI assembly; not a full disassembly.
+
+000000000002ab80 <_D5bench__T11lookupBatchTdZQqFNaNbNiNfAS2ma__T7Matrix3TdZQlxASQw__TQvTdZQBakZv>:
+instruction_lines=63; selected_packed_fp_ops=0
+   2abf3:	e8 08 b4 ff ff       	call   26000 <_D2ma__T16matrixAtSeverityTdZQvFNaNbNiNfxASQBp__T7Matrix3TdZQldZSQCl__TQwTdZQBb>
+
+000000000003b6c0 <_D5bench__T5batchTdVEQt4Modei3ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+instruction_lines=97; selected_packed_fp_ops=5
+   3b75f:	e8 9c a8 fe ff       	call   26000 <_D2ma__T16matrixAtSeverityTdZQvFNaNbNiNfxASQBp__T7Matrix3TdZQldZSQCl__TQwTdZQBb>
+   3b835:	e8 86 a3 fe ff       	call   25bc0 <_d_arraybounds_index>
+
+000000000003d220 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+instruction_lines=143; selected_packed_fp_ops=20
+   3d45c:	e8 5f 87 fe ff       	call   25bc0 <_d_arraybounds_index>
+
+000000000003d470 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+instruction_lines=57; selected_packed_fp_ops=0
+   3d4d8:	e8 23 95 fe ff       	call   26a00 <_D2bv__T12brettelProbeTdZQrFNaNbNiNfSQBj__T3RgbTdZQhkZQs>
+   3d523:	e8 98 86 fe ff       	call   25bc0 <_d_arraybounds_index>
+
+000000000003d530 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+instruction_lines=197; selected_packed_fp_ops=26
+   3d852:	e8 69 83 fe ff       	call   25bc0 <_d_arraybounds_index>
+
+0000000000045cf0 <_D5bench__T11lookupBatchTfZQqFNaNbNiNfAS2ma__T7Matrix3TfZQlxASQw__TQvTfZQBakZv>:
+instruction_lines=58; selected_packed_fp_ops=0
+   45d63:	e8 b8 0a fe ff       	call   26820 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb>
+
+0000000000045da0 <_D5bench__T5batchTfVEQt4Modei3ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+instruction_lines=102; selected_packed_fp_ops=5
+   45e40:	e8 db 09 fe ff       	call   26820 <_D2ma__T16matrixAtSeverityTfZQvFNaNbNiNfxASQBp__T7Matrix3TfZQlfZSQCl__TQwTfZQBb>
+   45f0f:	e8 ac fc fd ff       	call   25bc0 <_d_arraybounds_index>
+
+0000000000045f20 <_D5bench__T5batchTfVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+instruction_lines=55; selected_packed_fp_ops=5
+   45fe8:	e8 d3 fb fd ff       	call   25bc0 <_d_arraybounds_index>
+
+0000000000045ff0 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+instruction_lines=47; selected_packed_fp_ops=0
+   46036:	e8 d5 0c fe ff       	call   26d10 <_D2bv__T12brettelProbeTfZQrFNaNbNiNfSQBj__T3RgbTfZQhkZQs>
+   4607a:	e8 41 fb fd ff       	call   25bc0 <_d_arraybounds_index>
+
+0000000000046080 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+instruction_lines=91; selected_packed_fp_ops=0
+   461f3:	e8 c8 f9 fd ff       	call   25bc0 <_d_arraybounds_index>

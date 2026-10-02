@@ -1,0 +1,107 @@
+
+isolation-work/paired-isolation-dmd-2.113.0/benchmark-prepared:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+000000000006bb80 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   6bb80:	push   rbp
+   6bb81:	mov    rbp,rsp
+   6bb84:	sub    rsp,0x120
+   6bb8b:	mov    QWORD PTR [rbp-0x120],rbx
+   6bb92:	mov    r11,rcx
+   6bb95:	mov    rax,r8
+   6bb98:	mov    rbx,QWORD PTR [rbp+0x58]
+   6bb9c:	xor    r8d,r8d
+   6bb9f:	test   rbx,rbx
+   6bba2:	je     6bcf0 <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x170>
+   6bba8:	mov    rdx,QWORD PTR [rbp+0x60]
+   6bbac:	mov    r9,rax
+   6bbaf:	mov    rsi,rdx
+   6bbb2:	lea    rdi,[rbp-0x118]
+   6bbb9:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   6bbbb:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   6bbbd:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   6bbbf:	lea    rsi,[rbp+0x10]
+   6bbc3:	lea    rdi,[rbp-0xf8]
+   6bbca:	mov    ecx,0x9
+   6bbcf:	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   6bbd2:	lea    rsi,[rbp+0x10]
+   6bbd6:	lea    rdi,[rbp-0x88]
+   6bbdd:	mov    ecx,0x9
+   6bbe2:	rep movs QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   6bbe5:	movsd  xmm0,QWORD PTR [rbp-0x118]
+   6bbed:	rex.W movsd QWORD PTR [rbp-0x38],xmm0
+   6bbf3:	movsd  xmm1,QWORD PTR [rbp-0x110]
+   6bbfb:	rex.W movsd QWORD PTR [rbp-0x30],xmm1
+   6bc01:	movsd  xmm2,QWORD PTR [rbp-0x108]
+   6bc09:	rex.W movsd QWORD PTR [rbp-0x28],xmm2
+   6bc0f:	movsd  xmm3,QWORD PTR [rbp+0x20]
+   6bc14:	mulsd  xmm3,xmm2
+   6bc18:	movsd  xmm4,QWORD PTR [rbp+0x10]
+   6bc1d:	movsd  xmm0,QWORD PTR [rbp-0x38]
+   6bc22:	mulsd  xmm4,xmm0
+   6bc26:	movsd  xmm1,QWORD PTR [rbp+0x18]
+   6bc2b:	movsd  xmm5,QWORD PTR [rbp-0x30]
+   6bc30:	mulsd  xmm1,xmm5
+   6bc34:	addsd  xmm4,xmm1
+   6bc38:	addsd  xmm3,xmm4
+   6bc3c:	rex.W movsd QWORD PTR [rbp-0xa8],xmm3
+   6bc45:	movsd  xmm3,QWORD PTR [rbp+0x38]
+   6bc4a:	mulsd  xmm3,xmm2
+   6bc4e:	movsd  xmm4,QWORD PTR [rbp+0x28]
+   6bc53:	mulsd  xmm4,xmm0
+   6bc57:	movsd  xmm6,QWORD PTR [rbp+0x30]
+   6bc5c:	mulsd  xmm6,xmm5
+   6bc60:	addsd  xmm4,xmm6
+   6bc64:	addsd  xmm3,xmm4
+   6bc68:	rex.W movsd QWORD PTR [rbp-0xa0],xmm3
+   6bc71:	movsd  xmm1,QWORD PTR [rbp+0x50]
+   6bc76:	mulsd  xmm1,xmm2
+   6bc7a:	movsd  xmm2,QWORD PTR [rbp+0x40]
+   6bc7f:	mulsd  xmm2,xmm0
+   6bc83:	movsd  xmm0,QWORD PTR [rbp+0x48]
+   6bc88:	mulsd  xmm0,xmm5
+   6bc8c:	addsd  xmm2,xmm0
+   6bc90:	addsd  xmm1,xmm2
+   6bc94:	rex.W movsd QWORD PTR [rbp-0x98],xmm1
+   6bc9d:	cmp    r8,r11
+   6bca0:	jae    6bcfc <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x17c>
+   6bca2:	movsd  xmm0,QWORD PTR [rbp-0xa8]
+   6bcaa:	rex.W movsd QWORD PTR [rbp-0x18],xmm0
+   6bcb0:	movsd  xmm1,QWORD PTR [rbp-0xa0]
+   6bcb8:	rex.W movsd QWORD PTR [rbp-0x10],xmm1
+   6bcbe:	movsd  xmm2,QWORD PTR [rbp-0x98]
+   6bcc6:	rex.W movsd QWORD PTR [rbp-0x8],xmm2
+   6bccc:	lea    rsi,[rbp-0x18]
+   6bcd0:	mov    rdi,r9
+   6bcd3:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   6bcd5:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   6bcd7:	movs   QWORD PTR es:[rdi],QWORD PTR ds:[rsi]
+   6bcd9:	mov    eax,0x18
+   6bcde:	add    rdx,rax
+   6bce1:	add    r9,rax
+   6bce4:	inc    r8
+   6bce7:	cmp    r8,rbx
+   6bcea:	jb     6bbaf <_D5bench__T5batchTdVEQt4Modei2ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv+0x2f>
+   6bcf0:	mov    rbx,QWORD PTR [rbp-0x120]
+   6bcf7:	mov    rsp,rbp
+   6bcfa:	pop    rbp
+   6bcfb:	ret
+   6bcfc:	mov    rcx,r11
+   6bcff:	mov    rdx,r8
+   6bd02:	mov    esi,0x59
+   6bd07:	lea    rdi,[rip+0x81182]        # ece90 <_TMP0>
+   6bd0e:	call   af3a8 <_d_arraybounds_indexp>
+   6bd13:	mov    rbx,QWORD PTR [rbp-0x120]
+   6bd1a:	mov    rsp,rbp
+   6bd1d:	pop    rbp
+   6bd1e:	ret
+
+Disassembly of section .fini:

@@ -1,0 +1,125 @@
+# R7.3 — Machado 2009 severity model
+
+## Scope
+
+R7.3 studies the Machado, Oliveira & Fernandes (2009) model as a separate CVD model family. It does not make severity a universal parameter across Brettel, Viénot and Machado.
+
+The paper describes a physiologically based model derived from electrophysiological data and intended to handle normal colour vision, anomalous trichromacy and dichromacy in a unified model. Experimental evaluation involved people with CVD and normal colour vision. 
+
+## Severity semantics
+
+The independent DaltonLens reference documents Machado severity on a continuous scale from 0 to 1. It uses the published matrices at 0.1 increments and linearly interpolates between adjacent tabulated matrices for intermediate severity values. Severity 1 represents full dichromacy in that implementation. 
+
+This is different from merely interpolating Brettel output with the original color: Machado's matrices are the model's severity-dependent transformations.
+
+The implementation evidence also shows that the model is applied to **linear RGB**, with sRGB decoding before the matrix and encoding afterwards. 
+
+## Published/reference matrix family
+
+The reference table contains ten increments between normal vision and the full-severity endpoint. The following endpoint matrices are independently reproduced by multiple implementations:
+
+### Protan, severity 1
+
+```
+[ 0.152286  1.052583 -0.204868 ]
+[ 0.114503  0.786281  0.099216 ]
+[-0.003882 -0.048116  1.051998 ]
+```
+
+### Deutan, severity 1
+
+```
+[ 0.367322  0.860646 -0.227968 ]
+[ 0.280085  0.672501  0.047413 ]
+[-0.011820  0.042940  0.968881 ]
+```
+
+### Tritan, severity 1
+
+```
+[ 1.255528 -0.076749 -0.178779 ]
+[-0.078411  0.930809  0.147602 ]
+[ 0.004733  0.691367  0.303900 ]
+```
+
+The complete 0.1-step table is preserved in the independent reference source; R7.3 currently probes the identity and full-severity endpoints and the continuous interpolation contract. A subsequent numerical probe should cross-check the complete 0.1-step table. The source table is independently reproduced in public implementations and reference material. 
+
+## Tritan limitation
+
+The DaltonLens review explicitly warns that Machado 2009 does not work well for tritanopia. Its simulator therefore treats Machado as useful for anomalous protan/deutan modelling but does not regard it as a strong tritan reference. 
+
+This is an important production boundary: implementing the published tritan matrix is not equivalent to claiming that it is a validated tritan perception model.
+
+## Gamut
+
+The matrix transform itself does not define the final display gamut policy. Some implementations clamp the resulting linear-RGB channels before re-encoding, while other research workflows preserve out-of-gamut values for diagnostics. The production library must therefore keep transformation and gamut policy separate.
+
+## Model boundary
+
+R7.3 establishes:
+
+- Machado is a separate physiologically based model family;
+- severity belongs to Machado's own model semantics;
+- severity 0 is the identity endpoint;
+- severity 1 is the complete-deficiency endpoint in the published/reference table;
+- intermediate values use the published severity-dependent matrix family;
+- transformations operate in linear RGB;
+- protan and deutan are the stronger production candidates for severity modelling;
+- tritan requires an explicit limitation and should not silently be presented as equally validated;
+- no accessibility threshold is part of this model.
+
+## Production API implication
+
+A future API should make the model explicit rather than hide it:
+
+```
+Machado2009
+    deficiency
+    severity
+    ↓
+LinearSRgb
+```
+
+It should not expose a generic:
+
+```
+CvdTransform(deficiency, severity)
+```
+
+that implies that Brettel, Viénot and Machado share the same severity semantics.
+
+A generic CVD deficiency enum may still be useful at a higher layer, but model-specific operations must retain their own contracts.
+
+## R7.3 acceptance status
+
+- [x] Machado model identified
+- [x] severity domain documented
+- [x] endpoint matrices recorded
+- [x] linear-RGB boundary documented
+- [x] independent reference identified
+- [x] tritan limitation documented
+- [x] complete 11-point severity tables represented by probe
+- [x] cross-source matrix-table comparison: DaltonLens and Colour Science
+- [ ] float/double error envelope
+- [x] CTFE/runtime equivalence for table lookup and adjacent interpolation
+- [ ] production API decision
+
+R7.3 therefore remains a research reference until its executable validation is complete.
+
+
+## Complete table cross-source verification
+
+The complete 11-point matrices for Protanomaly, Deuteranomaly and Tritanomaly were compared coefficient-for-coefficient between the DaltonLens Python reference and the Colour Science dataset. All 33 matrices (297 coefficients) agree at the published six-decimal representation.
+
+This establishes source-table agreement. It does not independently validate the underlying physiological model.
+
+A critical observation is that intermediate severity matrices are not obtained by linear interpolation between the identity matrix and the severity-1 endpoint. The Tritanomaly sequence is visibly non-linear. A production implementation must therefore retain the published severity table, or use an explicitly justified equivalent model, rather than replacing it with endpoint interpolation.
+
+R7.3 now has a cross-source validated reference table. Float/double error analysis and CTFE/runtime equivalence remain separate tasks.
+
+
+## Executable table contract
+
+The R7.3 probe now contains all 33 reference matrices. It verifies that every exact 0.0 through 1.0 severity point returns the corresponding table matrix, and that intermediate severity values interpolate only between their adjacent 0.1 reference matrices. It also verifies the non-linear nature of the published table and compares CTFE and runtime results for representative intermediate severities.
+
+The float path is instantiated separately to ensure that the same table/lookup structure is CTFE-capable for both scalar types.

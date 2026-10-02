@@ -1,0 +1,71 @@
+
+isolation-work/paired-isolation-ldc-1.43.0/benchmark-oldreference:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+000000000002fdd0 <_D5bench__T11lookupBatchTdZQqFNaNbNiNfAS2ma__T7Matrix3TdZQlxASQw__TQvTdZQBakZv>:
+   2fdd0:	test   rdi,rdi
+   2fdd3:	je     2fe95 <_D5bench__T11lookupBatchTdZQqFNaNbNiNfAS2ma__T7Matrix3TdZQlxASQw__TQvTdZQBakZv+0xc5>
+   2fdd9:	push   rbp
+   2fdda:	push   r15
+   2fddc:	push   r14
+   2fdde:	push   r13
+   2fde0:	push   r12
+   2fde2:	push   rbx
+   2fde3:	sub    rsp,0x48
+   2fde7:	mov    rbx,rcx
+   2fdea:	mov    r14,rdx
+   2fded:	mov    r15,rsi
+   2fdf0:	mov    r12,rdi
+   2fdf3:	mov    r13d,r8d
+   2fdf6:	mov    rbp,rsp
+   2fdf9:	nop    DWORD PTR [rax+0x0]
+   2fe00:	mov    rax,r13
+   2fe03:	movabs rcx,0x5e1d27a3ee9c011
+   2fe0d:	mul    rcx
+   2fe10:	mov    rax,r13
+   2fe13:	sub    rax,rdx
+   2fe16:	shr    rax,1
+   2fe19:	add    rax,rdx
+   2fe1c:	shr    rax,0x9
+   2fe20:	imul   eax,eax,0x3e9
+   2fe26:	mov    ecx,r13d
+   2fe29:	sub    ecx,eax
+   2fe2b:	xorps  xmm0,xmm0
+   2fe2e:	cvtsi2sd xmm0,ecx
+   2fe32:	divsd  xmm0,QWORD PTR [rip+0x6af66]        # 9ada0 <_fini+0x2180>
+   2fe3a:	mov    rdi,rbp
+   2fe3d:	mov    rsi,r14
+   2fe40:	mov    rdx,rbx
+   2fe43:	call   26f90 <_D2ma__T16matrixAtSeverityTdZQvFNaNbNiNfxASQBp__T7Matrix3TdZQldZSQCl__TQwTdZQBb>
+   2fe48:	mov    rax,QWORD PTR [rsp+0x40]
+   2fe4d:	mov    QWORD PTR [r15+0x40],rax
+   2fe51:	movups xmm0,XMMWORD PTR [rsp]
+   2fe55:	movups xmm1,XMMWORD PTR [rsp+0x10]
+   2fe5a:	movups xmm2,XMMWORD PTR [rsp+0x20]
+   2fe5f:	movups xmm3,XMMWORD PTR [rsp+0x30]
+   2fe64:	movups XMMWORD PTR [r15+0x30],xmm3
+   2fe69:	movups XMMWORD PTR [r15+0x20],xmm2
+   2fe6e:	movups XMMWORD PTR [r15+0x10],xmm1
+   2fe73:	movups XMMWORD PTR [r15],xmm0
+   2fe77:	inc    r13
+   2fe7a:	add    r15,0x48
+   2fe7e:	dec    r12
+   2fe81:	jne    2fe00 <_D5bench__T11lookupBatchTdZQqFNaNbNiNfAS2ma__T7Matrix3TdZQlxASQw__TQvTdZQBakZv+0x30>
+   2fe87:	add    rsp,0x48
+   2fe8b:	pop    rbx
+   2fe8c:	pop    r12
+   2fe8e:	pop    r13
+   2fe90:	pop    r14
+   2fe92:	pop    r15
+   2fe94:	pop    rbp
+   2fe95:	ret
+
+Disassembly of section .fini:

@@ -1,0 +1,39 @@
+000000000003d470 <_D5bench__T5batchTdVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   3d4d8:	e8 23 95 fe ff       	call   26a00 <_D2bv__T12brettelProbeTdZQrFNaNbNiNfSQBj__T3RgbTdZQhkZQs>
+   3d523:	e8 98 86 fe ff       	call   25bc0 <_d_arraybounds_index>
+
+000000000003d530 <_D5bench__T5batchTdVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTdZQhASQr__TQqTdZQvxAS2ma__T7Matrix3TdZQlSQu__TQtTdZQykZv>:
+   3d628:	66 44 0f 59 c0       	mulpd  %xmm0,%xmm8
+   3d632:	66 44 0f 59 c9       	mulpd  %xmm1,%xmm9
+   3d637:	66 45 0f 58 c8       	addpd  %xmm8,%xmm9
+   3d63c:	66 44 0f 58 cf       	addpd  %xmm7,%xmm9
+   3d641:	66 0f 59 fa          	mulpd  %xmm2,%xmm7
+   3d645:	66 0f 59 f3          	mulpd  %xmm3,%xmm6
+   3d649:	66 0f 59 ec          	mulpd  %xmm4,%xmm5
+   3d64d:	66 0f 58 ee          	addpd  %xmm6,%xmm5
+   3d651:	66 0f 58 ef          	addpd  %xmm7,%xmm5
+   3d6d5:	66 0f 59 f1          	mulpd  %xmm1,%xmm6
+   3d6d9:	66 0f 59 ea          	mulpd  %xmm2,%xmm5
+   3d6dd:	66 0f 58 ee          	addpd  %xmm6,%xmm5
+   3d6e5:	66 0f 58 e5          	addpd  %xmm5,%xmm4
+   3d768:	66 44 0f 59 c0       	mulpd  %xmm0,%xmm8
+   3d772:	66 44 0f 59 c9       	mulpd  %xmm1,%xmm9
+   3d777:	66 45 0f 58 c8       	addpd  %xmm8,%xmm9
+   3d77c:	66 44 0f 58 cf       	addpd  %xmm7,%xmm9
+   3d781:	66 0f 59 fa          	mulpd  %xmm2,%xmm7
+   3d785:	66 0f 59 f3          	mulpd  %xmm3,%xmm6
+   3d789:	66 0f 59 ec          	mulpd  %xmm4,%xmm5
+   3d78d:	66 0f 58 ee          	addpd  %xmm6,%xmm5
+   3d791:	66 0f 58 ef          	addpd  %xmm7,%xmm5
+   3d811:	66 0f 59 f1          	mulpd  %xmm1,%xmm6
+   3d815:	66 0f 59 ea          	mulpd  %xmm2,%xmm5
+   3d819:	66 0f 58 ee          	addpd  %xmm6,%xmm5
+   3d821:	66 0f 58 e5          	addpd  %xmm5,%xmm4
+   3d852:	e8 69 83 fe ff       	call   25bc0 <_d_arraybounds_index>
+
+0000000000045ff0 <_D5bench__T5batchTfVEQt4Modei0ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   46036:	e8 d5 0c fe ff       	call   26d10 <_D2bv__T12brettelProbeTfZQrFNaNbNiNfSQBj__T3RgbTfZQhkZQs>
+   4607a:	e8 41 fb fd ff       	call   25bc0 <_d_arraybounds_index>
+
+0000000000046080 <_D5bench__T5batchTfVEQt4Modei1ZQuFNaNbNiNfxAS2bv__T3RgbTfZQhASQr__TQqTfZQvxAS2ma__T7Matrix3TfZQlSQu__TQtTfZQykZv>:
+   461f3:	e8 c8 f9 fd ff       	call   25bc0 <_d_arraybounds_index>

@@ -1,0 +1,267 @@
+
+/home/runner/work/_temp/bv-replay/cpp-benchmark:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .plt.sec:
+
+Disassembly of section .text:
+
+0000000000001400 <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+    1400:	movabs r9,0xaaaaaaaaaaaaaaab
+    140a:	mov    r8,rsi
+    140d:	mov    rax,rdi
+    1410:	sub    r8,rdi
+    1413:	mov    rdi,r8
+    1416:	sar    rdi,0x2
+    141a:	imul   rdi,r9
+    141e:	cmp    rsi,rax
+    1421:	je     152d <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x12d>
+    1427:	pxor   xmm2,xmm2
+    142b:	pxor   xmm1,xmm1
+    142f:	pxor   xmm0,xmm0
+    1433:	cmp    ecx,0x1
+    1436:	lea    rsi,[rip+0xa683]        # bac0 <_ZL12vienotProtan>
+    143d:	lea    rcx,[rip+0xa61c]        # ba60 <_ZL12vienotDeutan>
+    1444:	pxor   xmm10,xmm10
+    1449:	pxor   xmm5,xmm5
+    144d:	pxor   xmm6,xmm6
+    1451:	pxor   xmm7,xmm7
+    1455:	cmovne rcx,rsi
+    1459:	pxor   xmm9,xmm9
+    145e:	pxor   xmm8,xmm8
+    1463:	cvtsd2ss xmm2,QWORD PTR [rcx]
+    1467:	cvtsd2ss xmm1,QWORD PTR [rcx+0x8]
+    146c:	movaps xmm4,xmm2
+    146f:	movaps xmm3,xmm1
+    1472:	cvtsd2ss xmm0,QWORD PTR [rcx+0x10]
+    1477:	movaps xmm12,xmm0
+    147b:	cvtsd2ss xmm10,QWORD PTR [rcx+0x18]
+    1481:	unpcklps xmm4,xmm10
+    1485:	cvtsd2ss xmm9,QWORD PTR [rcx+0x20]
+    148b:	cvtsd2ss xmm8,QWORD PTR [rcx+0x28]
+    1491:	unpcklps xmm3,xmm9
+    1495:	unpcklps xmm12,xmm8
+    1499:	cvtsd2ss xmm5,QWORD PTR [rcx+0x30]
+    149e:	cvtsd2ss xmm6,QWORD PTR [rcx+0x38]
+    14a3:	cvtsd2ss xmm7,QWORD PTR [rcx+0x40]
+    14a8:	cmp    r8,0x24
+    14ac:	jbe    14be <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0xbe>
+    14ae:	mov    rcx,rdx
+    14b1:	sub    rcx,rax
+    14b4:	sub    rcx,0x4
+    14b8:	cmp    rcx,0x28
+    14bc:	ja     1530 <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x130>
+    14be:	xor    ecx,ecx
+    14c0:	movq   xmm0,QWORD PTR [rax]
+    14c4:	add    rcx,0x1
+    14c8:	add    rax,0xc
+    14cc:	add    rdx,0xc
+    14d0:	movss  xmm2,DWORD PTR [rax-0x4]
+    14d5:	movaps xmm1,xmm0
+    14d8:	movaps xmm8,xmm0
+    14dc:	shufps xmm1,xmm1,0xe0
+    14e0:	shufps xmm8,xmm8,0xe5
+    14e5:	mulps  xmm1,xmm4
+    14e8:	mulps  xmm8,xmm3
+    14ec:	addps  xmm1,xmm8
+    14f0:	movaps xmm8,xmm2
+    14f4:	shufps xmm8,xmm8,0xe0
+    14f9:	mulps  xmm8,xmm12
+    14fd:	mulss  xmm2,xmm7
+    1501:	addps  xmm1,xmm8
+    1505:	movlps QWORD PTR [rdx-0xc],xmm1
+    1509:	movaps xmm1,xmm0
+    150c:	shufps xmm1,xmm1,0xe5
+    1510:	mulss  xmm0,xmm5
+    1514:	mulss  xmm1,xmm6
+    1518:	addss  xmm1,xmm0
+    151c:	movaps xmm0,xmm2
+    151f:	addss  xmm0,xmm1
+    1523:	movss  DWORD PTR [rdx-0x4],xmm0
+    1528:	cmp    rcx,rdi
+    152b:	jb     14c0 <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0xc0>
+    152d:	ret
+    152e:	xchg   ax,ax
+    1530:	test   r8,r8
+    1533:	mov    r10d,0x1
+    1539:	movaps xmm11,xmm5
+    153d:	mov    rcx,rax
+    1540:	cmovne r10,rdi
+    1544:	unpcklps xmm11,xmm2
+    1548:	movaps xmm2,xmm6
+    154b:	mov    r8,rdx
+    154e:	unpcklps xmm2,xmm1
+    1551:	movaps xmm1,xmm3
+    1554:	movss  DWORD PTR [rsp-0xc],xmm7
+    155a:	movlhps xmm1,xmm2
+    155d:	mov    r9,r10
+    1560:	movaps xmm13,xmm2
+    1564:	movss  DWORD PTR [rsp-0x14],xmm5
+    156a:	movaps xmm2,xmm1
+    156d:	shr    r9,0x2
+    1571:	movaps xmm1,xmm7
+    1574:	movaps xmm14,xmm4
+    1578:	unpcklps xmm1,xmm0
+    157b:	lea    r9,[r9+r9*2]
+    157f:	movaps xmm0,xmm12
+    1583:	movss  DWORD PTR [rsp-0x10],xmm6
+    1589:	unpcklps xmm8,xmm7
+    158d:	unpcklps xmm10,xmm5
+    1591:	movaps xmm15,xmm11
+    1595:	shl    r9,0x4
+    1599:	unpcklps xmm9,xmm6
+    159d:	movlhps xmm14,xmm11
+    15a1:	movlhps xmm0,xmm1
+    15a4:	add    r9,rax
+    15a7:	movaps xmm11,xmm1
+    15ab:	movlhps xmm15,xmm10
+    15af:	movaps XMMWORD PTR [rsp-0x28],xmm0
+    15b4:	movaps xmm7,xmm2
+    15b7:	movlhps xmm13,xmm9
+    15bb:	movlhps xmm11,xmm8
+    15bf:	movlhps xmm10,xmm4
+    15c3:	movlhps xmm9,xmm3
+    15c7:	movlhps xmm8,xmm12
+    15cb:	nop    DWORD PTR [rax+rax*1+0x0]
+    15d0:	movups xmm1,XMMWORD PTR [rcx]
+    15d3:	movups xmm0,XMMWORD PTR [rcx+0x10]
+    15d7:	add    rcx,0x30
+    15db:	add    r8,0x30
+    15df:	movups xmm2,XMMWORD PTR [rcx-0x10]
+    15e3:	movaps xmm6,xmm1
+    15e6:	movaps xmm5,xmm1
+    15e9:	unpcklps xmm6,xmm0
+    15ec:	shufps xmm5,xmm1,0xc0
+    15f0:	shufps xmm6,xmm6,0x6a
+    15f4:	mulps  xmm5,xmm14
+    15f8:	mulps  xmm6,xmm7
+    15fb:	addps  xmm5,xmm6
+    15fe:	movaps xmm6,xmm1
+    1601:	shufps xmm1,xmm0,0xaf
+    1605:	shufps xmm6,xmm0,0x4e
+    1609:	shufps xmm6,xmm6,0xc0
+    160d:	mulps  xmm6,XMMWORD PTR [rsp-0x28]
+    1612:	mulps  xmm1,xmm10
+    1616:	addps  xmm5,xmm6
+    1619:	movups XMMWORD PTR [r8-0x30],xmm5
+    161e:	movaps xmm5,xmm0
+    1621:	shufps xmm5,xmm0,0xf0
+    1625:	mulps  xmm5,xmm9
+    1629:	addps  xmm1,xmm5
+    162c:	movaps xmm5,xmm0
+    162f:	shufps xmm5,xmm2,0x5
+    1633:	mulps  xmm5,xmm8
+    1637:	addps  xmm1,xmm5
+    163a:	movups XMMWORD PTR [r8-0x20],xmm1
+    163f:	movaps xmm1,xmm0
+    1642:	unpckhps xmm0,xmm2
+    1645:	shufps xmm1,xmm2,0x4e
+    1649:	shufps xmm0,xmm0,0x56
+    164d:	shufps xmm1,xmm1,0xfc
+    1651:	mulps  xmm0,xmm13
+    1655:	mulps  xmm1,xmm15
+    1659:	shufps xmm2,xmm2,0xfc
+    165d:	mulps  xmm2,xmm11
+    1661:	addps  xmm0,xmm1
+    1664:	addps  xmm0,xmm2
+    1667:	movups XMMWORD PTR [r8-0x10],xmm0
+    166c:	cmp    rcx,r9
+    166f:	jne    15d0 <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x1d0>
+    1675:	mov    r8,r10
+    1678:	movss  xmm5,DWORD PTR [rsp-0x14]
+    167e:	movss  xmm6,DWORD PTR [rsp-0x10]
+    1684:	and    r8,0xfffffffffffffffc
+    1688:	and    r10d,0x3
+    168c:	movss  xmm7,DWORD PTR [rsp-0xc]
+    1692:	je     152d <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x12d>
+    1698:	lea    rcx,[r8+r8*2]
+    169c:	shl    rcx,0x2
+    16a0:	lea    r9,[rax+rcx*1]
+    16a4:	movq   xmm0,QWORD PTR [r9]
+    16a9:	movss  xmm2,DWORD PTR [r9+0x8]
+    16af:	lea    r9,[rdx+rcx*1]
+    16b3:	movaps xmm1,xmm0
+    16b6:	movaps xmm8,xmm0
+    16ba:	shufps xmm1,xmm1,0xe0
+    16be:	shufps xmm8,xmm8,0xe5
+    16c3:	mulps  xmm1,xmm4
+    16c6:	mulps  xmm8,xmm3
+    16ca:	addps  xmm1,xmm8
+    16ce:	movaps xmm8,xmm2
+    16d2:	shufps xmm8,xmm8,0xe0
+    16d7:	mulps  xmm8,xmm12
+    16db:	mulss  xmm2,xmm7
+    16df:	addps  xmm1,xmm8
+    16e3:	movlps QWORD PTR [r9],xmm1
+    16e7:	movaps xmm1,xmm0
+    16ea:	shufps xmm0,xmm0,0xe5
+    16ee:	mulss  xmm1,xmm5
+    16f2:	mulss  xmm0,xmm6
+    16f6:	addss  xmm0,xmm1
+    16fa:	addss  xmm0,xmm2
+    16fe:	movss  DWORD PTR [r9+0x8],xmm0
+    1704:	lea    r9,[r8+0x1]
+    1708:	cmp    r9,rdi
+    170b:	jae    152d <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x12d>
+    1711:	lea    r9,[rcx+0xc]
+    1715:	add    r8,0x2
+    1719:	lea    r10,[rax+r9*1]
+    171d:	add    r9,rdx
+    1720:	movq   xmm0,QWORD PTR [r10]
+    1725:	movss  xmm2,DWORD PTR [r10+0x8]
+    172b:	movaps xmm1,xmm0
+    172e:	movaps xmm8,xmm0
+    1732:	shufps xmm1,xmm1,0xe0
+    1736:	shufps xmm8,xmm8,0xe5
+    173b:	mulps  xmm1,xmm4
+    173e:	mulps  xmm8,xmm3
+    1742:	addps  xmm1,xmm8
+    1746:	movaps xmm8,xmm2
+    174a:	shufps xmm8,xmm8,0xe0
+    174f:	mulps  xmm8,xmm12
+    1753:	mulss  xmm2,xmm7
+    1757:	addps  xmm1,xmm8
+    175b:	movlps QWORD PTR [r9],xmm1
+    175f:	movaps xmm1,xmm0
+    1762:	shufps xmm0,xmm0,0xe5
+    1766:	mulss  xmm1,xmm5
+    176a:	mulss  xmm0,xmm6
+    176e:	addss  xmm0,xmm1
+    1772:	addss  xmm0,xmm2
+    1776:	movss  DWORD PTR [r9+0x8],xmm0
+    177c:	cmp    r8,rdi
+    177f:	jae    152d <_Z5batchIfL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x12d>
+    1785:	add    rcx,0x18
+    1789:	add    rax,rcx
+    178c:	add    rcx,rdx
+    178f:	movq   xmm0,QWORD PTR [rax]
+    1793:	movss  xmm2,DWORD PTR [rax+0x8]
+    1798:	movaps xmm1,xmm0
+    179b:	shufps xmm1,xmm1,0xe0
+    179f:	mulps  xmm1,xmm4
+    17a2:	movaps xmm4,xmm0
+    17a5:	shufps xmm4,xmm4,0xe5
+    17a9:	mulps  xmm3,xmm4
+    17ac:	addps  xmm1,xmm3
+    17af:	movaps xmm3,xmm2
+    17b2:	shufps xmm3,xmm3,0xe0
+    17b6:	mulps  xmm3,xmm12
+    17ba:	mulss  xmm2,xmm7
+    17be:	addps  xmm1,xmm3
+    17c1:	movlps QWORD PTR [rcx],xmm1
+    17c4:	movaps xmm1,xmm0
+    17c7:	shufps xmm0,xmm0,0xe5
+    17cb:	mulss  xmm1,xmm5
+    17cf:	mulss  xmm0,xmm6
+    17d3:	addss  xmm0,xmm1
+    17d7:	addss  xmm0,xmm2
+    17db:	movss  DWORD PTR [rcx+0x8],xmm0
+    17e0:	ret
+
+Disassembly of section .fini:

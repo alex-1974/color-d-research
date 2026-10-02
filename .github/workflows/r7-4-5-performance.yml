@@ -1,0 +1,102 @@
+name: R7.4.5 CVD performance baseline
+
+on:
+  push:
+    branches: [research/163-cvd-transformations]
+    paths:
+      - experiments/r7_4_5_cvd_performance/**
+      - experiments/r7_2_brettel_vienot_reference/**
+      - experiments/r7_3_machado_2009_reference/**
+      - .github/workflows/r7-4-5-performance.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [dmd-2.111.0, ldc-1.41.0, dmd-2.113.0, ldc-1.43.0]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+      - name: Prepare shared source and record platform
+        working-directory: experiments/r7_4_5_cvd_performance
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            git rev-parse HEAD
+            "$DC" --version
+            g++ --version
+            uname -a
+            lscpu
+            python3 prepare.py
+          } | tee metadata.txt
+      - name: Debug preflight and optimized builds
+        working-directory: experiments/r7_4_5_cvd_performance
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$DC" in
+            *ldc2*) version_flag=-d-version=Preflight; optimize=(-O3 -fp-contract=off) ;;
+            *) version_flag=-version=Preflight; optimize=(-O -inline) ;;
+          esac
+          set -x
+          case "$DC" in
+            *ldc2*) fixed_flag=-d-version=FixedMachado; direct_flag=-d-version=DirectMachado; bounded_flag=-d-version=BoundedMachado ;;
+            *) fixed_flag=-version=FixedMachado; direct_flag=-version=DirectMachado; bounded_flag=-version=BoundedMachado ;;
+          esac
+          for VARIANT in default fixed bounded direct; do
+            EXTRA_FLAGS=()
+            if test "$VARIANT" = fixed; then EXTRA_FLAGS=("$fixed_flag"); fi
+            if test "$VARIANT" = direct; then EXTRA_FLAGS=("$direct_flag"); fi
+            if test "$VARIANT" = bounded; then EXTRA_FLAGS=("$bounded_flag"); fi
+            "$DC" -g -boundscheck=on "$version_flag" "${EXTRA_FLAGS[@]}" -of="preflight-$VARIANT" bench.d candidates.d machado_candidates.d bv_policy.d _generated/bv.d _generated/ma.d
+            "./preflight-$VARIANT" 32 > "preflight-$VARIANT.txt"
+            "$DC" "${optimize[@]}" "${EXTRA_FLAGS[@]}" -release -boundscheck=on -of="benchmark-$VARIANT" bench.d candidates.d machado_candidates.d bv_policy.d _generated/bv.d _generated/ma.d
+            objdump -d "benchmark-$VARIANT" > "$VARIANT-assembly.txt"
+          done
+          g++ -std=c++17 -O3 -ffp-contract=off -fno-fast-math reference.cpp -o cpp-benchmark
+          sha256sum benchmark-default benchmark-fixed benchmark-bounded benchmark-direct cpp-benchmark > binaries.sha256
+          objdump -d cpp-benchmark > cpp-assembly.txt
+      - name: Balanced baseline and candidate measurement on one allowed CPU
+        working-directory: experiments/r7_4_5_cvd_performance
+        shell: bash
+        run: |
+          set -euo pipefail
+          BENCH_CPU=$(python3 -c 'import os; print(min(os.sched_getaffinity(0)))')
+          echo "affinity_cpu=$BENCH_CPU; workload=65536; turbo/frequency/SMT=uncontrolled shared runner" | tee -a metadata.txt
+          for VARIANT in default fixed bounded direct; do
+            if test "$VARIANT" = default; then TARGET=.; BINARY=benchmark-default;
+            else TARGET="$VARIANT"; BINARY="benchmark-$VARIANT"; fi
+            mkdir -p "$TARGET"
+            if test "$VARIANT" != default; then cp summarize.py "$TARGET/"; fi
+            taskset -c "$BENCH_CPU" "./$BINARY" 65536 > "$TARGET/d-forward.csv"
+            taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 > "$TARGET/cpp-forward.csv"
+          done
+          for VARIANT in direct bounded fixed default; do
+            if test "$VARIANT" = default; then TARGET=.; BINARY=benchmark-default;
+            else TARGET="$VARIANT"; BINARY="benchmark-$VARIANT"; fi
+            taskset -c "$BENCH_CPU" ./cpp-benchmark 65536 reverse > "$TARGET/cpp-reverse.csv"
+            taskset -c "$BENCH_CPU" "./$BINARY" 65536 reverse > "$TARGET/d-reverse.csv"
+            echo "VARIANT=$VARIANT"
+            python3 "$TARGET/summarize.py" | tee "$TARGET/summary.txt"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r7-4-5-${{ matrix.compiler }}
+          path: |
+            experiments/r7_4_5_cvd_performance/*.csv
+            experiments/r7_4_5_cvd_performance/*.txt
+            experiments/r7_4_5_cvd_performance/*.sha256
+            experiments/r7_4_5_cvd_performance/_generated/**
+            experiments/r7_4_5_cvd_performance/fixed/**
+            experiments/r7_4_5_cvd_performance/direct/**
+            experiments/r7_4_5_cvd_performance/bounded/**
