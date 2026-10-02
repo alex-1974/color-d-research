@@ -140,7 +140,7 @@ def main():
                 sec_text=capture(["readelf","-SW",binary],work).decode(errors="replace")
                 probe_rows=[line for line in sec_text.splitlines() if ".color_d_probe" in line]
                 if len(probe_rows)!=1: raise RuntimeError("fixed envelope output section missing")
-                mprobe=re.search(r"[.]color_d_probe\\s+PROGBITS\\s+[0-9A-Fa-f]+\\s+[0-9A-Fa-f]+\\s+([0-9A-Fa-f]+)",probe_rows[0])
+                mprobe=re.search(r"[.]color_d_probe\s+PROGBITS\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]+\s+([0-9A-Fa-f]+)",probe_rows[0])
                 if not mprobe: raise RuntimeError("unable to parse fixed envelope section")
                 size=int(mprobe.group(1),16)
                 if envelope_size is None: envelope_size=size
