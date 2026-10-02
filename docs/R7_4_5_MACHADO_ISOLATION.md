@@ -567,3 +567,27 @@ This is the narrowest experiment so far: source, candidate machine code and the
 outer wrapper remain fixed, while only the link placement requirement of the
 active candidate section changes. It is still research-only and does not imply
 a production linker/alignment policy.
+
+
+### Phase-7 first attempt rejected by control-address guard
+
+The first COMDAT-alignment attempt changed the candidate section alignment
+directly in the DMD object. The candidate moved, but the outer
+`bench.batch!float` address also moved. The probe therefore aborted before
+timing, as intended.
+
+That method is superseded by a fixed-envelope linker experiment. The candidate
+COMDAT section is renamed to `.text.colorD.target` and placed between
+`.text.colorD.pre` and `.text.colorD.post` inside a dedicated output
+section. Pre/post padding always totals 64 bytes while the split is varied
+0/64, 16/48, 32/32 and 48/16. The complete probe section therefore has
+constant size while the candidate moves locally inside it.
+
+The revised probe rejects the run unless:
+
+- the fixed-envelope output-section size is identical in all variants;
+- `candidates.indexedVienotBatch!float` changes mod-64 placement;
+- the outer `bench.batch!float` address is identical in every variant.
+
+Only after those controls pass are cycles, instructions and wall-clock samples
+collected.
