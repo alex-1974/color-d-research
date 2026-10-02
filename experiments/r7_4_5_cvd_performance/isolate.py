@@ -59,12 +59,12 @@ def main():
         work = source/replay.EXPERIMENT
         # Rebuild the measured original source on this same host. Other experiment
         # inputs must be byte-identical, so this comparison changes bench.d only.
+        original_work = root/'original-work'
+        shutil.copytree(work, original_work)
         for path in replay.FILES:
             original = replay.capture(['git','show',ORIGINAL+':'+str(path)],repo)
             if path.name == 'bench.d':
-                historical = work/'historical'/'bench.d'
-                historical.parent.mkdir()
-                historical.write_bytes(original)
+                (original_work/'bench.d').write_bytes(original)
             elif original != (source/path).read_bytes():
                 raise RuntimeError('original dependency changed: '+str(path))
         compiler = shutil.which(args.compiler)
@@ -79,8 +79,8 @@ def main():
         sources=['bench.d','candidates.d','machado_candidates.d','bv_policy.d','_generated/bv.d','_generated/ma.d']
         for variant,define in VARIANTS.items():
             binary=root/('benchmark-'+variant)
-            selected_sources = ['historical/bench.d', *sources[1:]] if variant.startswith('old') else sources
-            run([compiler,*optimize,'-release','-boundscheck=on',flag+define,'-of='+str(binary),*selected_sources],work,'build-'+variant+'.txt')
+            selected_work = original_work if variant.startswith('old') else work
+            run([compiler,*optimize,'-release','-boundscheck=on',flag+define,'-of='+str(binary),*sources],selected_work,'build-'+variant+'.txt')
             run(['objdump','-d','--no-show-raw-insn','-M','intel',binary],work,'codegen/'+variant+'.txt')
         binaries={v:hashlib.sha256((root/('benchmark-'+v)).read_bytes()).hexdigest() for v in VARIANTS}
         meta['binary_sha256']=binaries
