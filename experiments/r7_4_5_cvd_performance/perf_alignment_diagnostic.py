@@ -8,10 +8,11 @@ FAMILIES = {"index":"IndexedVienot", "reference":"ReferenceVienot"}
 PADS = [0, 16]
 MODES = {"vienot":"PerfVienotOnly", "brettel":"PerfBrettelOnly"}
 SIZES = [65536]
-GENERIC_EVENTS = [
+CANDIDATE_EVENTS = [
     "task-clock","cycles","instructions","branches","branch-misses",
     "cache-references","cache-misses","stalled-cycles-frontend","stalled-cycles-backend"
 ]
+REQUIRED_EVENTS = {"cycles","instructions"}
 
 def capture(argv, cwd):
     return subprocess.check_output(list(map(str,argv)), cwd=cwd)
@@ -38,7 +39,7 @@ def main():
     if "DMD" not in version.upper() or not match or match.group(1)!=a.expected_dmd:
         raise RuntimeError(f"expected DMD {a.expected_dmd}, got: {version.splitlines()[0] if version else 'unknown'}")
 
-    meta={"revision":rev,"cpu":cpu,"compiler_version":version,"events":GENERIC_EVENTS,
+    meta={"revision":rev,"cpu":cpu,"compiler_version":version,"candidate_events":CANDIDATE_EVENTS,
           "pads":PADS,"families":FAMILIES,"modes":MODES,
           "purpose":"matched slow/fast hardware-counter comparison for CVD alignment effect",
           "status":"running","observations":[replay.observe(cpu)]}
@@ -58,13 +59,23 @@ def main():
         return q.returncode
 
     try:
-        # Permission/counter preflight before expensive builds.
-        probe=root/"perf-preflight.txt"
-        with probe.open("wb") as out, Path(str(probe)+".stderr").open("wb") as err:
-            q=subprocess.run([perf,"stat","-x,","-e","cycles","--","true"],stdout=out,stderr=err)
-        meta["perf_preflight_returncode"]=q.returncode
-        if q.returncode:
-            raise RuntimeError("perf stat preflight failed; inspect perf-preflight.txt.stderr (permissions/paranoid setting likely)")
+        # Permission and event preflight before expensive builds. Force C locale so
+        # comma remains a reliable field separator independent of desktop locale.
+        supported=[]
+        preflight={}
+        for event in CANDIDATE_EVENTS:
+            target=root/f"perf-preflight-{event}.txt"
+            with target.open("wb") as out, Path(str(target)+".stderr").open("wb") as err:
+                q=subprocess.run(["env","LC_ALL=C",perf,"stat","-x,","-e",event,"--","true"],stdout=out,stderr=err)
+            errtext=Path(str(target)+".stderr").read_text(errors="replace")
+            ok=(q.returncode==0 and "<not supported>" not in errtext and "<not counted>" not in errtext)
+            preflight[event]={"returncode":q.returncode,"supported":ok}
+            if ok: supported.append(event)
+        meta["perf_event_preflight"]=preflight
+        meta["events"]=supported
+        missing=sorted(REQUIRED_EVENTS-set(supported))
+        if missing:
+            raise RuntimeError("required perf counters unavailable: "+", ".join(missing)+"; inspect perf-preflight-*.txt.stderr")
 
         run(["lscpu"],work,"lscpu.txt")
         run([os.sys.executable,"prepare.py"],work,"prepare.txt")
@@ -96,7 +107,7 @@ def main():
                     binaries[name]=hashlib.sha256(binary.read_bytes()).hexdigest()
 
         meta["binary_sha256"]=binaries
-        event_arg=",".join(GENERIC_EVENTS)
+        event_arg=",".join(supported)
         rows=[]
         # Four balanced repetitions in each direction. perf itself executes one process per sample.
         orders=[
@@ -109,7 +120,7 @@ def main():
                         for pad in order:
                             name=f"{mode}-{family}-p{pad}"
                             stderr=f"perf/{mode}-{family}-p{pad}-r{int(reverse)}-rep{rep}.csv"
-                            argv=[perf,"stat","-x,","-e",event_arg,"--",
+                            argv=["env","LC_ALL=C",perf,"stat","-x,","-e",event_arg,"--",
                                   "taskset","-c",str(cpu),root/("benchmark-"+name),"65536"]
                             if reverse: argv.append("reverse")
                             rc=run(argv,work,"program/"+f"{mode}-{family}-p{pad}-r{int(reverse)}-rep{rep}.txt",check=False)
@@ -126,7 +137,7 @@ def main():
             for r in csv.reader(path.open()):
                 if len(r)<3: continue
                 value=r[0].strip(); event=r[2].strip()
-                if event not in GENERIC_EVENTS: continue
+                if event not in supported: continue
                 if value in ("<not supported>","<not counted>") or not value:
                     raise RuntimeError(f"counter unavailable: {event} in {path.name}")
                 value=float(value.replace(" ",""))
@@ -141,7 +152,7 @@ def main():
         for mode in MODES:
             for family in FAMILIES:
                 for reverse in (0,1):
-                    for event in GENERIC_EVENTS:
+                    for event in supported:
                         rr=[]
                         for rep in range(len(orders)):
                             a0=values[(mode,family,0,reverse,rep,event)]
