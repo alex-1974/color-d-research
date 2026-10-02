@@ -1,0 +1,8 @@
+name "r7-4-6-cvd-kernel-architecture"
+description "Semantic preflight for CVD kernel architecture research"
+targetType "executable"
+
+sourceFiles "preflight.d"
+sourceFiles "kernels.d"
+
+dflags "-boundscheck=on"
