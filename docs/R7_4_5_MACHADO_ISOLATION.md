@@ -399,3 +399,25 @@ Decision: do not introduce a production alignment workaround. The next probe
 must vary one measured kernel's local layout while keeping downstream/global
 text layout as constant as practical, and must verify the resulting symbol
 addresses and normalized code before timing.
+
+
+## Hardware-counter alignment diagnostic — phase 5
+
+Phase 5 compares matched slow/fast global-alignment variants directly with
+`perf stat`.
+
+The probe builds p0 and p16 variants for indexed/reference and for isolated
+Viénot/Brettel benchmark modes. It forces the C locale for machine-readable
+counter output, preflights every requested event on the current kernel/PMU, and
+requires at least `cycles` and `instructions`. Optional cache, branch and
+frontend/backend-stall events are included only when the host can count them.
+
+Each fast/slow pair is run in balanced order in forward and reverse benchmark
+direction. The archive preserves binaries, disassembly, raw benchmark output,
+raw perf output, parsed counters and p16/p0 counter ratios.
+
+This phase is diagnostic only. A cycles reduction without an instruction-count
+change would support a frontend/layout explanation; a corresponding movement in
+frontend-stall counters would strengthen that interpretation. Absence of such a
+counter signature would narrow, but not by itself disprove, the alignment
+effect observed in wall-clock timing.
