@@ -1,4 +1,4 @@
-name: R7.4.5 integrated BV policy
+name: R7.4.5 BV policy and Vienot source shapes
 on:
   push:
     branches: [research/163-cvd-transformations]
@@ -42,16 +42,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 experiments/r7_4_5_cvd_performance/replay.py --compilers "$DC" --variants default bv_direct bv_split bv_portable bv_compiler --sizes 1024 8191 65536 --blocks 3 --output "$RUNNER_TEMP/bv-replay" --notes "Integrated BV policy; shared CI clocks/thermals/SMT uncontrolled"
+          python3 experiments/r7_4_5_cvd_performance/replay.py --compilers "$DC" --variants default bv_direct bv_split bv_portable bv_compiler bv_vienot_index bv_vienot_static --sizes 1024 8191 65536 --blocks 3 --output "$RUNNER_TEMP/bv-replay" --notes "Integrated BV policy; shared CI clocks/thermals/SMT uncontrolled"
           python3 - "$RUNNER_TEMP/bv-replay" <<'PY'
           import csv,json,pathlib,sys
           root=pathlib.Path(sys.argv[1])
           assert json.loads((root/'metadata.json').read_text())['status']=='passed'
           rows=list(csv.DictReader((root/'pooled-summary.csv').open()))
-          assert len(rows)==5*3*28
+          assert len(rows)==7*3*28
           assert all(int(r['samples_per_language'])==54 for r in rows)
-          print('Integrated BV 420 cases, 54 samples per language/case: PASS')
+          print('BV policy / Viénot source shapes 588 cases, 54 samples per language/case: PASS')
           PY
+      - name: Inspect fixed Vienot batch code generation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/inspect_vienot_codegen.py --output "$RUNNER_TEMP/bv-qualification/codegen" "$RUNNER_TEMP/bv-replay"/compiler-*/benchmark-bv_compiler "$RUNNER_TEMP/bv-replay"/compiler-*/benchmark-bv_vienot_index "$RUNNER_TEMP/bv-replay"/compiler-*/benchmark-bv_vienot_static "$RUNNER_TEMP/bv-replay/cpp-benchmark"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -177,3 +177,46 @@ void validateCandidates(T)()
         static assert(componentMatches(second.r,refColor.r) && componentMatches(second.g,refColor.g) && componentMatches(second.b,refColor.b));
     }}
 }
+
+// Viénot source-shape probes. Neither changes the selected policy.
+pragma(inline, true)
+void indexedVienotBatch(T)(const bv.Rgb!T[] input, bv.Rgb!T[] output, uint deficiency)
+@safe pure nothrow @nogc
+{
+    static assert(is(T == float) || is(T == double));
+    assert(input.length == output.length);
+    const matrix = prepareVienot!T(deficiency);
+    foreach (i; 0 .. input.length)
+    {
+        // Read every component before writing, including exact in-place calls.
+        const T r = input[i].r, g = input[i].g, b = input[i].b;
+        directWrite!T(output[i],matrix,r,g,b);
+    }
+}
+
+pragma(inline, true)
+private void staticVienotLoop(T, uint deficiency)(const bv.Rgb!T[] input, bv.Rgb!T[] output)
+@safe pure nothrow @nogc
+{
+    static assert(is(T == float) || is(T == double));
+    static assert(deficiency < 2);
+    enum matrix = bv.precisionMatrix!T(deficiency == 1 ? bv.vienotDeutan : bv.vienotProtan);
+    foreach (i; 0 .. input.length)
+    {
+        const T r = input[i].r, g = input[i].g, b = input[i].b;
+        // Keep all terms, including 0*b and 1*b: IEEE inputs are supported.
+        output[i].r = matrix.m00*r + matrix.m01*g + matrix.m02*b;
+        output[i].g = matrix.m10*r + matrix.m11*g + matrix.m12*b;
+        output[i].b = matrix.m20*r + matrix.m21*g + matrix.m22*b;
+    }
+}
+
+pragma(inline, true)
+void staticVienotBatch(T)(const bv.Rgb!T[] input, bv.Rgb!T[] output, uint deficiency)
+@safe pure nothrow @nogc
+{
+    assert(input.length == output.length);
+    assert(deficiency < 2);
+    if (deficiency == 1) staticVienotLoop!(T,1)(input,output);
+    else staticVienotLoop!(T,0)(input,output);
+}

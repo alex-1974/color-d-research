@@ -47,6 +47,16 @@ bool qualifyInput(T)(bv.Rgb!T input)
                 if (!colorsMatch!T(policyOutput[0],vienotExpected)
                     || !colorsMatch!T(inPlaceOutput[0],vienotExpected)) return false;
             }}
+            static foreach (useStatic; [false,true])
+            {{
+                static if (useStatic) staticVienotBatch!T(source[],policyOutput[],deficiency);
+                else indexedVienotBatch!T(source[],policyOutput[],deficiency);
+                inPlaceOutput[0] = input;
+                static if (useStatic) staticVienotBatch!T(inPlaceOutput[],inPlaceOutput[],deficiency);
+                else indexedVienotBatch!T(inPlaceOutput[],inPlaceOutput[],deficiency);
+                if (!colorsMatch!T(policyOutput[0],vienotExpected)
+                    || !colorsMatch!T(inPlaceOutput[0],vienotExpected)) return false;
+            }}
             directWrite!T(direct,matrix,input.r,input.g,input.b);
             inPlace = input;
             directWrite!T(inPlace,matrix,inPlace.r,inPlace.g,inPlace.b);
@@ -79,10 +89,44 @@ bool qualifySelection(T)()
     return true;
 }
 
+
+bool qualifyVienotBatches(T)()
+@safe pure nothrow @nogc
+{
+    bv.Rgb!T[65] source, output, inPlace;
+    foreach (i, ref p; source)
+        p = bv.Rgb!T(T(i)/T(32)-T(1),T(i%7)/T(3),T(i%11)/T(5)-T(1));
+    foreach (n; [0,1,2,3,7,8,9,31,32,33,65])
+    foreach (deficiency; 0u .. 2u)
+    static foreach (useStatic; [false,true])
+    {{
+        inPlace[] = source[];
+        static if (useStatic)
+        {
+            staticVienotBatch!T(source[0..n],output[0..n],deficiency);
+            staticVienotBatch!T(inPlace[0..n],inPlace[0..n],deficiency);
+        }
+        else
+        {
+            indexedVienotBatch!T(source[0..n],output[0..n],deficiency);
+            indexedVienotBatch!T(inPlace[0..n],inPlace[0..n],deficiency);
+        }
+        foreach (i; 0 .. n)
+        {
+            const expected = bv.vienotProbe(source[i],deficiency == 1);
+            if (!colorsMatch!T(output[i],expected) || !colorsMatch!T(inPlace[i],expected))
+                return false;
+        }
+        foreach (i; n .. source.length)
+            if (!colorsMatch!T(inPlace[i],source[i])) return false;
+    }}
+    return true;
+}
+
 bool qualifyCtfe(T)()
 @safe pure nothrow @nogc
 {
-    if (!qualifySelection!T()) return false;
+    if (!qualifySelection!T() || !qualifyVienotBatches!T()) return false;
     const bv.Rgb!T[5] inputs=[bv.Rgb!T(1,0,0),bv.Rgb!T(-1,0,0),bv.Rgb!T(0,0,0),
                  bv.Rgb!T(-2,2,1),bv.Rgb!T(T.nan,1,0)];
     foreach (p; inputs)
@@ -97,7 +141,7 @@ bool qualifyRuntime(T)(out size_t inputs)
 @safe pure nothrow @nogc
 {
     inputs = 0;
-    if (!qualifySelection!T()) return false;
+    if (!qualifySelection!T() || !qualifyVienotBatches!T()) return false;
     uint state=0x7a31b49c;
     foreach (i; 0 .. 4096)
     {
@@ -139,4 +183,5 @@ void main()
     writefln("qualification,float,inputs=%s,extended/IEEE/selection/in-place/CTFE/attributes=PASS",inputs);
     if (!qualifyRuntime!double(inputs)) throw new Exception("combined BV double qualification failed");
     writefln("qualification,double,inputs=%s,extended/IEEE/selection/in-place/CTFE/attributes=PASS",inputs);
+    writefln("vienot,indexed/static,empty/tails/batch-in-place/CTFE/attributes=PASS");
 }
