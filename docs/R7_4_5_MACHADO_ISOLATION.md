@@ -165,3 +165,63 @@ paired medians showed substantial outliers under the existing powersave/turbo/
 thermal conditions. They therefore reinforce the need for balanced blocks and
 do not justify a placement conclusion. Repeat phase 1 with DMD 2.113.0 before
 advancing to deliberate placement variation.
+
+
+## XPS FP-state diagnostic — DMD 2.113.0 result
+
+Phase 1 completed successfully on the XPS at research revision
+`29cc9c5813e6a6f4e7a5e056c83196043dee8dea`.
+
+Evidence summary:
+
+- DMD 2.113.0 was used as requested.
+- 2,016 timing groups and 4,032 before/after FP-state records were produced.
+- both duplicate indexed binaries were byte-identical;
+- both duplicate reference binaries were byte-identical;
+- zero FP control-state changes were observed;
+- the only observed control state was MXCSR control `0x1f80` with x87
+  control word `0x037f`;
+- 72 MXCSR status changes were observed, all corresponding to sticky precision
+  status being set during arithmetic, not FTZ/DAZ/rounding or exception-mask
+  changes.
+
+A/A timing is centered near unity but remains noisy. Across all paired medians,
+the indexed duplicate median ratio was about 1.007 and the reference duplicate
+median ratio about 1.003. Individual paired medians nevertheless ranged roughly
+0.36–1.77 for indexed and 0.65–2.28 for reference. The host was still running
+the powersave governor with turbo and SMT enabled, and observed thermal sensors
+reached approximately 99–100 C during the run.
+
+Decision: FP control-state mutation is not a supported explanation for the
+earlier multifold movements. Because A/A timing still contains large isolated
+outliers, placement testing must use multiple deterministic offsets, balanced
+ordering, fixed binaries and per-block/per-direction evidence rather than
+interpreting single comparisons.
+
+## Code-placement diagnostic — phase 2
+
+`placement_diagnostic.py` deliberately varies executable text placement while
+keeping the D source kernels, compiler, compiler flags, workload and FP-control
+instrumentation unchanged.
+
+For each indexed/reference family it builds text-padding variants of 0, 64, 128,
+256, 512 and 1024 bytes. The padding object is linked ahead of the unchanged D
+sources. Before any timing is accepted, the driver records demangled symbol
+addresses and requires at least one targeted benchmark symbol to change its
+offset within a 4 KiB page. Full disassembly, symbol tables, binary hashes,
+placement modulo 64/modulo 4096, FP-state evidence and balanced raw timing are
+preserved.
+
+Run on the same XPS:
+
+```sh
+python3 experiments/r7_4_5_cvd_performance/placement_diagnostic.py \
+  --compiler "$HOME/dlang/dmd-2.113.0/linux/bin64/dmd" \
+  --expected-dmd 2.113.0 \
+  --cc gcc \
+  --output /tmp/color-cvd-placement-213
+```
+
+A failed placement-validation check is a useful result: it means the linker did
+not place the padding object ahead of the measured D text and the layout method
+must be changed before timing data is interpreted.
