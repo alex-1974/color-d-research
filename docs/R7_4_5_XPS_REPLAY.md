@@ -122,3 +122,17 @@ archive was also inspected without extraction: 448 pooled rows, 36 samples per
 language/case, 173 successful recorded commands, and every files.sha256 entry
 verified. Condensed CI evidence is retained in
 [data/r7_4_5/replay-smoke-36920078378.json](../data/r7_4_5/replay-smoke-36920078378.json).
+
+## Follow-up: integrated policies
+
+The [integrated BV policy experiment](R7_4_5_BV_POLICY.md) adds `bv_portable` and
+`bv_compiler` after the eight original variants. The current runner defaults to
+ten variants, snapshots both policy and qualification source, and runs standalone
+Debug/Release BV qualification for every compiler before timing. Its expanded
+smoke passes all four compiler jobs. The eight-variant protocol and source pin
+above remain the identity of the returned 2026-10-01 XPS archive.
+
+For the new candidate, use the [focused pinned XPS script](../tools/run_xps_bv_policy.sh)
+rather than substituting a newer driver into the earlier source revision.
+The new integrated consumer replay is pending and cannot be inferred from the
+older XPS binary measurements.

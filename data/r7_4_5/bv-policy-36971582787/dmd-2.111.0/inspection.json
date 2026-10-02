@@ -1,0 +1,318 @@
+{
+  "archive_sha256": "c979b027ecd02416e4554134e6652069c69f89db6f9c8243e4ba86dbf577a1e8",
+  "archive_bytes": 6667772,
+  "manifest_entries": 603,
+  "commands": 239,
+  "raw_sample_rows": 45360,
+  "checksum_max_abs": {
+    "float": 0.0,
+    "double": 0.0
+  },
+  "metadata": {
+    "revision": "e948f48b71bea374702d79ae8bf9a4aba0010e56",
+    "cpu": 0,
+    "sizes": [
+      1024,
+      8191,
+      65536
+    ],
+    "blocks": 3,
+    "variants": [
+      "default",
+      "bv_direct",
+      "bv_split",
+      "bv_portable",
+      "bv_compiler"
+    ],
+    "notes": "Integrated BV policy; shared CI clocks/thermals/SMT uncontrolled",
+    "compilers": [
+      {
+        "executable": "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+        "family": "dmd",
+        "version": "DMD64 D Compiler v2.111.0\nCopyright (C) 1999-2025 by The D Language Foundation, All Rights Reserved written by Walter Bright\n"
+      }
+    ],
+    "gcc_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "uname": [
+      "Linux",
+      "runnervm8df0l",
+      "6.17.0-1022-azure",
+      "#22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026",
+      "x86_64"
+    ],
+    "controls": "CPU affinity applied; frequency/turbo/SMT/thermals observed, not changed",
+    "observations": [
+      {
+        "time_utc": "2026-10-02T06:01:46.402565+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:02:02.129712+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:03:45.153660+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:03:45.153923+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:05:27.940259+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:05:27.940515+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      },
+      {
+        "time_utc": "2026-10-02T06:07:10.677245+00:00",
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "/sys/devices/system/cpu/smt/active": "1"
+      }
+    ],
+    "status": "passed",
+    "interpretation": "Replay checks passed; performance acceptance and independent model qualification remain separate."
+  },
+  "source_hashes": {
+    "source/experiments/r7_2_brettel_vienot_reference/source/app.d": "1ebbd9e9227a20fee096f5d13bf80efe84198c24d158441a203960927e9e3a79",
+    "source/experiments/r7_3_machado_2009_reference/source/app.d": "f2e714358502fbb4265a8866f1dbec57f0c4c69b9b4da437d04ee8dfe0f79b04",
+    "source/experiments/r7_4_5_cvd_performance/_generated/bv.d": "9da462fb72982c5b8c55614e2441a19bfc6490675c388d71196fbd5a29ec0827",
+    "source/experiments/r7_4_5_cvd_performance/_generated/coefficients.hpp": "05f1b86646323adc0241426f4dc68de45a1b02435adde632b6cbd6af7ae621b0",
+    "source/experiments/r7_4_5_cvd_performance/_generated/ma.d": "160c98aca44d3facf6dd3ab4722d0229e5c78f34c27196b19ceaab5825531918",
+    "source/experiments/r7_4_5_cvd_performance/bench.d": "50351de2d184b533c45991807802307d6a4f0d2c430dbf9409c353832b093ea9",
+    "source/experiments/r7_4_5_cvd_performance/bv_policy.d": "1a06cba2f95630a176385fdab5e6c55de0adbb9b2747b92919d9fd1fc21aa186",
+    "source/experiments/r7_4_5_cvd_performance/bv_qualification.d": "c912c8b67e3111f93504e0e4a0ae82020805fb8470f59dc0bb5ac08f1546952d",
+    "source/experiments/r7_4_5_cvd_performance/candidates.d": "9616d8d7c0a26ffb09212e341e774d2d1dd245909ff2f914f073f19676525e3b",
+    "source/experiments/r7_4_5_cvd_performance/machado_candidates.d": "8cc646a5950d862dfbacfc83f286db95eee1d4aca1074c2bac46ceae905233d0",
+    "source/experiments/r7_4_5_cvd_performance/prepare.py": "265bcedede07f7a599f83cc85a00fe016fd5b2fd26365bf0b63c8a6d74890659",
+    "source/experiments/r7_4_5_cvd_performance/reference.cpp": "62464ad880c1569edcc1739f84886a60e1b8ddab6374cdebf5d537a9f5df0cf2",
+    "source/experiments/r7_4_5_cvd_performance/replay.py": "22c484e674da52156cb373588499446246da97275fe0726205093310b0e2446d",
+    "source/experiments/r7_4_5_cvd_performance/summarize.py": "4d2968c60818ebf468b36ad037cc16f6ec779ac28c415e6fc0d94e11141b13c8"
+  },
+  "binary_hashes": {
+    "compiler-0-dmd/benchmark-bv_compiler": "28c3803738707d21d2def905ce097575a795e1397d9389072061f1ac75775baa",
+    "compiler-0-dmd/benchmark-bv_direct": "e8fe42162493bfb3768150a67c2ff5d20db7dc512884bb3642c9c4490d460ada",
+    "compiler-0-dmd/benchmark-bv_portable": "9a480eb0533b43b0a16396da25311de3b854985b78e6d70348ba95151f2711e6",
+    "compiler-0-dmd/benchmark-bv_split": "d1e1040d3be2fbe908618bf33d253f28def10e3a4af0ceefaa8e1cf8fee06174",
+    "compiler-0-dmd/benchmark-default": "70264a5135302632d619d94877b047cea2909b8c7e4509b00f3747dcb8bd55ab",
+    "cpp-benchmark": "b01f08fe98a87bc3646d7377f100ec7bf658c0cb05615c6d857cca66c9cb9f55"
+  },
+  "verified_timed_affinity_commands": 180,
+  "build_commands": [
+    [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O3",
+      "-ffp-contract=off",
+      "-fno-fast-math",
+      "reference.cpp",
+      "-o",
+      "/home/runner/work/_temp/bv-replay/cpp-benchmark"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+      "-g",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/bv-qualification-debug",
+      "bv_qualification.d",
+      "candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/bv-qualification-release",
+      "bv_qualification.d",
+      "candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+      "-g",
+      "-boundscheck=on",
+      "-version=Preflight",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/preflight",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-default",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=DirectCvd",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_direct",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=SplitCvd",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_split",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=PortableBvPolicy",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_portable",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ],
+    [
+      "/opt/hostedtoolcache/dmd/2.111.0/x64/dmd2/linux/bin64/dmd",
+      "-O",
+      "-inline",
+      "-version=CompilerBvPolicy",
+      "-release",
+      "-boundscheck=on",
+      "-of=/home/runner/work/_temp/bv-replay/compiler-0-dmd/benchmark-bv_compiler",
+      "bench.d",
+      "candidates.d",
+      "machado_candidates.d",
+      "bv_policy.d",
+      "_generated/bv.d",
+      "_generated/ma.d"
+    ]
+  ],
+  "verified_tracked_source_git_blobs": [
+    {
+      "path": "experiments/r7_2_brettel_vienot_reference/source/app.d",
+      "sha": "d50237f89ae7d07f239c56093c4c7668723ee85e"
+    },
+    {
+      "path": "experiments/r7_3_machado_2009_reference/source/app.d",
+      "sha": "dd7756dc71f05b38cbbf8ae78eb46be15716c3c4"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bench.d",
+      "sha": "7c5c354223d7fea496f691291db5640f412d35eb"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_policy.d",
+      "sha": "1734b56bb1bff9bc78ffdead9e0851c18a80c9c8"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/bv_qualification.d",
+      "sha": "ee7e08fe1016b055d1b28769aa4b9afef9d3fb86"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/candidates.d",
+      "sha": "3a0ee667a1f823cdf6f5adfd4d4fc6f2207555d5"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/machado_candidates.d",
+      "sha": "4e80d9d6c4433055d41eb99a2ae20a5736cf2ced"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/prepare.py",
+      "sha": "4f1b305c33353c0ac80d004bfb7a11aaa5857f1c"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/reference.cpp",
+      "sha": "e8a798a07a90c3b941c96169792f5f2606bace4b"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/replay.py",
+      "sha": "aef72a878e8580e43f7ac553c94b071db359c479"
+    },
+    {
+      "path": "experiments/r7_4_5_cvd_performance/summarize.py",
+      "sha": "6d6f93f6b1ed45e0874ef4040973a37ce1d0dfe7"
+    }
+  ],
+  "ci_artifact": {
+    "id": 11212146690,
+    "name": "bv-qualification-dmd-2.111.0",
+    "digest": "sha256:bda48a73789e8971b0fafe45e0c6a730083f88d9c8be63c6a1af8e7ffc700c83",
+    "size_in_bytes": 6577762,
+    "expires_at": "2026-12-31T06:01:33Z"
+  }
+}

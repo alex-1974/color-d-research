@@ -1,0 +1,90 @@
+{
+  "source": "e948f48b71bea374702d79ae8bf9a4aba0010e56",
+  "runs": [
+    {
+      "id": 36971582756,
+      "name": "R7.4.5 consumer replay smoke",
+      "url": "https://github.com/alex-1974/color-d-research/actions/runs/36971582756",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 110726475694,
+          "name": "replay (ldc-1.41.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726475813,
+          "name": "replay (dmd-2.113.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726475822,
+          "name": "replay (ldc-1.43.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726475857,
+          "name": "replay (dmd-2.111.0)",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 36971582778,
+      "name": "R7.4.5 CVD performance baseline",
+      "url": "https://github.com/alex-1974/color-d-research/actions/runs/36971582778",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 110726475797,
+          "name": "benchmark (ldc-1.41.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726476021,
+          "name": "benchmark (dmd-2.111.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726476040,
+          "name": "benchmark (ldc-1.43.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726476112,
+          "name": "benchmark (dmd-2.113.0)",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 36971582787,
+      "name": "R7.4.5 integrated BV policy",
+      "url": "https://github.com/alex-1974/color-d-research/actions/runs/36971582787",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 110726475804,
+          "name": "qualify (dmd-2.111.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726475951,
+          "name": "qualify (ldc-1.41.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726476058,
+          "name": "qualify (ldc-1.43.0)",
+          "conclusion": "success"
+        },
+        {
+          "id": 110726476414,
+          "name": "qualify (dmd-2.113.0)",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "gate": "Research qualification and measurement available; integrated consumer replay and production performance acceptance open."
+}

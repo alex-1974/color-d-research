@@ -121,3 +121,11 @@ The DMD/C++ residual gap still requires investigation rather than acceptance by
 a green CI. No new XPS run is needed merely to repeat unchanged kernels; a new
 integrated policy does need a targeted consumer replay. Independent scientific
 reference envelopes and public API/consumer review remain separate gates.
+
+## Follow-up: integrated policy
+
+[The integrated BV comparison](R7_4_5_BV_POLICY.md) is now measured across the
+four-compiler matrix. A centralized compiler-selected double Viénot choice
+preserves DMD gains and restores approximately original LDC timing. Small-batch
+LDC 1.41 double Brettel and material C++ residual gaps keep performance acceptance
+open. The new policy binary still needs its own consumer replay.

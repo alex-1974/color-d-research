@@ -1,0 +1,15 @@
+{
+  "compiler": "ldc-1.41.0",
+  "kernel": "double Brettel batch",
+  "split_and_compiler_normalized_instructions_equal": false,
+  "instruction_counts": {
+    "bv_compiler": 339,
+    "bv_split": 339,
+    "default": 52
+  },
+  "limitations": "Addresses, RIP displacements and address comments normalized; no causal claim for small-batch timings.",
+  "normalized_computation_diff": "Only differing immediates are the file-name length and source-line arguments in the bounds-failure path; computation instructions match after address normalization.",
+  "candidate_prologue_observation": "Loads both plane matrices and normal coefficients; has input/output address-range checks and packed-double and scalar paths.",
+  "baseline_observation": "Calls scalar brettelProbe for each item; full kernel includes bounds failure.",
+  "interpretation": "These observations do not prove the cause of small-batch timing differences. No new size threshold is selected."
+}

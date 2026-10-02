@@ -12,7 +12,9 @@ import zipfile
 from collections import defaultdict
 
 
-def inspect(artifact, destination):
+def inspect(artifact, destination, expected_variants=None):
+    if expected_variants is None:
+        expected_variants=['default','prepared','bv_direct','bv_split']
     destination.mkdir(parents=True, exist_ok=False)
     with zipfile.ZipFile(artifact) as z:
         tar_names=[n for n in z.namelist() if n.endswith('/bv-replay.tar.gz') or n=='bv-replay.tar.gz']
@@ -38,9 +40,16 @@ def inspect(artifact, destination):
     metadata=json.loads(files['metadata.json'])
     assert metadata['status']=='passed' and len(metadata['compilers'])==1
     assert metadata['sizes']==[1024,8191,65536] and metadata['blocks']==3
-    assert metadata['variants']==['default','prepared','bv_direct','bv_split']
+    assert metadata['variants']==expected_variants
+    if 'bv_compiler' in expected_variants:
+        selected='direct' if metadata['compilers'][0]['family']=='dmd' else 'original'
+        for mode in ['debug','release']:
+            assert f'policy,portable,double-vienot=original,compilerSelected,double-vienot={selected}' in (destination/(mode+'.txt')).read_text()
     commands=json.loads(files['commands.json'])
     assert all(c['returncode']==0 for c in commands)
+    timed=[c for c in commands if c['stdout'].endswith(('d-forward.csv','d-reverse.csv','cpp-forward.csv','cpp-reverse.csv'))]
+    assert len(timed)==len(expected_variants)*len(metadata['sizes'])*metadata['blocks']*4
+    assert all(c['argv'][:3]==['taskset','-c',str(metadata['cpu'])] for c in timed)
     keys={(s,m,str(d)) for s in ['float','double'] for m,ds in [('brettel',range(3)),('vienot',range(2)),('prepared',range(3)),('lookup',range(3)),('lookupApply',range(3))] for d in ds}
     all_samples=defaultdict(list); block_rows=[]; checksum_max={'float':0.,'double':0.}
     def csv_rows(name): return csv.reader(io.StringIO(files[name].decode()))
@@ -81,20 +90,25 @@ def inspect(artifact, destination):
             check_summary(row,values)
             block_rows.append(dict(variant=variant,block=str(block),**row))
     pooled=list(csv.DictReader(io.StringIO(files['pooled-summary.csv'].decode())))
-    assert len(pooled)==336
-    assert len({tuple(r[k] for k in ['variant','scalar','mode','deficiency','n']) for r in pooled})==336
+    expected_rows=len(expected_variants)*len(metadata['sizes'])*len(keys)
+    assert len(pooled)==expected_rows
+    assert len({tuple(r[k] for k in ['variant','scalar','mode','deficiency','n']) for r in pooled})==expected_rows
     for row in pooled:
         values={lang:all_samples[tuple(row[k] for k in ['variant','scalar','mode','deficiency','n'])+(lang,)] for lang in ['D','CPP']}
         assert all(len(v)==54 for v in values.values()) and row['samples_per_language']=='54'
         check_summary(row,values)
     (destination/'pooled-summary.csv').write_bytes(files['pooled-summary.csv'])
+    for name in ['lscpu.txt','prepare.txt','binaries.sha256']:
+        if name in files: (destination/name).write_bytes(files[name])
     with (destination/'block-summary.csv').open('w') as f:
         w=csv.DictWriter(f,fieldnames=list(block_rows[0]));w.writeheader();w.writerows(block_rows)
     evidence=dict(archive_sha256=hashlib.sha256(archive).hexdigest(),archive_bytes=len(archive),manifest_entries=len(manifest),commands=len(commands),raw_sample_rows=sum(map(len,all_samples.values())),checksum_max_abs=checksum_max,metadata=metadata,source_hashes={p:h for p,h in manifest.items() if p.startswith('source/')},binary_hashes={p:h for p,h in manifest.items() if ('/benchmark-' in p and not p.endswith('.o')) or p=='cpp-benchmark'})
+    evidence['verified_timed_affinity_commands']=len(timed)
+    evidence['build_commands']=[c['argv'] for c in commands if Path(c['stdout']).name.startswith('build-')]
     (destination/'inspection.json').write_text(json.dumps(evidence,indent=2)+'\n')
     print(artifact.name, 'PASS',len(pooled),'pooled cases;',len(block_rows),'block cases;',checksum_max)
 
 
 if __name__=='__main__':
-    assert len(sys.argv)==3, 'usage: inspect_bv_replay.py ARTIFACT.zip NEW_OUTPUT_DIRECTORY'
-    inspect(Path(sys.argv[1]),Path(sys.argv[2]))
+    assert len(sys.argv)>=3, 'usage: inspect_bv_replay.py ARTIFACT.zip NEW_OUTPUT_DIRECTORY [EXPECTED_VARIANT ...]'
+    inspect(Path(sys.argv[1]),Path(sys.argv[2]),sys.argv[3:] or None)

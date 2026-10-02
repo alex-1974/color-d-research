@@ -204,3 +204,11 @@ on all four compilers, with extended finite/IEEE inputs, in-place stores and CTF
 Three-size, three-block measurements confirm Brettel and float Viénot gains;
 LDC double Viénot regressions and DMD/C++ residual gaps keep a universal
 replacement and production performance acceptance open.
+
+## Follow-up: integrated BV policy
+
+[Portable and compiler-selected BV forms](R7_4_5_BV_POLICY.md) pass expanded
+Debug/Release/CTFE qualification and complete the three-size CI comparison.
+The compiler-selected candidate avoids the prior LDC double Viénot regression
+while retaining DMD's direct-store gain. It remains a research candidate;
+consumer replay, small-batch limits and material C++ gaps remain open.
