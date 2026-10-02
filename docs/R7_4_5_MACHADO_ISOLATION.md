@@ -135,13 +135,7 @@ region and use the small x86 helper `fp_state.c`. The driver retains every state
 row in `fp-state.csv` and separately records any before/after mutation in
 `fp-state-changes.csv`. It does not modify FTZ, DAZ or rounding mode in phase 1.
 
-Run on the XPS with the fixed compiler selected for this diagnosis:
-
-```sh
-python3 experiments/r7_4_5_cvd_performance/fp_state_diagnostic.py \
-  --compiler dmd \
-  --output /tmp/color-cvd-fp-state
-```
+Run on the XPS with the fixed compiler selected for this diagnosis. The phase-1 driver requires DMD 2.113.0 exactly and aborts on another DMD version:\n\n```sh\npython3 experiments/r7_4_5_cvd_performance/fp_state_diagnostic.py \\\n  --compiler /path/to/dmd-2.113.0 \\\n  --expected-dmd 2.113.0 \\\n  --output /tmp/color-cvd-fp-state\n```
 
 Acceptance for moving to phase 2 is diagnostic, not a production performance
 gate: the run must complete with fixed binaries, complete FP-state pairs and no
@@ -150,3 +144,24 @@ identity are evidence to inspect, not assumptions. Phase 2 will then vary code
 placement deliberately while preserving the same kernels, FP state, workload,
 affinity and output checksums. Only after placement is isolated should explicit
 FTZ/DAZ state variation be combined with placement.
+
+
+### Superseded preliminary XPS run
+
+An initial XPS invocation reached all timed processes with DMD 2.111.0 before the
+post-processing step failed on the hyphenated A/A variant names. The raw archive
+is still useful as diagnostic evidence but is not the requested fixed-compiler
+phase-1 result.
+
+Both A/A rebuild pairs were byte-identical. MXCSR control bits and the x87
+control word remained unchanged in every inspected before/after pair. MXCSR
+changed only by sticky exception flag bit 5 (precision) from 0x1f80 to 0x1fa0
+in the first arithmetic case of each process; this is an observed status flag,
+not a change of FTZ, DAZ, rounding mode or exception masks. The driver now
+separates MXCSR status flags from control-state changes and records both.
+
+The preliminary A/A timing medians were centered close to 1.0, but individual
+paired medians showed substantial outliers under the existing powersave/turbo/
+thermal conditions. They therefore reinforce the need for balanced blocks and
+do not justify a placement conclusion. Repeat phase 1 with DMD 2.113.0 before
+advancing to deliberate placement variation.
