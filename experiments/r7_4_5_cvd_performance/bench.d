@@ -252,8 +252,13 @@ void main(string[] args)
     else
     {
         writeln("metadata,D,frontend=", __VERSION__, ",n=", n, ",warmup=3,rounds=9,repeats=16,AoS,bounds=on");
-        if (reverse) { cases!double(n, reverse); cases!float(n, reverse); }
-        else { cases!float(n, reverse); cases!double(n, reverse); }
+        version (PerfFloatOnly) cases!float(n, reverse);
+        else version (PerfDoubleOnly) cases!double(n, reverse);
+        else
+        {
+            if (reverse) { cases!double(n, reverse); cases!float(n, reverse); }
+            else { cases!float(n, reverse); cases!double(n, reverse); }
+        }
     }
 }
 
