@@ -1,0 +1,206 @@
+
+/home/runner/work/_temp/bv-replay/cpp-benchmark:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .plt.sec:
+
+Disassembly of section .text:
+
+00000000000031c0 <_Z5batchIdL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0>:
+    31c0:	movabs r9,0xaaaaaaaaaaaaaaab
+    31ca:	mov    r8,rsi
+    31cd:	mov    rax,rdi
+    31d0:	sub    r8,rdi
+    31d3:	mov    rdi,r8
+    31d6:	sar    rdi,0x3
+    31da:	imul   rdi,r9
+    31de:	cmp    rsi,rax
+    31e1:	je     32e6 <_Z5batchIdL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x126>
+    31e7:	cmp    ecx,0x1
+    31ea:	lea    rsi,[rip+0x88cf]        # bac0 <_ZL12vienotProtan>
+    31f1:	lea    rcx,[rip+0x8868]        # ba60 <_ZL12vienotDeutan>
+    31f8:	cmovne rcx,rsi
+    31fc:	movsd  xmm3,QWORD PTR [rcx]
+    3200:	movsd  xmm6,QWORD PTR [rcx+0x8]
+    3205:	movsd  xmm7,QWORD PTR [rcx+0x10]
+    320a:	movsd  xmm4,QWORD PTR [rcx+0x18]
+    320f:	movsd  xmm8,QWORD PTR [rcx+0x20]
+    3215:	movsd  xmm9,QWORD PTR [rcx+0x28]
+    321b:	movsd  xmm11,QWORD PTR [rcx+0x30]
+    3221:	movsd  xmm12,QWORD PTR [rcx+0x38]
+    3227:	movsd  xmm13,QWORD PTR [rcx+0x40]
+    322d:	cmp    r8,0x18
+    3231:	jbe    3247 <_Z5batchIdL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x87>
+    3233:	mov    rcx,rdx
+    3236:	sub    rcx,rax
+    3239:	sub    rcx,0x8
+    323d:	cmp    rcx,0x20
+    3241:	ja     32f0 <_Z5batchIdL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x130>
+    3247:	xor    ecx,ecx
+    3249:	nop    DWORD PTR [rax+0x0]
+    3250:	movsd  xmm2,QWORD PTR [rax]
+    3254:	movapd xmm5,xmm6
+    3258:	add    rcx,0x1
+    325c:	add    rax,0x18
+    3260:	movsd  xmm1,QWORD PTR [rax-0x10]
+    3265:	movapd xmm10,xmm3
+    326a:	movsd  xmm0,QWORD PTR [rax-0x8]
+    326f:	add    rdx,0x18
+    3273:	mulsd  xmm10,xmm2
+    3278:	mulsd  xmm5,xmm1
+    327c:	addsd  xmm5,xmm10
+    3281:	movapd xmm10,xmm7
+    3286:	mulsd  xmm10,xmm0
+    328b:	addsd  xmm5,xmm10
+    3290:	movapd xmm10,xmm4
+    3295:	mulsd  xmm10,xmm2
+    329a:	mulsd  xmm2,xmm11
+    329f:	movsd  QWORD PTR [rdx-0x18],xmm5
+    32a4:	movapd xmm5,xmm8
+    32a9:	mulsd  xmm5,xmm1
+    32ad:	mulsd  xmm1,xmm12
+    32b2:	addsd  xmm5,xmm10
+    32b7:	movapd xmm10,xmm9
+    32bc:	mulsd  xmm10,xmm0
+    32c1:	addsd  xmm1,xmm2
+    32c5:	mulsd  xmm0,xmm13
+    32ca:	addsd  xmm5,xmm10
+    32cf:	addsd  xmm0,xmm1
+    32d3:	movsd  QWORD PTR [rdx-0x10],xmm5
+    32d8:	movsd  QWORD PTR [rdx-0x8],xmm0
+    32dd:	cmp    rcx,rdi
+    32e0:	jb     3250 <_Z5batchIdL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x90>
+    32e6:	ret
+    32e7:	nop    WORD PTR [rax+rax*1+0x0]
+    32f0:	test   r8,r8
+    32f3:	mov    r8d,0x1
+    32f9:	movapd xmm2,xmm3
+    32fd:	mov    rcx,rax
+    3300:	cmovne r8,rdi
+    3304:	movapd xmm0,xmm12
+    3309:	movapd xmm5,xmm6
+    330d:	mov    rsi,rdx
+    3310:	unpcklpd xmm0,xmm6
+    3314:	movapd xmm1,xmm8
+    3319:	movsd  QWORD PTR [rsp-0x38],xmm6
+    331f:	movaps XMMWORD PTR [rsp-0x68],xmm0
+    3324:	mov    r9,r8
+    3327:	movapd xmm0,xmm13
+    332c:	mov    rdi,r8
+    332f:	unpcklpd xmm0,xmm7
+    3333:	shr    r9,1
+    3336:	and    rdi,0xfffffffffffffffe
+    333a:	movapd xmm10,xmm9
+    333f:	movaps XMMWORD PTR [rsp-0x58],xmm0
+    3344:	add    rdi,r9
+    3347:	movapd xmm0,xmm7
+    334b:	unpcklpd xmm2,xmm4
+    334f:	movapd xmm15,xmm4
+    3354:	movapd xmm14,xmm11
+    3359:	unpcklpd xmm5,xmm8
+    335e:	shl    rdi,0x4
+    3362:	unpcklpd xmm0,xmm9
+    3367:	unpcklpd xmm1,xmm12
+    336c:	add    rdi,rax
+    336f:	movsd  QWORD PTR [rsp-0x18],xmm9
+    3376:	unpcklpd xmm10,xmm13
+    337b:	movapd xmm6,XMMWORD PTR [rsp-0x68]
+    3381:	unpcklpd xmm15,xmm11
+    3386:	movapd xmm9,XMMWORD PTR [rsp-0x58]
+    338d:	unpcklpd xmm14,xmm3
+    3392:	movsd  QWORD PTR [rsp-0x40],xmm3
+    3398:	movapd xmm3,xmm2
+    339c:	movsd  QWORD PTR [rsp-0x30],xmm7
+    33a2:	movapd xmm7,xmm5
+    33a6:	movsd  QWORD PTR [rsp-0x28],xmm4
+    33ac:	movapd xmm4,xmm1
+    33b0:	movsd  QWORD PTR [rsp-0x20],xmm8
+    33b7:	movapd xmm8,xmm10
+    33bc:	movsd  QWORD PTR [rsp-0x10],xmm11
+    33c3:	movapd xmm11,xmm0
+    33c8:	nop    DWORD PTR [rax+rax*1+0x0]
+    33d0:	movupd xmm0,XMMWORD PTR [rcx]
+    33d4:	movupd xmm2,XMMWORD PTR [rcx+0x10]
+    33d9:	add    rcx,0x30
+    33dd:	add    rsi,0x30
+    33e1:	movupd xmm1,XMMWORD PTR [rcx-0x10]
+    33e6:	movapd xmm5,xmm0
+    33ea:	movapd xmm10,xmm0
+    33ef:	unpcklpd xmm5,xmm0
+    33f3:	unpckhpd xmm10,xmm0
+    33f8:	mulpd  xmm10,xmm7
+    33fd:	mulpd  xmm5,xmm3
+    3401:	addpd  xmm5,xmm10
+    3406:	movapd xmm10,xmm2
+    340b:	unpcklpd xmm10,xmm2
+    3410:	mulpd  xmm10,xmm11
+    3415:	addpd  xmm5,xmm10
+    341a:	movups XMMWORD PTR [rsi-0x30],xmm5
+    341e:	movapd xmm5,xmm2
+    3422:	movsd  xmm5,xmm0
+    3426:	shufpd xmm0,xmm1,0x1
+    342b:	mulpd  xmm5,xmm14
+    3430:	mulpd  xmm0,xmm6
+    3434:	addpd  xmm0,xmm5
+    3438:	movapd xmm5,xmm1
+    343c:	movsd  xmm5,xmm2
+    3440:	unpckhpd xmm2,xmm2
+    3444:	mulpd  xmm5,xmm9
+    3449:	mulpd  xmm2,xmm15
+    344e:	addpd  xmm0,xmm5
+    3452:	movups XMMWORD PTR [rsi-0x20],xmm0
+    3456:	movapd xmm0,xmm1
+    345a:	unpcklpd xmm0,xmm1
+    345e:	unpckhpd xmm1,xmm1
+    3462:	mulpd  xmm0,xmm4
+    3466:	mulpd  xmm1,xmm8
+    346b:	addpd  xmm0,xmm2
+    346f:	addpd  xmm0,xmm1
+    3473:	movups XMMWORD PTR [rsi-0x10],xmm0
+    3477:	cmp    rcx,rdi
+    347a:	jne    33d0 <_Z5batchIdL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x210>
+    3480:	mov    rcx,r8
+    3483:	movsd  xmm3,QWORD PTR [rsp-0x40]
+    3489:	movsd  xmm6,QWORD PTR [rsp-0x38]
+    348f:	and    rcx,0xfffffffffffffffe
+    3493:	and    r8d,0x1
+    3497:	movsd  xmm7,QWORD PTR [rsp-0x30]
+    349d:	movsd  xmm4,QWORD PTR [rsp-0x28]
+    34a3:	movsd  xmm8,QWORD PTR [rsp-0x20]
+    34aa:	movsd  xmm9,QWORD PTR [rsp-0x18]
+    34b1:	movsd  xmm11,QWORD PTR [rsp-0x10]
+    34b8:	je     32e6 <_Z5batchIdL4Mode1EEvRKSt6vectorI3RgbIT_ESaIS4_EERS6_RKSt5arrayI6MatrixIS3_ELm11EESC_j.isra.0+0x126>
+    34be:	lea    rcx,[rcx+rcx*2]
+    34c2:	shl    rcx,0x3
+    34c6:	add    rax,rcx
+    34c9:	movsd  xmm0,QWORD PTR [rax]
+    34cd:	movsd  xmm2,QWORD PTR [rax+0x8]
+    34d2:	movsd  xmm1,QWORD PTR [rax+0x10]
+    34d7:	lea    rax,[rdx+rcx*1]
+    34db:	mulsd  xmm3,xmm0
+    34df:	mulsd  xmm6,xmm2
+    34e3:	mulsd  xmm4,xmm0
+    34e7:	mulsd  xmm8,xmm2
+    34ec:	mulsd  xmm0,xmm11
+    34f1:	mulsd  xmm2,xmm12
+    34f6:	mulsd  xmm7,xmm1
+    34fa:	addsd  xmm3,xmm6
+    34fe:	mulsd  xmm9,xmm1
+    3503:	mulsd  xmm1,xmm13
+    3508:	addsd  xmm4,xmm8
+    350d:	addsd  xmm0,xmm2
+    3511:	addsd  xmm3,xmm7
+    3515:	addsd  xmm4,xmm9
+    351a:	addsd  xmm0,xmm1
+    351e:	movsd  QWORD PTR [rax],xmm3
+    3522:	movsd  QWORD PTR [rax+0x8],xmm4
+    3527:	movsd  QWORD PTR [rax+0x10],xmm0
+    352c:	ret
+
+Disassembly of section .fini:

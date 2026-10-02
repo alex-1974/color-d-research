@@ -183,3 +183,15 @@ DMD 2.113. No integrated policy or production API was changed. The DMD indexed
 residual gap remains about 2.8–3.0 times C++ for float and 1.8–1.9 times for
 double on these CI hosts; the performance gate is still open. The next narrow
 probe is reference-bound input iteration with direct stores and bounds checks.
+
+### Reference-bound Viénot iteration follow-up
+
+The [reference-iteration probe](R7_4_5_VIENOT_REFERENCE.md), measured at
+`bc2c387e933469901cd8c2d2cedfe0b700db9f5f`, is implemented and fully inspected.
+DMD removes the three indexed input checks; extra float gains hold on the
+DMD 2.111/EPYC 7763 host, but not broadly on DMD 2.113/EPYC 9V45. Double does
+not consistently improve over index, and LDC regressions remain. Unchanged
+Machado controls under DMD 2.113 shift by multiple-fold factors despite matching
+normalized function code. Keep the selected policy unchanged and isolate those
+control movements before selecting an integrated winner. The performance gate
+remains open; no compiler-version fork or production promotion follows.

@@ -183,3 +183,15 @@ the reports and fixed-binary codegen evidence without executing archived binarie
 Source Git blob verification is a separate recorded network check. Large raw
 archives and executables remain Tier-3 CI artifacts; their IDs, digests, sizes
 and expiry dates are retained in artifacts.json rather than committing binaries.
+
+### Reference-bound Viénot iteration follow-up
+
+The [reference-iteration probe](R7_4_5_VIENOT_REFERENCE.md), measured at
+`bc2c387e933469901cd8c2d2cedfe0b700db9f5f`, is implemented and fully inspected.
+DMD removes the three indexed input checks; extra float gains hold on the
+DMD 2.111/EPYC 7763 host, but not broadly on DMD 2.113/EPYC 9V45. Double does
+not consistently improve over index, and LDC regressions remain. Unchanged
+Machado controls under DMD 2.113 shift by multiple-fold factors despite matching
+normalized function code. Keep the selected policy unchanged and isolate those
+control movements before selecting an integrated winner. The performance gate
+remains open; no compiler-version fork or production promotion follows.

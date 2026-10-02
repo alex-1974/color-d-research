@@ -1,0 +1,59 @@
+{
+  "totals": {
+    "manifest_entries": 1964,
+    "commands": 772,
+    "raw_sample_rows": 145152,
+    "verified_timed_affinity_commands": 576,
+    "verified_codegen_binaries": 16
+  },
+  "pooled_cases": 1344,
+  "block_cases": 4032,
+  "matched_checksum_max_abs": {
+    "float": 0.0,
+    "double": 0.0
+  },
+  "controls": {
+    "dmd-2.111.0": {
+      "max_selected_policy_machado_block_median_max_over_min": 1.0181332093550561,
+      "unchanged_arithmetic_pooled_ref_over_index_speedup_min": 0.9974223620363841,
+      "unchanged_arithmetic_pooled_ref_over_index_speedup_max": 1.0386967081886422
+    },
+    "dmd-2.113.0": {
+      "max_selected_policy_machado_block_median_max_over_min": 1.4539826033850274,
+      "unchanged_arithmetic_pooled_ref_over_index_speedup_min": 0.14101046222490482,
+      "unchanged_arithmetic_pooled_ref_over_index_speedup_max": 5.108241686726582
+    },
+    "ldc-1.41.0": {
+      "max_selected_policy_machado_block_median_max_over_min": 1.1750535331500105,
+      "unchanged_arithmetic_pooled_ref_over_index_speedup_min": 0.9790982709546643,
+      "unchanged_arithmetic_pooled_ref_over_index_speedup_max": 1.0237939958896147
+    },
+    "ldc-1.43.0": {
+      "max_selected_policy_machado_block_median_max_over_min": 1.254996299072085,
+      "unchanged_arithmetic_pooled_ref_over_index_speedup_min": 0.990082644560061,
+      "unchanged_arithmetic_pooled_ref_over_index_speedup_max": 1.0086602139894358
+    }
+  },
+  "compiler_info": {
+    "dmd-2.111.0": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "compiler": "DMD64 D Compiler v2.111.0\nCopyright (C) 1999-2025 by The D Language Foundation, All Rights Reserved written by Walter Bright\n",
+      "gcc": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    },
+    "dmd-2.113.0": {
+      "cpu": "AMD EPYC 9V45 96-Core Processor",
+      "compiler": "DMD64 D Compiler v2.113.0\nCopyright (C) 1999-2026 by The D Language Foundation, All Rights Reserved written by Walter Bright\n",
+      "gcc": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    },
+    "ldc-1.41.0": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "compiler": "LDC - the LLVM D compiler (1.41.0):\n  based on DMD v2.111.0 and LLVM 20.1.5\n  built with LDC - the LLVM D compiler (1.41.0)\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: znver3\n  http://dlang.org - http://wiki.dlang.org/LDC\n\n\n  Registered Targets:\n    aarch64     - AArch64 (little endian)\n    aarch64_32  - AArch64 (little endian ILP32)\n    aarch64_be  - AArch64 (big endian)\n    amdgcn      - AMD GCN GPUs\n    arm         - ARM\n    arm64       - ARM64 (little endian)\n    arm64_32    - ARM64 (little endian ILP32)\n    armeb       - ARM (big endian)\n    avr         - Atmel AVR Microcontroller\n    bpf         - BPF (host endian)\n    bpfeb       - BPF (big endian)\n    bpfel       - BPF (little endian)\n    hexagon     - Hexagon\n    lanai       - Lanai\n    loongarch32 - 32-bit LoongArch\n    loongarch64 - 64-bit LoongArch\n    mips        - MIPS (32-bit big endian)\n    mips64      - MIPS (64-bit big endian)\n    mips64el    - MIPS (64-bit little endian)\n    mipsel      - MIPS (32-bit little endian)\n    msp430      - MSP430 [experimental]\n    nvptx       - NVIDIA PTX 32-bit\n    nvptx64     - NVIDIA PTX 64-bit\n    ppc32       - PowerPC 32\n    ppc32le     - PowerPC 32 LE\n    ppc64       - PowerPC 64\n    ppc64le     - PowerPC 64 LE\n    r600        - AMD GPUs HD2XXX-HD6XXX\n    riscv32     - 32-bit RISC-V\n    riscv64     - 64-bit RISC-V\n    sparc       - Sparc\n    sparcel     - Sparc LE\n    sparcv9     - Sparc V9\n    spirv       - SPIR-V Logical\n    spirv32     - SPIR-V 32-bit\n    spirv64     - SPIR-V 64-bit\n    systemz     - SystemZ\n    thumb       - Thumb\n    thumbeb     - Thumb (big endian)\n    ve          - VE\n    wasm32      - WebAssembly 32-bit\n    wasm64      - WebAssembly 64-bit\n    x86         - 32-bit X86: Pentium-Pro and above\n    x86-64      - 64-bit X86: EM64T and AMD64\n    xcore       - XCore\n    xtensa      - Xtensa 32\n",
+      "gcc": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    },
+    "ldc-1.43.0": {
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "compiler": "LDC - the LLVM D compiler (1.43.0):\n  based on DMD v2.113.0 and LLVM 22.1.8\n  built with LDC - the LLVM D compiler (1.43.0)\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: znver4\n  https://dlang.org - https://wiki.dlang.org/LDC\n\n\n  Registered Targets:\n    aarch64     - AArch64 (little endian)\n    aarch64_32  - AArch64 (little endian ILP32)\n    aarch64_be  - AArch64 (big endian)\n    amdgcn      - AMD GCN GPUs\n    arm         - ARM\n    arm64       - ARM64 (little endian)\n    arm64_32    - ARM64 (little endian ILP32)\n    armeb       - ARM (big endian)\n    avr         - Atmel AVR Microcontroller\n    bpf         - BPF (host endian)\n    bpfeb       - BPF (big endian)\n    bpfel       - BPF (little endian)\n    hexagon     - Hexagon\n    lanai       - Lanai\n    loongarch32 - 32-bit LoongArch\n    loongarch64 - 64-bit LoongArch\n    mips        - MIPS (32-bit big endian)\n    mips64      - MIPS (64-bit big endian)\n    mips64el    - MIPS (64-bit little endian)\n    mipsel      - MIPS (32-bit little endian)\n    msp430      - MSP430 [experimental]\n    nvptx       - NVIDIA PTX 32-bit\n    nvptx64     - NVIDIA PTX 64-bit\n    ppc32       - PowerPC 32\n    ppc32le     - PowerPC 32 LE\n    ppc64       - PowerPC 64\n    ppc64le     - PowerPC 64 LE\n    r600        - AMD GPUs HD2XXX-HD6XXX\n    riscv32     - 32-bit RISC-V\n    riscv32be   - 32-bit big endian RISC-V\n    riscv64     - 64-bit RISC-V\n    riscv64be   - 64-bit big endian RISC-V\n    sparc       - Sparc\n    sparcel     - Sparc LE\n    sparcv9     - Sparc V9\n    spirv       - SPIR-V Logical\n    spirv32     - SPIR-V 32-bit\n    spirv64     - SPIR-V 64-bit\n    systemz     - SystemZ\n    thumb       - Thumb\n    thumbeb     - Thumb (big endian)\n    ve          - VE\n    wasm32      - WebAssembly 32-bit\n    wasm64      - WebAssembly 64-bit\n    x86         - 32-bit X86: Pentium-Pro and above\n    x86-64      - 64-bit X86: EM64T and AMD64\n    xcore       - XCore\n    xtensa      - Xtensa 32\n",
+      "gcc": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    }
+  }
+}
