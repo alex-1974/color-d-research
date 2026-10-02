@@ -1,0 +1,31 @@
+name: R7.4.5 Machado process isolation
+on:
+  push:
+    branches: [research/163-cvd-transformations]
+    paths:
+      - experiments/r7_4_5_cvd_performance/bench.d
+      - experiments/r7_4_5_cvd_performance/isolate.py
+      - .github/workflows/r7-4-5-isolation.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  isolate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [dmd-2.111.0, dmd-2.113.0, ldc-1.41.0, ldc-1.43.0]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+      - name: Fixed binary isolation and unchanged checksum comparison
+        run: python3 experiments/r7_4_5_cvd_performance/isolate.py --compiler "$DC" --output "$RUNNER_TEMP/isolation"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: isolation-${{ matrix.compiler }}
+          path: ${{ runner.temp }}/isolation/**

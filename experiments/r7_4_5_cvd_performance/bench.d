@@ -198,10 +198,15 @@ void cases(T)(size_t n, bool reverse)
     foreach (index; 0u .. 3u)
     {
         const deficiency = reverse ? 2u-index : index;
+        version (IsolateLookup) runLookup!T(n, deficiency, reverse);
+        else version (IsolatePrepared) runCase!(T, Mode.prepared)(n, deficiency, reverse);
+        else
+        {
         if (reverse) { runLookup!T(n, deficiency, reverse); runCase!(T, Mode.lookupApply)(n, deficiency, reverse); runCase!(T, Mode.prepared)(n, deficiency, reverse); }
         runCase!(T, Mode.brettel)(n, deficiency, reverse);
         if (deficiency < 2) runCase!(T, Mode.vienot)(n, deficiency, reverse);
         if (!reverse) { runCase!(T, Mode.prepared)(n, deficiency, reverse); runCase!(T, Mode.lookupApply)(n, deficiency, reverse); runLookup!T(n, deficiency, reverse); }
+        }
     }
 }
 
