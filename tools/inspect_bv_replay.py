@@ -27,14 +27,19 @@ def inspect(artifact, destination, expected_variants=None):
             log=z.read(names[0])
             for scalar in ['float','double']:
                 assert f'qualification,{scalar},inputs=5839,'.encode() in log
-            shape_variants={'bv_vienot_index','bv_vienot_static'} & set(expected_variants)
+            shape_variants={'bv_vienot_index','bv_vienot_static','bv_vienot_ref'} & set(expected_variants)
             if shape_variants:
                 assert b'vienot,indexed/static,empty/tails/batch-in-place/CTFE/attributes=PASS' in log
-            assert log.count(b'=PASS')==(3 if shape_variants else 2)
+            shape_log=b'vienot,indexed/static,empty/tails/batch-in-place/CTFE/attributes=PASS'
+            reference_log=b'vienot,reference,empty/tails/batch-in-place/CTFE/attributes=PASS'
+            if 'bv_vienot_ref' in expected_variants: assert reference_log in log
+            assert log.count(b'=PASS')==2+int(shape_log in log)+int(reference_log in log)
             (destination/(mode+'.txt')).write_bytes(log)
-        if {'bv_vienot_index','bv_vienot_static'} & set(expected_variants):
+        codegen_variants={'bv_vienot_index','bv_vienot_static','bv_vienot_ref'} & set(expected_variants)
+        if codegen_variants:
             names=[n for n in z.namelist() if '/codegen/' in n and not n.endswith('/')]
-            assert len(names)==9 and len({Path(n).name for n in names})==9
+            expected_files=1+2*(2+len(codegen_variants))
+            assert len(names)==expected_files and len({Path(n).name for n in names})==expected_files
             codegen_files={Path(n).name:z.read(n) for n in names}
     with tarfile.open(fileobj=io.BytesIO(archive),mode='r:gz') as t:
         assert all(m.isdir() or m.isfile() for m in t.getmembers())
@@ -113,9 +118,9 @@ def inspect(artifact, destination, expected_variants=None):
     evidence=dict(archive_sha256=hashlib.sha256(archive).hexdigest(),archive_bytes=len(archive),manifest_entries=len(manifest),commands=len(commands),raw_sample_rows=sum(map(len,all_samples.values())),checksum_max_abs=checksum_max,metadata=metadata,source_hashes={p:h for p,h in manifest.items() if p.startswith('source/')},binary_hashes={p:h for p,h in manifest.items() if ('/benchmark-' in p and not p.endswith('.o')) or p=='cpp-benchmark'})
     if codegen_files:
         records=json.loads(codegen_files['inspection.json'])
-        assert len(records)==4
+        assert len(records)==2+len(codegen_variants)
         family=metadata['compilers'][0]['family']
-        expected_binaries={'cpp-benchmark','benchmark-bv_compiler','benchmark-bv_vienot_index','benchmark-bv_vienot_static'}
+        expected_binaries={'cpp-benchmark','benchmark-bv_compiler'} | {'benchmark-'+v for v in codegen_variants}
         assert {Path(r['binary']).name for r in records}==expected_binaries
         for record in records:
             name=Path(record['binary']).name

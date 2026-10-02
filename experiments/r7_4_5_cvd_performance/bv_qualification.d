@@ -47,12 +47,14 @@ bool qualifyInput(T)(bv.Rgb!T input)
                 if (!colorsMatch!T(policyOutput[0],vienotExpected)
                     || !colorsMatch!T(inPlaceOutput[0],vienotExpected)) return false;
             }}
-            static foreach (useStatic; [false,true])
+            static foreach (shape; [0,1,2])
             {{
-                static if (useStatic) staticVienotBatch!T(source[],policyOutput[],deficiency);
+                static if (shape == 1) staticVienotBatch!T(source[],policyOutput[],deficiency);
+                else static if (shape == 2) referenceVienotBatch!T(source[],policyOutput[],deficiency);
                 else indexedVienotBatch!T(source[],policyOutput[],deficiency);
                 inPlaceOutput[0] = input;
-                static if (useStatic) staticVienotBatch!T(inPlaceOutput[],inPlaceOutput[],deficiency);
+                static if (shape == 1) staticVienotBatch!T(inPlaceOutput[],inPlaceOutput[],deficiency);
+                else static if (shape == 2) referenceVienotBatch!T(inPlaceOutput[],inPlaceOutput[],deficiency);
                 else indexedVienotBatch!T(inPlaceOutput[],inPlaceOutput[],deficiency);
                 if (!colorsMatch!T(policyOutput[0],vienotExpected)
                     || !colorsMatch!T(inPlaceOutput[0],vienotExpected)) return false;
@@ -98,13 +100,18 @@ bool qualifyVienotBatches(T)()
         p = bv.Rgb!T(T(i)/T(32)-T(1),T(i%7)/T(3),T(i%11)/T(5)-T(1));
     foreach (n; [0,1,2,3,7,8,9,31,32,33,65])
     foreach (deficiency; 0u .. 2u)
-    static foreach (useStatic; [false,true])
+    static foreach (shape; [0,1,2])
     {{
         inPlace[] = source[];
-        static if (useStatic)
+        static if (shape == 1)
         {
             staticVienotBatch!T(source[0..n],output[0..n],deficiency);
             staticVienotBatch!T(inPlace[0..n],inPlace[0..n],deficiency);
+        }
+        else static if (shape == 2)
+        {
+            referenceVienotBatch!T(source[0..n],output[0..n],deficiency);
+            referenceVienotBatch!T(inPlace[0..n],inPlace[0..n],deficiency);
         }
         else
         {
@@ -184,4 +191,5 @@ void main()
     if (!qualifyRuntime!double(inputs)) throw new Exception("combined BV double qualification failed");
     writefln("qualification,double,inputs=%s,extended/IEEE/selection/in-place/CTFE/attributes=PASS",inputs);
     writefln("vienot,indexed/static,empty/tails/batch-in-place/CTFE/attributes=PASS");
+    writefln("vienot,reference,empty/tails/batch-in-place/CTFE/attributes=PASS");
 }

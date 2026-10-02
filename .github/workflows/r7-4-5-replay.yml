@@ -35,7 +35,7 @@ jobs:
           assert metadata['status'] == 'passed'
           with (root/'pooled-summary.csv').open() as stream:
               rows = list(csv.DictReader(stream))
-          assert len(rows) == 12*2*28
+          assert len(rows) == 13*2*28
           assert all(int(r['samples_per_language']) == 36 for r in rows)
           assert pathlib.Path(str(root)+'.tar.gz').is_file()
           print('Replay complete matrix, pooled report and archive: PASS')

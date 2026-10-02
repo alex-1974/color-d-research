@@ -9,7 +9,8 @@ else version (DirectMachado) enum machadoMode = 2;
 else version (BoundedMachado) enum machadoMode = 3;
 else enum machadoMode = 0;
 
-version (IndexedVienot) enum candidateMode = 7;
+version (ReferenceVienot) enum candidateMode = 9;
+else version (IndexedVienot) enum candidateMode = 7;
 else version (StaticVienot) enum candidateMode = 8;
 else version (PortableBvPolicy) enum candidateMode = 5;
 else version (CompilerBvPolicy) enum candidateMode = 6;
@@ -39,7 +40,8 @@ void batch(T, Mode mode)(const bv.Rgb!T[] input, bv.Rgb!T[] output,
     else static if (candidateMode >= 7 && mode == Mode.vienot)
     {
         static if (candidateMode == 7) indexedVienotBatch!T(input,output,deficiency);
-        else staticVienotBatch!T(input,output,deficiency);
+        else static if (candidateMode == 8) staticVienotBatch!T(input,output,deficiency);
+        else referenceVienotBatch!T(input,output,deficiency);
         return;
     }
     else static if (candidateMode >= 5 && mode == Mode.vienot)

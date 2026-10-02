@@ -23,6 +23,7 @@ VARIANTS = {
     'ma_direct': 'DirectMachado',
     'bv_portable': 'PortableBvPolicy', 'bv_compiler': 'CompilerBvPolicy',
     'bv_vienot_index': 'IndexedVienot', 'bv_vienot_static': 'StaticVienot',
+    'bv_vienot_ref': 'ReferenceVienot',
 }
 EXPERIMENT = Path('experiments/r7_4_5_cvd_performance')
 FILES = [EXPERIMENT / name for name in (

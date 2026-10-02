@@ -220,3 +220,19 @@ void staticVienotBatch(T)(const bv.Rgb!T[] input, bv.Rgb!T[] output, uint defici
     if (deficiency == 1) staticVienotLoop!(T,1)(input,output);
     else staticVienotLoop!(T,0)(input,output);
 }
+
+// Reference-bound iteration probe: no RGB aggregate copy and no indexed
+// input access. Snapshot all components before writing for exact in-place use.
+pragma(inline, true)
+void referenceVienotBatch(T)(const bv.Rgb!T[] input, bv.Rgb!T[] output, uint deficiency)
+@safe pure nothrow @nogc
+{
+    static assert(is(T == float) || is(T == double));
+    assert(input.length == output.length);
+    const matrix = prepareVienot!T(deficiency);
+    foreach (i, ref p; input)
+    {
+        const T r = p.r, g = p.g, b = p.b;
+        directWrite!T(output[i],matrix,r,g,b);
+    }
+}
