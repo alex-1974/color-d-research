@@ -184,3 +184,153 @@ GitHub Actions run 37076556756 passed for both DMD 2.113.0 and LDC 1.43.0:
 Shared-runner timings are smoke evidence only and are not used for performance
 selection. Controlled XPS replay over 1024/8191/65536 and balanced blocks is
 still pending.
+
+
+## XPS result — algorithm architecture comparison
+
+The controlled XPS replay completed successfully at revision
+`c2e3c5e119298e899f29c6676cc976b3f0611145`.
+
+Archive integrity, binary hashes, semantic preflight, and D/C++ checksum pairing
+all passed. The run used DMD 2.113.0, LDC 1.41.0, GCC 15.2.0, three workload
+sizes (1024, 8191, 65536), three balanced blocks, CPU 0 affinity,
+`boundscheck=on` for D, and matched D/C++ source architectures.
+
+The host remained an uncontrolled powersave/turbo/SMT environment and reached
+high package temperatures during the run, so small cross-language differences
+remain approximate. The large architecture effects below are far beyond that
+noise.
+
+### Viénot
+
+Hoisting the deficiency-selected matrix out of the per-color scalar call is the
+dominant optimization.
+
+Median D speedup versus scalar across sizes/deficiencies:
+
+| compiler | scalar | prepared | specialized |
+| --- | --- | ---: | ---: |
+| DMD 2.113 | float  | ~11.8x | ~9.0x |
+| DMD 2.113 | double | ~12.0x | ~10.8x |
+| LDC 1.41  | float  | ~5.8x  | ~5.8x |
+| LDC 1.41  | double | ~1.0x  | ~1.0x |
+
+GCC gains essentially nothing from explicit preparation because it already
+hoists/folds the equivalent scalar work. Therefore the huge D scalar penalty is
+primarily a D compiler/source-shape failure to eliminate repeated invariant
+preparation, not a better C++ scientific algorithm.
+
+The conservative Viénot specialized kernel is slower than prepared on DMD and
+neutral on LDC. Reusing the identical first/second row in source does not
+improve the generated hot path enough to justify the extra specialization.
+
+Prepared Viénot D/C++ median ratios are approximately:
+
+- DMD float: 2.74x;
+- DMD double: 1.58x;
+- LDC float: 1.11x;
+- LDC double: 0.81x.
+
+Thus preparation fixes the gross architectural error but does not close the
+remaining DMD code-generation gap.
+
+### Machado
+
+Machado shows the clearest prepare-once result.
+
+Median D speedup versus scalar:
+
+| compiler | scalar | prepared | specialized |
+| --- | --- | ---: | ---: |
+| DMD 2.113 | float  | ~18.5x | ~14.0x |
+| DMD 2.113 | double | ~17.5x | ~12.3x |
+| LDC 1.41  | float  | ~10.3x | ~10.4x |
+| LDC 1.41  | double | ~1.0x  | ~1.0x |
+
+Again, GCC's scalar and prepared timings are essentially identical: GCC already
+moves the fixed severity/deficiency preparation out of the effective pixel
+work. DMD does not, and LDC 1.41 does not reliably do so for float.
+
+Explicitly preparing the severity matrix once per batch is therefore an
+algorithm/API-level requirement for predictable D performance. It should not be
+left to optimizer loop-invariant-code-motion.
+
+The further specialized form that copies matrix coefficients into scalar locals
+does not help DMD and is slower than the prepared generic form. LDC treats the
+two forms as essentially equivalent.
+
+Prepared Machado D/C++ median ratios are approximately:
+
+- DMD float: 2.74x;
+- DMD double: 1.74x;
+- LDC float: 1.42x;
+- LDC double: 0.96x.
+
+### Brettel
+
+Brettel also benefits from explicit preparation, but it exposes a second,
+distinct issue.
+
+Prepared plan speedup versus scalar is about:
+
+- DMD float: ~2.9x;
+- DMD double: ~2.7x;
+- LDC float: ~3.7x;
+- LDC double: workload-dependent, roughly 1.8-2.2x at the larger sizes.
+
+The split specialized branch form is much faster than prepared for DMD and
+brings DMD much closer to matched C++ in several cases. However both DMD and
+GCC show strong workload/code-layout sensitivity for this specialized branch
+shape. GCC's specialized Brettel kernel becomes substantially slower than its
+own prepared/scalar path at 8191 and 65536; DMD's specialized float path also
+rises reproducibly from roughly 4 ns/color at n=1024 to roughly 8-9 ns/color at
+n=65536, while LDC stays nearly flat.
+
+Therefore the split specialized Brettel form is **not** yet a production
+candidate. The result is evidence that branch/source shape matters strongly,
+but choosing it now would risk selecting one compiler/layout accident over
+another.
+
+### Architectural conclusion
+
+The experiment confirms that the previous per-color API architecture was
+suboptimal for bulk consumers.
+
+The production-relevant conclusion is narrower than "specialize every model":
+
+1. **Prepared transform objects are the primary missing abstraction.**
+   Deficiency and, for Machado, severity must be prepared once and reusable over
+   many colors.
+2. **Viénot should use the prepared generic matrix kernel first.**
+   The conservative row-specialized source form regresses DMD.
+3. **Machado should use the prepared generic matrix kernel first.**
+   Scalar-local coefficient specialization adds no value.
+4. **Brettel should expose a prepared two-plane plan, but its optimal hot-loop
+   branch form needs another focused compiler/codegen slice before production.**
+5. The remaining DMD/C++ gap after preparation is now clearly a compiler/kernel
+   code-generation problem rather than repeated model preparation.
+
+A production API should therefore separate preparation from application, e.g.
+conceptually:
+
+~~~text
+prepare model/deficiency[/severity]
+        ->
+Prepared transform value
+        ->
+apply(one color)
+applyInto(input[], output[])
+~~~
+
+The exact public names remain a production design decision.
+
+### Next research step
+
+For Viénot and Machado, additional algorithm exploration is no longer the
+highest-value work. The next step is production/API qualification of prepared
+transforms plus batch execution.
+
+For Brettel only, retain a research follow-up comparing prepared branch forms,
+if-conversion/branchless selection where IEEE semantics allow it, and
+auto-vectorization/codegen across DMD/LDC/GCC before selecting a production
+batch kernel.
