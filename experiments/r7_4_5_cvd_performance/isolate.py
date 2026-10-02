@@ -59,8 +59,9 @@ def main():
         work = source/replay.EXPERIMENT
         # Rebuild the measured original source on this same host. Other experiment
         # inputs must be byte-identical, so this comparison changes bench.d only.
-        original_work = root/'original-work'
-        shutil.copytree(work, original_work)
+        original_source = root/'original-source'
+        shutil.copytree(source, original_source)
+        original_work = original_source/replay.EXPERIMENT
         for path in replay.FILES:
             original = replay.capture(['git','show',ORIGINAL+':'+str(path)],repo)
             if path.name == 'bench.d':
