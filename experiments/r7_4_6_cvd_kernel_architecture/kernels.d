@@ -116,7 +116,7 @@ private enum Matrix3!double identityMatrix =
         0, 0, 1
     );
 
-private enum Matrix3!double[11] machadoProtanTable =
+private immutable Matrix3!double[11] machadoProtanTable =
 [
     identityMatrix,
     Matrix3!double(.856167,.182038,-.038205,.029342,.955115,.015544,-.002880,-.001563,1.004443),
@@ -131,7 +131,7 @@ private enum Matrix3!double[11] machadoProtanTable =
     Matrix3!double(.152286,1.052583,-.204868,.114503,.786281,.099216,-.003882,-.048116,1.051998)
 ];
 
-private enum Matrix3!double[11] machadoDeutanTable =
+private immutable Matrix3!double[11] machadoDeutanTable =
 [
     identityMatrix,
     Matrix3!double(.866435,.177704,-.044139,.049567,.939063,.011370,-.003453,.007233,.996220),
@@ -167,7 +167,7 @@ Matrix3!T prepareVienot(T)(uint deficiency)
 BrettelPlan!T prepareBrettel(T)(uint deficiency)
 @safe pure nothrow @nogc
 {
-    final switch (deficiency)
+    switch (deficiency)
     {
         case 0:
             return BrettelPlan!T(
@@ -195,6 +195,9 @@ BrettelPlan!T prepareBrettel(T)(uint deficiency)
                 cast(T)-0.02788,
                 cast(T)-0.01113
             );
+
+        default:
+            assert(0, "unsupported Brettel deficiency");
     }
 }
 
@@ -526,7 +529,7 @@ private void compareColor(T)(Rgb!T actual, Rgb!T expected)
 void validateKernels(T)()
 @safe pure nothrow @nogc
 {
-    enum T severity = cast(T)0.65;
+    enum severity = cast(T)0.65;
 
     Rgb!T[1] input;
     Rgb!T[1] output;
