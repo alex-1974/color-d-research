@@ -76,6 +76,7 @@ def main():
         flag = '-d-version=' if ldc else '-version='
         run(['lscpu'], work, 'lscpu.txt')
         run([sys.executable,'prepare.py'],work,'prepare.txt')
+        run([sys.executable,'prepare.py'],original_work,'original-prepare.txt')
         sources=['bench.d','candidates.d','machado_candidates.d','bv_policy.d','_generated/bv.d','_generated/ma.d']
         for variant,define in VARIANTS.items():
             binary=root/('benchmark-'+variant)
