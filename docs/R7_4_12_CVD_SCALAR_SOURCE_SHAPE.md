@@ -170,3 +170,122 @@ including:
 Shared-runner timings are diagnostic only and are not selection evidence.
 
 Controlled XPS selection evidence is pending.
+
+
+## First controlled XPS result — manifest typed tables
+
+The first controlled XPS replay completed at research revision
+`2d11404d6ba9cd0ce24cada508da5729d6dcd4b2` against exact production
+revision `bed36eee31fc35d0a8843ba12e55dfd7b12042e7`.
+
+Archive SHA-256:
+
+`a37cbeba3968674bff2dcd63e9bc57f65baf9c65e4f3a56a06115474e4494675`
+
+Integrity/methodology gates passed:
+
+- replay status: PASS;
+- 140 recorded file hashes: PASS;
+- three binary hashes: PASS;
+- exact production source pin: PASS;
+- all D/source-shape/GCC observable checksums: PASS;
+- DMD 2.113.0;
+- LDC 1.43.0 / LLVM 22.1.8;
+- GCC 15.2.0;
+- sizes 1024/8191/65536;
+- three balanced blocks;
+- CPU 0 affinity;
+- bounds checks enabled;
+- hottest recorded thermal zone about 97 C.
+
+Small percentage differences remain approximate because of the thermal state.
+The material effects below are stable across all three sizes.
+
+### Machado
+
+The manifest target-scalar `typed-table` candidate is the only candidate that
+improves every measured compiler/type/workload combination.
+
+Median speedup versus exact production:
+
+| compiler | scalar | fixed | dynamic |
+| --- | --- | ---: | ---: |
+| DMD 2.113 | float | **1.245x** | **1.414x** |
+| DMD 2.113 | double | **1.182x** | **1.193x** |
+| LDC 1.43 | float | **1.570x** | **1.186x** |
+| LDC 1.43 | double | **1.485x** | **1.151x** |
+
+The dynamic result is particularly important because it cannot be explained by
+simply hoisting fixed deficiency/severity preparation.
+
+For LDC float dynamic Machado, the typed-table candidate reaches about
+0.74x matched C++ time, i.e. it is already faster than the matched C++ scalar
+reference in this workload.
+
+DMD remains materially slower than C++ even after this improvement, so DMD
+Machado still has backend/source lowering headroom.
+
+### Viénot
+
+Viénot exposes a compiler-family split.
+
+DMD 2.113 gains dramatically from removing runtime double -> target-scalar
+matrix materialization:
+
+| scalar | fixed typed-table speedup | dynamic typed-table speedup |
+| --- | ---: | ---: |
+| float | **8.729x** | **8.504x** |
+| double | **1.325x** | **1.307x** |
+
+The float effect is stable across all three sizes. Direct-return and
+inline-chain are also about 6x faster than exact production, proving that the
+production prepare/carrier call chain is not eliminated by DMD.
+
+LDC differs:
+
+- float fixed is effectively neutral;
+- float dynamic regresses by about 6%;
+- double dynamic improves by about 32%.
+
+Therefore one shared Viénot typed-table path is not currently compiler-neutral.
+A DMD-specific capability path may be justifiable only after the required DMD
+version-matrix qualification.
+
+### Brettel
+
+No manifest typed-table promotion is justified.
+
+The most serious result is DMD float, where typed-table is only about 0.22x
+production throughput. The larger two-matrix plan is expensive when represented
+as the current manifest value shape.
+
+Brettel remains on the production carrier/prepared path.
+
+### Codegen finding: manifest arrays are not the final representation
+
+The first XPS result proves that target-scalar constants can remove real work,
+but the current `enum` table representation is not suitable as the final DMD
+implementation.
+
+For example, DMD 2.113 emits:
+
+- production float Machado `matrixAtSeverity` helpers of about 0x1399 bytes
+  each;
+- manifest typed `typedMachadoMatrix!float` of about **0x21f1 bytes**.
+
+The latter materializes a large manifest-array source shape on the stack/code
+path even though it is still faster because it avoids repeated
+double-to-float conversion.
+
+Similarly, typed Viénot still copies a manifest matrix through stack storage
+rather than simply indexing immutable target-scalar data.
+
+Therefore the first XPS result is **selection evidence for typed target-scalar
+data**, but not yet for the manifest-array implementation.
+
+The next candidate uses module-level `immutable` target-scalar matrices/tables
+and ref-backed constant plans so runtime indexing reads directly from read-only
+storage. CTFE remains routed through the already validated manifest constants.
+
+This `typed-static` representation must be qualified before any production
+promotion.
