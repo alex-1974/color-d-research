@@ -100,4 +100,13 @@ recorded as backend-limited for the current AoS API/toolchain generation.
 
 ## Status
 
-Implementation complete; CI/toolchain smoke and controlled XPS evidence pending.
+Implementation and cross-compiler CI/toolchain smoke are complete.
+
+GitHub Actions run 37113943936 passes under DMD 2.113.0 and LDC 1.43.0,
+including the exact pinned production source, all five scalar block-loop
+variants, special-value/in-place equivalence, matched GCC checksums, result
+aggregation, and disassembly capture.
+
+Shared-runner timings remain non-selection evidence.
+
+Controlled XPS evidence is pending.
