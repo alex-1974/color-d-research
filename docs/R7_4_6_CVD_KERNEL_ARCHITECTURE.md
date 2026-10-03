@@ -366,3 +366,116 @@ shared-runner timing is not performance evidence.
 
 Controlled XPS production performance evidence over 1024/8191/65536 and three
 balanced blocks is pending.
+
+
+## Exact production XPS result
+
+The controlled XPS exact-production replay completed successfully with research
+revision `849d633135d2e7ede592ea2c6ec32e79aeb42dda` and pinned color-d
+revision `7a7550d44b3133b1145562c6ca8483fe6b0f668c`.
+
+Archive, tracked-file hashes, production-source hashes, and all three binary
+hashes verified. D/C++ observable checksum pairing passed for every
+compiler/block/direction/round.
+
+The run used DMD 2.113.0, LDC 1.41.0, GCC 15.2.0, CPU 0 affinity,
+n=1024/8191/65536, three balanced blocks, and `boundscheck=on`.
+The XPS remained in powersave mode with turbo and SMT enabled and reached about
+98 C in the hottest recorded zone. Large factors are robust; small percentage
+differences remain approximate.
+
+### Exact prepared production performance
+
+Median prepared D/C++ ratios across sizes and deficiencies:
+
+| compiler | scalar | Viénot | Machado | Brettel |
+| --- | --- | ---: | ---: | ---: |
+| DMD 2.113 | float  | 2.62x | 2.55x | 3.27x |
+| DMD 2.113 | double | 1.60x | 1.61x | 3.93x |
+| LDC 1.41  | float  | 1.96x | 1.96x | 1.82x |
+| LDC 1.41  | double | 1.44x | 1.44x | 1.67x |
+
+DMD Viénot/Machado prepared absolute times are about 2.1-2.3 ns/color and
+match the research prepared kernels closely. Thus the prepare-once production
+promotion successfully retained the DMD prepared-kernel performance.
+
+Brettel remains much more expensive and size-sensitive, as expected from the
+earlier branch/code-shape result.
+
+### Scalar-to-prepared production speedups
+
+The exact public API exposes much larger scalar/prepared ratios than the
+research architecture prototype for several DMD paths:
+
+| compiler | scalar | Viénot | Machado | Brettel |
+| --- | --- | ---: | ---: | ---: |
+| DMD 2.113 | float  | ~76x | ~150x | ~13x median |
+| DMD 2.113 | double | ~13x | ~118x | ~2.5x |
+| LDC 1.41  | float  | ~3.3x | ~1.8x | ~1.2x |
+| LDC 1.41  | double | ~0.62x | ~2.3x | ~1.2x |
+
+These ratios must not be read simply as a larger algorithmic win. The exact
+production scalar refactor changed compiler code shape.
+
+DMD disassembly shows scalar loops retaining calls to the public
+`prepare...()` and `apply()`/Machado preparation paths inside the loop.
+Compared with the research scalar candidate, the production scalar path is
+roughly 6.2x slower for Viénot float, 6.4x slower for Machado double, about
+7.6x slower for Machado float, and materially slower for some Brettel-float
+cases. Viénot double and Brettel double remain close to the research scalar
+baseline.
+
+Therefore the production scalar convenience API has a compiler-sensitive
+performance regression and should not be treated as a bulk-performance
+baseline.
+
+### LDC public prepared call-shape regression
+
+A second issue appears only after measuring the exact public prepared API.
+
+Compared with the R7.4.6 research prepared kernels, production prepared D
+absolute times change by approximately:
+
+| scalar/model | production / research |
+| --- | ---: |
+| LDC float Viénot | 1.74x |
+| LDC double Viénot | 1.48x |
+| LDC float Machado | 1.35x |
+| LDC double Machado | 1.35x |
+| LDC float Brettel | ~3.05x median, strongly size-sensitive |
+| LDC double Brettel | ~1.51x median, strongly size-sensitive |
+
+DMD prepared Viénot/Machado remain within roughly +/-6% of the research
+candidate, so this is not a general cost of the public API design.
+
+The LDC codegen gives a concrete hypothesis. In the research Viénot-float
+prepared loop, matrix values are hoisted into XMM registers before the main
+vectorized work. In the exact-production benchmark, the generic noinline
+wrapper passes the prepared value by `const ref`; after
+`tryApplyInto` is inlined, LDC repeatedly loads/shuffles matrix coefficients
+through the prepared-object pointer inside the vectorized loop.
+
+This is consistent with an alias/call-shape barrier preventing full scalar
+replacement/loop-invariant hoisting. It is evidence, not yet proof that the
+public API itself is at fault: a normal consumer can call
+`prepared.tryApplyInto` directly rather than through the benchmark's generic
+`const ref` wrapper.
+
+### Revised status
+
+The prepared production architecture is semantically correct and solves the
+gross repeated-preparation problem, but the performance story is not yet
+closed:
+
+1. DMD prepared Viénot/Machado transferred successfully, with the previously
+   identified remaining compiler/kernel gap.
+2. The exact scalar convenience implementation needs a focused inlining/code-
+   shape qualification before it can be accepted as performance-neutral.
+3. LDC public prepared performance requires a direct-call/value-call diagnostic
+   to separate real API cost from the benchmark wrapper's `const ref` alias
+   shape.
+4. Brettel remains a separate branch/codegen problem and should not drive the
+   matrix-model fix.
+
+Do not add compiler-specific workarounds or change safety semantics from this
+result alone.
