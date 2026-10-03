@@ -131,4 +131,16 @@ has been fairly separated from auto-vectorization benefit.
 
 ## Status
 
-Implementation in progress; XPS evidence pending.
+Implementation and CI/toolchain smoke are complete.
+
+GitHub Actions run 37108441317 passed under both DMD 2.113.0 and LDC 1.43.0.
+The smoke compiled and executed:
+
+- the exact production D path;
+- all four GCC vectorization modes;
+- all four LDC vectorization modes in the LDC job;
+- checksum-equivalent outputs;
+- summary and attribution generation.
+
+Shared-runner timing is not used as performance evidence. Controlled XPS
+evidence is pending.
