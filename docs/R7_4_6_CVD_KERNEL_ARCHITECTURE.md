@@ -692,3 +692,106 @@ per-release compiler version forks.
 
 The revised exact production commit still requires a final XPS replay before
 merge.
+
+
+## Compiler-gated final production candidate accepted
+
+The exact-production XPS replay of color-d commit
+`0efa650d231cea917e71cc4dd5fc35fe27b65d9b` completed successfully at
+research revision `7d5dc783e8d60c93d8dc9eb3fc15e3e1d6a23cea`.
+
+All integrity gates passed:
+
+- production revision pin: PASS;
+- tracked source hashes: PASS;
+- binary hashes: PASS;
+- D/C++ checksum pairing: PASS;
+- DMD 2.113.0 / LDC 1.41.0 / GCC 15.2.0 matrix recorded;
+- sizes 1024/8191/65536;
+- three balanced blocks;
+- bounds checks enabled.
+
+The host again reached high package temperatures, up to roughly 99 C in the
+recorded hottest zone. Large effects are robust; small percentage differences
+remain approximate.
+
+### DMD: established production path preserved
+
+The compiler-family gate leaves DMD on the existing member-backed prepared
+implementation.
+
+Relative to the pinned production baseline, median prepared D time ratios
+across sizes and deficiencies are approximately:
+
+| scalar/model | gated / baseline |
+| --- | ---: |
+| float Viénot | 1.018x |
+| float Machado | 1.000x |
+| float Brettel | 0.979x |
+| double Viénot | 0.996x |
+| double Machado | 1.000x |
+| double Brettel | 0.997x |
+
+Individual measurements span the normal hot-host/layout range; the largest
+single increase is about 5.7%.
+
+Generated-code comparison confirms that the important DMD prepared
+`tryApplyInto` hot loops are restored to the baseline placement/instruction
+shape. Their symbol addresses match the baseline replay for the inspected
+Viénot, Machado, and Brettel instantiations, and the instruction bodies are
+unchanged. Remaining timing differences are therefore not evidence of a new
+DMD implementation regression.
+
+### LDC: snapshot gain retained
+
+The LDC-gated local prepared-state snapshot reproduces the material gain.
+
+Median prepared D time ratios versus the production baseline are approximately:
+
+| scalar/model | gated / baseline |
+| --- | ---: |
+| float Viénot | **0.732x** |
+| float Machado | **0.724x** |
+| double Viénot | **0.711x** |
+| double Machado | **0.735x** |
+| float Brettel | **0.324x** |
+| double Brettel | **0.660x** |
+
+Matched D/C++ median ratios for the final gated candidate are approximately:
+
+| scalar/model | D / C++ |
+| --- | ---: |
+| float Viénot | **1.43x** |
+| float Machado | **1.42x** |
+| double Viénot | **0.93x** |
+| double Machado | **0.96x** |
+| float Brettel | **0.53x** |
+| double Brettel | **0.99x** |
+
+Brettel double at n=1024 has a small-batch trade-off: the snapshot form is about
+19-20% slower than the old LDC path there, but it is about 34-48% faster at
+8191/65536 and remains around C++ performance overall. This is accepted as a
+documented workload-size trade-off for the material larger-batch gain.
+
+### Final production decision
+
+The accepted implementation uses one centralized semantic-neutral
+compiler-family capability gate:
+
+- LDC -> local prepared-state snapshot before batch hot loops;
+- DMD/non-LDC -> established member-backed prepared path.
+
+No public API changes, compiler-version thresholds, alignment/padding hacks,
+manual SIMD, disabled bounds checks, or relaxed IEEE semantics are introduced.
+
+This satisfies workspace DLANG_PRACTICES 15.5:
+
+- semantics identical;
+- difference internal;
+- reproducible material gain;
+- supported compiler matrix covered;
+- centralized/testable capability gate;
+- understandable reference/portable path retained.
+
+The prepared-path performance correction is therefore qualified for promotion.
+Scalar convenience source-shape work remains separate in color-d issue #171.
