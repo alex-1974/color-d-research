@@ -712,18 +712,18 @@ void runCase(
         );
     }
 
-    foreach (round; 0 .. 7)
+    foreach (round; 0 .. 5)
     {
         double checksum = 0;
 
         auto timer =
             StopWatch(AutoStart.yes);
 
-        foreach (repeat; 0 .. 4)
+        foreach (repeat; 0 .. 3)
         {
             input[0].r =
                 cast(T)(repeat + round) /
-                cast(T)16;
+                cast(T)12;
 
             batch!(
                 T,
@@ -759,7 +759,7 @@ void runCase(
         const double ns =
             cast(double)
                 timer.peek.total!"nsecs" /
-            cast(double)(n * 4);
+            cast(double)(n * 3);
 
         writefln(
             "sample,D,%s,%s,%s,%s,%s,%s,%s,%.9f,%.17g",
@@ -911,7 +911,7 @@ void main(
     writeln(
         "metadata,D,n=",
         n,
-        ",warmup=4,rounds=7,repeats=4,AoS,bounds=on"
+        ",warmup=4,rounds=5,repeats=3,AoS,bounds=on"
     );
 
     if (reverse)
