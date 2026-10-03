@@ -558,3 +558,78 @@ A production optimization should:
 
 This is an internal implementation/code-shape correction, not a new semantic
 or API contract.
+
+
+## PR #170 candidate exact-production result
+
+The exact-production XPS replay of color-d candidate
+`69269171dfc796e3d891db3aeef119261cb0f916` completed successfully using
+research revision `f152c07cbf9670fae4bd61820a7334f0976d4873`.
+
+Integrity, production-source hashes, binary hashes and D/C++ checksum pairing
+all passed. The run used the same DMD 2.113.0 / LDC 1.41.0 / GCC 15.2.0
+matrix, sizes 1024/8191/65536 and three balanced blocks as the exact-production
+baseline.
+
+### Prepared local-snapshot confirmation
+
+Median prepared D/C++ ratios for the candidate are:
+
+| compiler | scalar | Viénot | Machado | Brettel |
+| --- | --- | ---: | ---: | ---: |
+| DMD 2.113 | float  | 2.66x | 2.67x | 3.24x |
+| DMD 2.113 | double | 1.67x | 1.76x | 4.11x |
+| LDC 1.41  | float  | **1.41x** | **1.41x** | **0.50x** |
+| LDC 1.41  | double | **0.91x** | **0.92x** | **0.95x** |
+
+Relative to the pinned production baseline, candidate prepared D absolute time
+changes by approximately:
+
+| compiler/scalar/model | candidate / baseline |
+| --- | ---: |
+| LDC float Viénot | **0.739x** |
+| LDC float Machado | **0.749x** |
+| LDC double Viénot | **0.702x** |
+| LDC double Machado | **0.699x** |
+| LDC float Brettel | **0.322x median** |
+| LDC double Brettel | **0.634x median** |
+| DMD float Viénot | ~1.01x |
+| DMD double Viénot | ~1.03x |
+| DMD float Machado | ~1.04x |
+| DMD double Machado | ~1.07x |
+
+The local prepared-state snapshot therefore reproduces the call-shape
+diagnostic in the exact public production implementation. It is a strong
+production candidate.
+
+The small DMD increases are much smaller than the LDC gain but must be checked
+again on the final candidate because changing unrelated scalar code can move
+DMD hot code and this investigation has already established DMD layout
+sensitivity.
+
+### Scalar direct-arithmetic candidate rejected
+
+The same candidate also restored direct arithmetic to the scalar convenience
+functions. This does **not** provide a compiler-neutral scalar fix.
+
+Compared with the current exact-production baseline:
+
+- DMD Viénot float improves modestly (~0.93x), while Viénot double improves
+  strongly (~0.40x);
+- DMD Machado float is unstable/slower in the central result (~1.19x) and
+  Machado double improves only modestly (~0.93x);
+- LDC Machado regresses severely: float is about **4.67x** the current scalar
+  time and double about **2.37x**;
+- other scalar paths are mixed and include workload/layout sensitivity.
+
+Compared with the earlier research scalar architecture, production direct
+Machado remains much slower for several compiler/scalar combinations, so the
+direct scalar rewrite does not restore the desired baseline.
+
+Conclusion: do **not** merge the scalar rewrite together with the prepared
+local-snapshot optimization. Keep the local-snapshot change, revert scalar
+convenience functions to the existing production implementation, and study
+scalar source shape separately.
+
+A final exact-production XPS replay is required after that split because DMD
+code placement can change when the scalar bodies are reverted.
