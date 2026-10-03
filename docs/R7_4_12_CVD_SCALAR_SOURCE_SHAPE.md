@@ -151,6 +151,22 @@ instruction-identical placement effect.
 
 ## Status
 
-Replica implementation, semantic/CTFE preflight, compiler smoke, C++ reference
-and controlled replay implementation are complete. Replay CI smoke and XPS
-selection evidence are pending.
+Replica implementation, semantic/CTFE preflight, compiler smoke, matched C++
+reference and controlled replay implementation are complete.
+
+GitHub Actions run 37117110518 passes under DMD 2.113.0 and LDC 1.43.0,
+including:
+
+- exact pinned production source;
+- all six scalar source-shape variants;
+- finite/extended/NaN/infinity and invalid-severity validation;
+- CTFE validation;
+- fixed and dynamic scalar workloads;
+- matched C++ checksum pairing;
+- replay aggregation;
+- binary hashing;
+- full disassembly capture.
+
+Shared-runner timings are diagnostic only and are not selection evidence.
+
+Controlled XPS selection evidence is pending.
