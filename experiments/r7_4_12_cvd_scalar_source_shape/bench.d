@@ -287,25 +287,27 @@ private void validateModel(
                         1 .. variantCount
                     )
                     {
-                        const actual =
-                            candidateScalar!(
-                                T,
-                                model,
-                                variant
-                            )(
-                                color,
-                                deficiency,
-                                severity
-                            );
-
-                        if (!sameColor(
-                            actual,
-                            expected
-                        ))
                         {
-                            throw new Exception(
-                                "Machado scalar replica mismatch"
-                            );
+                            const actual =
+                                candidateScalar!(
+                                    T,
+                                    model,
+                                    variant
+                                )(
+                                    color,
+                                    deficiency,
+                                    severity
+                                );
+
+                            if (!sameColor(
+                                actual,
+                                expected
+                            ))
+                            {
+                                throw new Exception(
+                                    "Machado scalar replica mismatch"
+                                );
+                            }
                         }
                     }
                 }
@@ -327,25 +329,27 @@ private void validateModel(
                     1 .. variantCount
                 )
                 {
-                    const actual =
-                        candidateScalar!(
-                            T,
-                            model,
-                            variant
-                        )(
-                            color,
-                            deficiency,
-                            cast(T)0.65
-                        );
-
-                    if (!sameColor(
-                        actual,
-                        expected
-                    ))
                     {
-                        throw new Exception(
-                            "scalar replica mismatch"
-                        );
+                        const actual =
+                            candidateScalar!(
+                                T,
+                                model,
+                                variant
+                            )(
+                                color,
+                                deficiency,
+                                cast(T)0.65
+                            );
+
+                        if (!sameColor(
+                            actual,
+                            expected
+                        ))
+                        {
+                            throw new Exception(
+                                "scalar replica mismatch"
+                            );
+                        }
                     }
                 }
             }
@@ -385,25 +389,27 @@ private void validateModel(
                 1 .. variantCount
             )
             {
-                const actual =
-                    candidateScalar!(
-                        T,
-                        model,
-                        variant
-                    )(
-                        color,
-                        0,
-                        severity
-                    );
-
-                if (!sameColor(
-                    actual,
-                    expected
-                ))
                 {
-                    throw new Exception(
-                        "invalid-severity replica mismatch"
-                    );
+                    const actual =
+                        candidateScalar!(
+                            T,
+                            model,
+                            variant
+                        )(
+                            color,
+                            0,
+                            severity
+                        );
+
+                    if (!sameColor(
+                        actual,
+                        expected
+                    ))
+                    {
+                        throw new Exception(
+                            "invalid-severity replica mismatch"
+                        );
+                    }
                 }
             }
         }
@@ -429,41 +435,45 @@ private void validateCtfe(T)()
         ]
     )
     {
-        enum uint deficiency = 0;
-        enum T severity = cast(T)0.65;
-
-        enum expected =
-            productionScalar!(
-                T,
-                model
-            )(
-                color,
-                deficiency,
-                severity
-            );
-
-        static foreach (
-            variant;
-            1 .. variantCount
-        )
         {
-            enum actual =
-                candidateScalar!(
+            enum uint deficiency = 0;
+            enum T severity = cast(T)0.65;
+
+            enum expected =
+                productionScalar!(
                     T,
-                    model,
-                    variant
+                    model
                 )(
                     color,
                     deficiency,
                     severity
                 );
 
-            static assert(
-                sameColor(
-                    actual,
-                    expected
-                )
-            );
+            static foreach (
+                variant;
+                1 .. variantCount
+            )
+            {
+                {
+                    enum actual =
+                        candidateScalar!(
+                            T,
+                            model,
+                            variant
+                        )(
+                            color,
+                            deficiency,
+                            severity
+                        );
+
+                    static assert(
+                        sameColor(
+                            actual,
+                            expected
+                        )
+                    );
+                }
+            }
         }
     }
 }
