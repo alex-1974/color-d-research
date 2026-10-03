@@ -50,7 +50,8 @@ enum variantLabels =
     "direct-return",
     "out-kernel",
     "inline-chain",
-    "typed-table"
+    "typed-table",
+    "typed-static"
 ];
 
 
@@ -61,7 +62,7 @@ enum workloadLabels =
 ];
 
 
-enum size_t variantCount = 6;
+enum size_t variantCount = 7;
 
 
 private LinearSRgb!T productionScalar(
