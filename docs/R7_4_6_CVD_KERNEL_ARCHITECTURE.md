@@ -479,3 +479,82 @@ closed:
 
 Do not add compiler-specific workarounds or change safety semantics from this
 result alone.
+
+
+## Prepared call-shape isolation result
+
+The XPS call-shape replay completed successfully at research revision
+`cfcb1cdfc95677946dd9a28a92d67ffc66c68cc7` against the same pinned
+color-d production commit
+`7a7550d44b3133b1145562c6ca8483fe6b0f668c`.
+
+All file and binary hashes verified, and all four call shapes produced identical
+checksums for every compiler/scalar/model/workload/round.
+
+The four shapes were:
+
+1. prepared object passed by `const ref` through a noinline wrapper;
+2. prepared object passed by value through a noinline wrapper;
+3. prepared object passed by `const ref`, copied to a local value, then used;
+4. direct public `prepared.tryApplyInto` call.
+
+### DMD 2.113
+
+DMD is essentially insensitive to these four prepared call shapes. Across
+Viénot/Machado, float/double and all sizes, the central differences remain
+within roughly one percent, with only ordinary hot-host noise at the largest
+workloads.
+
+Therefore a local prepared-value snapshot is performance-neutral for the
+current DMD prepared kernel.
+
+### LDC 1.41
+
+LDC shows a strong, scalar-dependent scalar-replacement/alias effect.
+
+Median ratios versus the current `const ref` wrapper across sizes:
+
+| scalar/model | by value | local copy | direct |
+| --- | ---: | ---: | ---: |
+| float Viénot | ~0.734x | **~0.721x** | ~0.992x |
+| float Machado | ~0.739x | **~0.728x** | ~1.007x |
+| double Viénot | ~1.009x | **~0.693x** | ~1.003x |
+| double Machado | ~1.007x | **~0.702x** | ~1.013x |
+
+Thus:
+
+- direct public method invocation does **not** remove the LDC regression;
+- passing the prepared value by value helps float but not double;
+- making an explicit local value copy is the only shape that reliably improves
+  both float and double.
+
+The local-copy speedup is about 1.38x for float and 1.42-1.44x for double.
+
+Using the exact-production C++ measurements from the immediately preceding XPS
+run as the matched reference, the local-copy LDC path is approximately:
+
+- Viénot float: 1.36-1.45x C++;
+- Machado float: 1.38-1.45x C++;
+- Viénot double: 0.90-0.99x C++;
+- Machado double: 0.90-1.01x C++.
+
+The call-shape result therefore confirms that the public prepared object's
+field access through a const `this`/reference shape blocks useful LDC scalar
+replacement or loop-invariant hoisting. A local snapshot of the small prepared
+value before entering the hot loop is the robust compiler-neutral source shape.
+
+### Production implication
+
+The public API does not need to change.
+
+A production optimization should:
+
+1. snapshot prepared matrix/plan state into local values before the batch loop;
+2. keep the existing caller-owned slices, safety, bounds-check and no-allocation
+   contracts;
+3. restore the scalar convenience callables to direct model arithmetic rather
+   than relying on `prepare().apply()` being inlined by DMD;
+4. qualify the exact patched production commit on XPS before merge.
+
+This is an internal implementation/code-shape correction, not a new semantic
+or API contract.
