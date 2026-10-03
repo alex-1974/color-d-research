@@ -278,61 +278,63 @@ private void validateSpecials(T)(
         ]
     )
     {
-        LinearSRgb!T[7] output;
-
-        const ok =
-            runVariant!(
-                T,
-                variant
-            )(
-                production,
-                replica,
-                matrix,
-                input,
-                output
-            );
-
-        assert(ok);
-
-        foreach (i; 0 .. input.length)
         {
-            if (!sameColor(
-                output[i],
-                reference[i]
-            ))
-            {
-                throw new Exception(
-                    "source-shape special-value mismatch"
+            LinearSRgb!T[7] output;
+
+            const ok =
+                runVariant!(
+                    T,
+                    variant
+                )(
+                    production,
+                    replica,
+                    matrix,
+                    input,
+                    output
                 );
+
+            assert(ok);
+
+            foreach (i; 0 .. input.length)
+            {
+                if (!sameColor(
+                    output[i],
+                    reference[i]
+                ))
+                {
+                    throw new Exception(
+                        "source-shape special-value mismatch"
+                    );
+                }
             }
-        }
 
-        auto inPlace = input;
+            auto inPlace = input;
 
-        const inPlaceOk =
-            runVariant!(
-                T,
-                variant
-            )(
-                production,
-                replica,
-                matrix,
-                inPlace,
-                inPlace
-            );
-
-        assert(inPlaceOk);
-
-        foreach (i; 0 .. input.length)
-        {
-            if (!sameColor(
-                inPlace[i],
-                reference[i]
-            ))
-            {
-                throw new Exception(
-                    "source-shape in-place mismatch"
+            const inPlaceOk =
+                runVariant!(
+                    T,
+                    variant
+                )(
+                    production,
+                    replica,
+                    matrix,
+                    inPlace,
+                    inPlace
                 );
+
+            assert(inPlaceOk);
+
+            foreach (i; 0 .. input.length)
+            {
+                if (!sameColor(
+                    inPlace[i],
+                    reference[i]
+                ))
+                {
+                    throw new Exception(
+                        "source-shape in-place mismatch"
+                    );
+                }
             }
         }
     }
