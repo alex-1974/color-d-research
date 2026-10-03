@@ -1,0 +1,82 @@
+name: R7.4.8 CVD explicit SIMD
+
+on:
+  push:
+    branches:
+      - research/8-cvd-explicit-simd
+    paths:
+      - experiments/r7_4_8_cvd_explicit_simd/**
+      - experiments/r7_4_6_cvd_kernel_architecture/kernels.d
+      - .github/workflows/r7-4-8-explicit-simd.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Explicit SIMD smoke / ${{ matrix.compiler }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - dmd-2.113.0
+          - ldc-1.43.0
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install D toolchain
+        uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+
+      - name: Toolchain versions
+        run: |
+          "$DC" --version
+
+      - name: Build explicit SIMD probe
+        working-directory: experiments/r7_4_8_cvd_explicit_simd
+        run: |
+          set -euo pipefail
+          "$DC" \
+            -O \
+            -inline \
+            -release \
+            -boundscheck=on \
+            -I../r7_4_6_cvd_kernel_architecture \
+            -of=simd-probe \
+            bench.d \
+            simd_kernels.d \
+            ../r7_4_6_cvd_kernel_architecture/kernels.d
+
+      - name: Semantic and in-place preflight
+        working-directory: experiments/r7_4_8_cvd_explicit_simd
+        run: |
+          set -euo pipefail
+          ./simd-probe preflight
+
+      - name: Small benchmark smoke
+        working-directory: experiments/r7_4_8_cvd_explicit_simd
+        run: |
+          set -euo pipefail
+          ./simd-probe 1024 > smoke.csv
+          test "$(grep -c '^sample,' smoke.csv)" -eq 264
+
+      - name: Capture codegen
+        working-directory: experiments/r7_4_8_cvd_explicit_simd
+        run: |
+          set -euo pipefail
+          objdump -d --no-show-raw-insn -M intel simd-probe > codegen.txt
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r7-4-8-explicit-simd-${{ matrix.compiler }}
+          path: |
+            experiments/r7_4_8_cvd_explicit_simd/smoke.csv
+            experiments/r7_4_8_cvd_explicit_simd/codegen.txt
+          if-no-files-found: warn
