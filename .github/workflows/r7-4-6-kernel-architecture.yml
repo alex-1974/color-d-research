@@ -111,6 +111,34 @@ jobs:
           print("R7.4.6 exact production replay smoke: PASS")
           PY
 
+      - name: Prepared CVD call-shape smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 experiments/r7_4_6_cvd_kernel_architecture/production_callshape_replay.py \
+            --color-d "$GITHUB_WORKSPACE/external/color-d" \
+            --compilers "$DC" \
+            --sizes 1024 \
+            --blocks 1 \
+            --output "$RUNNER_TEMP/cvd-callshape"
+
+          python3 - "$RUNNER_TEMP/cvd-callshape" <<'PY'
+          import csv
+          import json
+          import pathlib
+          import sys
+
+          root = pathlib.Path(sys.argv[1])
+          metadata = json.loads((root / "metadata.json").read_text())
+          assert metadata["status"] == "passed"
+
+          rows = list(csv.DictReader((root / "summary.csv").open()))
+          assert len(rows) == 16
+          assert all(int(row["samples"]) == 22 for row in rows)
+
+          print("R7.4.6 prepared call-shape smoke: PASS")
+          PY
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -120,4 +148,6 @@ jobs:
             ${{ runner.temp }}/cvd-kernel.tar.gz
             ${{ runner.temp }}/cvd-production/**
             ${{ runner.temp }}/cvd-production.tar.gz
+            ${{ runner.temp }}/cvd-callshape/**
+            ${{ runner.temp }}/cvd-callshape.tar.gz
           if-no-files-found: warn
