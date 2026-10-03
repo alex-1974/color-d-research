@@ -77,7 +77,7 @@ jobs:
         run: |
           set -euo pipefail
           ./scalar-probe 256 > smoke.csv
-          test "$(grep -c '^sample,' smoke.csv)" -eq 504
+          test "$(grep -c '^sample,' smoke.csv)" -eq 360
 
       - name: Capture codegen
         working-directory: experiments/r7_4_12_cvd_scalar_source_shape
