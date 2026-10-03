@@ -494,3 +494,108 @@ Revised color-d candidate head:
 
 The revised candidate must pass normal CI and a second exact-candidate replay
 before merge.
+
+
+## Second exact production-candidate replay — accepted
+
+The revised production candidate was replayed at color-d revision
+`241e0f893040baa9bda8669c0299c9ffd9d25b5b`.
+
+Archive SHA-256:
+
+`181db3294a80753e5fe4eb85e07b01f96ed3391fdecb89584e1c5258e4e58d90`
+
+Qualification gates passed:
+
+- replay status: PASS;
+- 228 recorded file hashes: PASS;
+- all five binary hashes: PASS;
+- exact candidate source pin: PASS;
+- DMD 2.112.1 / 2.113.0 preflight: PASS;
+- LDC 1.42 / 1.43 preflight: PASS;
+- semantic/IEEE/invalid-severity/CTFE checks: PASS;
+- cross-variant/matched-C++ observable checksums: PASS;
+- sizes 1024/8191/65536;
+- three balanced blocks;
+- bounds checks enabled.
+
+The hottest recorded thermal zone reached about 100 C. Small percentage
+differences are therefore approximate.
+
+### Production transfer
+
+Compared with the original exact-production baseline replay, the revised
+production path is faster on every supported compiler/type/workload aggregate.
+
+Median production speedup versus the original baseline:
+
+| compiler | float fixed | float dynamic | double fixed | double dynamic |
+| --- | ---: | ---: | ---: | ---: |
+| DMD 2.112.1 | 3.28x | 8.04x | 8.90x | 7.43x |
+| DMD 2.113.0 | 2.10x | 5.00x | 4.08x | 3.96x |
+| LDC 1.42.0 | 1.34x | 1.37x | 1.50x | 1.42x |
+| LDC 1.43.0 | 1.37x | 1.39x | 1.37x | 1.34x |
+
+The DMD factors include the already documented text-placement sensitivity and
+should not be interpreted as purely algorithmic speedup factors. The important
+gate result is that no supported DMD workload regressed, while the LDC transfer
+is stable and material.
+
+The improvement direction is preserved across all three workload sizes. Under
+LDC 1.43 the production speedup is approximately:
+
+- float fixed: 1.37x;
+- float dynamic: 1.39x;
+- double fixed: 1.37x;
+- double dynamic: 1.34x.
+
+### Production versus standalone typed-static replica
+
+The revised production path no longer needs to match the standalone research
+replica instruction-for-instruction to pass the promotion gate. The important
+question is whether the accepted production source shape transfers the intended
+optimization without regression.
+
+Under LDC dynamic scalar workloads, revised production is actually faster than
+the standalone `typed-static` replica:
+
+- LDC 1.42 float dynamic: replica speedup vs production 0.876x;
+- LDC 1.42 double dynamic: 0.869x;
+- LDC 1.43 float dynamic: 0.869x;
+- LDC 1.43 double dynamic: 0.887x.
+
+That is, production is about 13-15% faster in the legitimate dynamic scalar
+workload.
+
+For the fixed-configuration diagnostic, the standalone replica remains roughly
+4-16% faster than production depending on scalar/compiler. This is not a
+regression versus the original production baseline, and fixed repeated
+configuration is explicitly the workload for which callers should use the
+Prepared API.
+
+DMD same-binary replica ratios remain dominated by the text-layout effect
+already established by R7.4.5/R7.4.9. They are not used as an independent
+selection metric.
+
+### Final R7.4.12 decision
+
+The revised Machado production candidate passes the performance-transfer gate.
+
+Accepted production changes:
+
+1. target-scalar immutable Machado runtime tables;
+2. one shared private matrix-selection/interpolation function;
+3. Prepared construction wraps that matrix for reuse;
+4. scalar `machado2009` applies the same selected matrix directly.
+
+Rejected / unchanged:
+
+- Viénot remains unchanged;
+- Brettel remains unchanged;
+- no compiler-version fork;
+- no public API change;
+- no SIMD;
+- no weakened CTFE, IEEE, allocation or safety contract.
+
+R7.4.12 therefore supports merging color-d PR #172 after normal CI remains
+green.
