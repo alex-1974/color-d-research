@@ -36,6 +36,7 @@ VARIANTS=[
     "out-kernel",
     "inline-chain",
     "typed-table",
+    "typed-static",
 ]
 
 
@@ -124,9 +125,9 @@ def parse_d(path):
                 ns=float(r[9]),
                 checksum=float(r[10]),
             ))
-    if len(rows)!=360:
+    if len(rows)!=420:
         raise RuntimeError(
-            f"{path}: expected 360 D samples, got {len(rows)}"
+            f"{path}: expected 420 D samples, got {len(rows)}"
         )
     return rows
 
