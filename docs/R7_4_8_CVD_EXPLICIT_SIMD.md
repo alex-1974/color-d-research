@@ -200,3 +200,150 @@ Shared-runner timing remains non-selection evidence.
 
 Controlled XPS qualification over 1024/8191/65536 and three balanced blocks is
 pending.
+
+
+## XPS qualification result
+
+The controlled XPS replay completed successfully at research revision
+`e859effe763dcbd680f7785ced2e14fee4a9f06a`.
+
+Integrity and methodology gates passed:
+
+- replay status: PASS;
+- `files.sha256`: PASS for every recorded file;
+- binary hashes recorded;
+- cross-variant D/GCC observable checksum equality: PASS;
+- DMD 2.113.0;
+- LDC 1.41.0 / LLVM 19.1.7;
+- GCC 15.2.0;
+- sizes 1024/8191/65536;
+- three balanced blocks;
+- CPU 0 affinity;
+- bounds checks enabled;
+- no fast-math;
+- hottest recorded thermal zone about 97 C.
+
+The thermal state makes very small percentage differences approximate, but the
+rejected effects below are large and directionally stable.
+
+### Aggregate result
+
+Median ratios across sizes and both deficiencies:
+
+| compiler | scalar | model | gather speedup vs prepared | block speedup vs prepared | prepared / GCC | gather / GCC | block / GCC |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
+| DMD | float | Viénot | 0.22x | **0.61x** | 2.72x | 12.19x | 4.34x |
+| DMD | float | Machado | 0.25x | **0.66x** | 3.01x | 12.27x | 4.35x |
+| DMD | double | Viénot | 0.20x | **0.49x** | 1.62x | 7.93x | 3.38x |
+| DMD | double | Machado | 0.20x | **0.47x** | 1.58x | 7.76x | 3.34x |
+| LDC | float | Viénot | 0.56x | **0.82x** | 1.12x | 2.01x | 1.37x |
+| LDC | float | Machado | 0.72x | **1.06x** | 1.45x | 2.01x | 1.35x |
+| LDC | double | Viénot | 0.70x | **0.85x** | 0.83x | 1.17x | 0.99x |
+| LDC | double | Machado | 0.80x | **0.96x** | 0.93x | 1.16x | 0.99x |
+
+A speedup below 1.0 means the explicit SIMD candidate is slower than the
+prepared reference.
+
+### DMD
+
+Both explicit SIMD forms are decisively rejected.
+
+The block-SIMD path is approximately:
+
+- 0.59-0.64x prepared throughput for Viénot float;
+- 0.65-0.71x for Machado float;
+- 0.45-0.54x for Viénot double;
+- 0.45-0.51x for Machado double.
+
+The gather-SIMD form is substantially worse again.
+
+The controlled measurements agree with the generated-code diagnosis: DMD's
+backend does not keep this explicit vector dataflow compact. The pure-compatible
+store forms also prevent a competitive three-vector-store loop.
+
+There is no evidence for a DMD explicit-SIMD production path from this slice.
+
+### LDC float
+
+The result is model-dependent and therefore also fails the production gate.
+
+For Viénot, block SIMD is consistently slower than the prepared reference:
+
+- n=1024: about 0.81x prepared throughput;
+- n=8191: about 0.82x;
+- n=65536: about 0.81x.
+
+For Machado, block SIMD gives only a modest and stable improvement:
+
+- n=1024: about 1.08x;
+- n=8191: about 1.06x;
+- n=65536: about 1.07x.
+
+Even the Machado candidate remains roughly 1.31-1.41x slower than full GCC.
+
+Therefore a shared LDC-float explicit-SIMD kernel is not justified. A
+model-specific manual-SIMD branch for only ~6% median gain would add substantial
+mechanism and maintenance cost while failing to solve the larger performance
+question.
+
+### LDC double
+
+Explicit SIMD is unnecessary and regressive.
+
+The existing prepared reference is already faster than or near GCC:
+
+- Viénot prepared median: about 0.83x GCC;
+- Machado prepared median: about 0.93x GCC.
+
+Block SIMD moves both to about 0.99x GCC but is slower than the D prepared
+reference:
+
+- Viénot block SIMD: about 0.85x prepared throughput;
+- Machado block SIMD: about 0.96x.
+
+The compiler-generated double path remains preferable.
+
+### Important source-shape observation
+
+The negative SIMD result exposes a more valuable lead.
+
+Within this same controlled replay, the non-SIMD prepared research loop reaches:
+
+- LDC Viénot float: median about **1.12x GCC**;
+- LDC Machado float: about **1.45x GCC**;
+- LDC Viénot double: about **0.83x GCC**;
+- LDC Machado double: about **0.93x GCC**.
+
+The previously qualified exact production replay measured LDC Viénot float
+near 1.42-1.43x GCC after the prepared-state correction.
+
+The R7.4.8 prepared reference and production public prepared call therefore
+still differ materially in optimizer-visible source/call shape even though the
+3x3 arithmetic is equivalent.
+
+This discrepancy is more promising than manual SIMD: the research prepared
+Viénot float form is already much closer to C++ than the explicit block-SIMD
+candidate (about 1.12x vs 1.37x GCC).
+
+The next slice should reproduce these source/call shapes side-by-side against
+the exact production API and generated code before any SIMD promotion is
+reconsidered.
+
+### Final R7.4.8 decision
+
+**Reject explicit SIMD for production from this slice.**
+
+Reasons:
+
+1. DMD regresses materially for every tested type/model/workload.
+2. LDC Viénot float regresses materially and consistently.
+3. LDC Machado float improves only about 6% and remains materially behind GCC.
+4. LDC double is already better with compiler-generated code.
+5. The portable prepared research source shape exposes a larger optimization
+   opportunity than the explicit SIMD path.
+6. Maintaining manual ISA-sensitive code is not justified while a simpler
+   source-shape discrepancy remains unresolved.
+
+The explicit SIMD implementation remains valuable research evidence and a
+future reference if compiler-generated vectorization cannot close the remaining
+gap. It is not an accepted production mechanism.
