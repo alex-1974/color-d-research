@@ -184,5 +184,19 @@ optimization rules are satisfied by the final evidence.
 
 ## Current status
 
-Cross-compiler SIMD implementation and semantic CI qualification are complete.
-Controlled XPS qualification is pending.
+Cross-compiler SIMD implementation, semantic qualification, codegen capture,
+and replay smoke are complete.
+
+GitHub Actions run 37110151919 passes under both DMD 2.113.0 and LDC 1.43.0,
+including:
+
+- build;
+- special/extended-value and exact in-place preflight;
+- n=1024 candidate smoke;
+- disassembly capture;
+- full replay/parser/checksum smoke against GCC.
+
+Shared-runner timing remains non-selection evidence.
+
+Controlled XPS qualification over 1024/8191/65536 and three balanced blocks is
+pending.
