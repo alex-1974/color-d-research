@@ -26,6 +26,9 @@ else version (D_SIMD)
         double2,
         loadUnaligned;
 
+    import core.stdc.string :
+        memcpy;
+
     private enum bool hasExplicitSimd = true;
 }
 else
@@ -338,9 +341,13 @@ static if (hasExplicitSimd)
         }
         else
         {
-            *cast(float[4]*)(
-                base + scalarOffset
-            ) = value.array;
+            memcpy(
+                cast(void*)(
+                    base + scalarOffset
+                ),
+                cast(const void*)&value,
+                float4.sizeof
+            );
         }
     }
 
@@ -370,9 +377,13 @@ static if (hasExplicitSimd)
         }
         else
         {
-            *cast(double[2]*)(
-                base + scalarOffset
-            ) = value.array;
+            memcpy(
+                cast(void*)(
+                    base + scalarOffset
+                ),
+                cast(const void*)&value,
+                double2.sizeof
+            );
         }
     }
 
