@@ -472,7 +472,7 @@ void runCase(
             cast(double)(n * 24);
 
         writefln(
-            "sample,D,%s,%s,%s,%s,%s,%s,%.9f,%.17g",
+            "sample,D,%s,%s,%s,%s,%s,%s,%s,%.9f,%.17g",
             T.stringof,
             modelLabels[model],
             variantLabels[variant],
