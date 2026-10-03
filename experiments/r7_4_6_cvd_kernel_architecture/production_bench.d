@@ -720,7 +720,7 @@ void main(string[] args)
         );
 
     writeln(
-        "metadata,D,production=7a7550d44b3133b1145562c6ca8483fe6b0f668c,n=",
+        "metadata,D,production=snapshotted-by-replay,n=",
         n,
         ",warmup=4,rounds=9,repeats=16,AoS,bounds=on,severity=0.65"
     );
