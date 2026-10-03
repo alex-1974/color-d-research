@@ -24,6 +24,19 @@ import std.datetime.stopwatch : StopWatch, AutoStart;
 import std.math : abs, isNaN, isInfinity;
 import std.conv : to;
 
+version (FpStateDiagnostic)
+{
+    extern(C) uint colorDReadMxcsr() @nogc nothrow;
+    extern(C) ushort colorDReadX87Control() @nogc nothrow;
+
+    void emitFpState(string phase, string scalar, string mode, uint deficiency, size_t n, bool reverse)
+    {
+        writefln("fpstate,%s,%s,%s,%s,%s,%s,0x%08x,0x%04x",
+            phase, scalar, mode, deficiency, n, reverse,
+            colorDReadMxcsr(), colorDReadX87Control());
+    }
+}
+
 enum Mode { brettel, vienot, prepared, lookupApply }
 
 pragma(inline, false)
@@ -101,6 +114,8 @@ void lookupBatch(T)(ma.Matrix3!T[] output, const ma.Matrix3!T[] table, uint shif
 
 void runCase(T, Mode mode)(size_t n, uint deficiency, bool reverse)
 {
+    enum labels = ["brettel", "vienot", "prepared", "lookupApply"];
+    version (FpStateDiagnostic) emitFpState("before", T.stringof, labels[mode], deficiency, n, reverse);
     auto input = new bv.Rgb!T[n];
     auto output = new bv.Rgb!T[n];
     uint state = 0x12345678;
@@ -158,13 +173,14 @@ void runCase(T, Mode mode)(size_t n, uint deficiency, bool reverse)
         }
         timer.stop();
         const ns = cast(double)timer.peek.total!"nsecs" / (n*16);
-        enum labels = ["brettel", "vienot", "prepared", "lookupApply"];
         writefln("sample,D,%s,%s,%s,%s,%s,%s,%.9f,%.17g", T.stringof, labels[mode], deficiency, n, reverse, round, ns, checksum);
     }
+    version (FpStateDiagnostic) emitFpState("after", T.stringof, labels[mode], deficiency, n, reverse);
 }
 
 void runLookup(T)(size_t n, uint deficiency, bool reverse)
 {
+    version (FpStateDiagnostic) emitFpState("before", T.stringof, "lookup", deficiency, n, reverse);
     auto output = new ma.Matrix3!T[n];
     const ma.Matrix3!T[11] table = ma.precisionTable!T(
         deficiency == 0 ? ma.protanTable : deficiency == 1 ? ma.deutanTable : ma.tritanTable);
@@ -191,6 +207,7 @@ void runLookup(T)(size_t n, uint deficiency, bool reverse)
         const ns = cast(double)timer.peek.total!"nsecs" / (n*16);
         writefln("sample,D,%s,lookup,%s,%s,%s,%s,%.9f,%.17g", T.stringof, deficiency, n, reverse, round, ns, checksum);
     }
+    version (FpStateDiagnostic) emitFpState("after", T.stringof, "lookup", deficiency, n, reverse);
 }
 
 void cases(T)(size_t n, bool reverse)
@@ -198,7 +215,15 @@ void cases(T)(size_t n, bool reverse)
     foreach (index; 0u .. 3u)
     {
         const deficiency = reverse ? 2u-index : index;
-        version (IsolateLookup) runLookup!T(n, deficiency, reverse);
+        version (PerfVienotOnly)
+        {
+            if (deficiency < 2) runCase!(T, Mode.vienot)(n, deficiency, reverse);
+        }
+        else version (PerfBrettelOnly)
+        {
+            runCase!(T, Mode.brettel)(n, deficiency, reverse);
+        }
+        else version (IsolateLookup) runLookup!T(n, deficiency, reverse);
         else version (IsolatePrepared) runCase!(T, Mode.prepared)(n, deficiency, reverse);
         else
         {
@@ -227,8 +252,13 @@ void main(string[] args)
     else
     {
         writeln("metadata,D,frontend=", __VERSION__, ",n=", n, ",warmup=3,rounds=9,repeats=16,AoS,bounds=on");
-        if (reverse) { cases!double(n, reverse); cases!float(n, reverse); }
-        else { cases!float(n, reverse); cases!double(n, reverse); }
+        version (PerfFloatOnly) cases!float(n, reverse);
+        else version (PerfDoubleOnly) cases!double(n, reverse);
+        else
+        {
+            if (reverse) { cases!double(n, reverse); cases!float(n, reverse); }
+            else { cases!float(n, reverse); cases!double(n, reverse); }
+        }
     }
 }
 

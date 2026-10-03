@@ -1,0 +1,90 @@
+name: R7.4.10 CVD SLP block loop
+
+on:
+  push:
+    branches:
+      - research/12-cvd-slp-block-loop
+    paths:
+      - experiments/r7_4_10_cvd_slp_block_loop/**
+      - docs/R7_4_10_CVD_SLP_BLOCK_LOOP.md
+      - .github/workflows/r7-4-10-slp-block-loop.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: SLP block-loop smoke / ${{ matrix.compiler }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - dmd-2.113.0
+          - ldc-1.43.0
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Checkout exact color-d production commit
+        uses: actions/checkout@v7
+        with:
+          repository: alex-1974/color-d
+          ref: bed36eee31fc35d0a8843ba12e55dfd7b12042e7
+          path: external/color-d
+
+      - name: Install D toolchain
+        uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+
+      - name: Toolchain versions
+        run: |
+          "$DC" --version
+          g++ --version
+          python3 --version
+
+      - name: SLP block-loop replay smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 experiments/r7_4_10_cvd_slp_block_loop/replay.py \
+            --color-d "$GITHUB_WORKSPACE/external/color-d" \
+            --compilers "$DC" \
+            --sizes 1024 \
+            --blocks 1 \
+            --output "$RUNNER_TEMP/cvd-slp-block" \
+            --notes "CI correctness/toolchain smoke only"
+
+          python3 - "$RUNNER_TEMP/cvd-slp-block" <<'PY'
+          import csv
+          import json
+          import pathlib
+          import sys
+
+          root = pathlib.Path(sys.argv[1])
+          metadata = json.loads((root / "metadata.json").read_text())
+          assert metadata["status"] == "passed"
+          assert metadata["production_revision"] == "bed36eee31fc35d0a8843ba12e55dfd7b12042e7"
+
+          attribution = list(csv.DictReader((root / "attribution.csv").open()))
+          assert len(attribution) == 10
+
+          summary = list(csv.DictReader((root / "summary.csv").open()))
+          assert len(summary) == 20
+          assert all(int(row["samples"]) == 22 for row in summary)
+
+          print("R7.4.10 SLP block-loop smoke: PASS")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r7-4-10-slp-block-${{ matrix.compiler }}
+          path: |
+            ${{ runner.temp }}/cvd-slp-block/**
+            ${{ runner.temp }}/cvd-slp-block.tar.gz
+          if-no-files-found: warn
