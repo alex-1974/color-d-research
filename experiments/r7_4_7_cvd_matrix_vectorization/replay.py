@@ -98,6 +98,10 @@ def main():
         if not family: raise SystemExit("unsupported compiler: "+cmd)
         compilers.append((exe,family,ver))
 
+    families=[family for _,family,_ in compilers]
+    if len(families)!=len(set(families)):
+        raise SystemExit("only one compiler per family is supported")
+
     gpp=shutil.which("g++"); taskset=shutil.which("taskset"); objdump=shutil.which("objdump")
     if not gpp or not taskset: raise SystemExit("g++ and taskset required")
 
@@ -172,7 +176,7 @@ def main():
                 run([compiler,*flags,"-release","-boundscheck=on","-I"+str(prodsrc),"-of="+str(b),
                      "bench.d",prodsrc/"color"/"cvd.d",prodsrc/"color"/"rgb.d"],
                     work,out/f"build-{idx}-{mode}.txt")
-                binaries[f"{idx}:{mode}"]=b
+                binaries[mode]=b
                 run([taskset,"-c",str(a.cpu),b,"32"],work,out/f"preflight-{idx}-{mode}.txt")
                 if objdump:
                     run([objdump,"-d","--no-show-raw-insn","-M","intel",b],work,out/"codegen"/f"{idx}-{mode}.txt")
@@ -193,7 +197,7 @@ def main():
                 for key in order:
                     b=binaries[key]
                     for reverse in ([False,True] if block%2==0 else [True,False]):
-                        dst=out/"runs"/f"n-{n}"/f"block-{block}"/f"{key.replace(':','-')}-{'reverse' if reverse else 'forward'}.csv"
+                        dst=out/"runs"/f"n-{n}"/f"block-{block}"/f"{key}-{'reverse' if reverse else 'forward'}.csv"
                         argv=[taskset,"-c",str(a.cpu),b,str(n)]
                         if reverse: argv.append("reverse")
                         run(argv,work,dst)
