@@ -272,3 +272,132 @@ the existing internal batch boundary, while preserving:
 
 Manual SIMD must be evidence-driven and independently qualified; R7.4.7 does
 not itself authorize promotion.
+
+
+## R7.4.11 — LDC 1.43 requalification
+
+The R7.4.7 vectorization-attribution replay was repeated unchanged on the same
+XPS with the current supported optimized compiler:
+
+- LDC 1.43.0;
+- DMD frontend baseline 2.113.0;
+- LLVM 22.1.8;
+- GCC 15.2.0;
+- exact color-d production revision
+  `bed36eee31fc35d0a8843ba12e55dfd7b12042e7`;
+- sizes 1024/8191/65536;
+- three balanced blocks;
+- CPU 0 affinity;
+- bounds checks enabled.
+
+Research revision:
+
+`1c77ad4f6f123e23bd1a8b5b21f7942c17188559`
+
+All integrity gates passed:
+
+- replay status: PASS;
+- all recorded file hashes: PASS;
+- binary hashes recorded;
+- production source pin: PASS;
+- observable checksum equality across D/GCC vectorization modes: PASS.
+
+The host again ran hot, with the hottest recorded thermal zone reaching about
+100 C. Small percentage differences between the 1.41 and 1.43 runs should
+therefore be treated as approximate. The main conclusion is based on the
+materially unchanged D/GCC ratios and generated-code structure.
+
+### LDC 1.41 versus 1.43
+
+Median attribution ratios across sizes and deficiencies:
+
+| scalar/model | LDC 1.41 full / GCC full | LDC 1.43 full / GCC full | change |
+| --- | ---: | ---: | ---: |
+| float Viénot | 1.424x | **1.425x** | +0.1% |
+| float Machado | 1.426x | **1.411x** | -1.1% |
+| double Viénot | 0.934x | **0.909x** | -2.6% |
+| double Machado | 0.912x | **0.893x** | -2.1% |
+
+The float result is therefore materially unchanged. LDC 1.43 does not close
+the approximately 1.4x gap to the matched fully optimized GCC loop.
+
+Double improves slightly and remains comfortably at or better than GCC.
+
+Scalar/no-vector performance is also effectively unchanged:
+
+| scalar/model | 1.41 LDC-no-both / GCC-no-both | 1.43 LDC-no-both / GCC-no-both |
+| --- | ---: | ---: |
+| float Viénot | 0.908x | 0.920x |
+| float Machado | 0.978x | 0.985x |
+| double Viénot | 0.921x | 0.913x |
+| double Machado | 0.924x | 0.932x |
+
+This reconfirms that scalar arithmetic is not the bottleneck.
+
+The useful vectorization gain measured as
+`LDC-no-both / LDC-full` is also of the same order or slightly stronger in
+1.43:
+
+| scalar/model | LDC 1.41 | LDC 1.43 |
+| --- | ---: | ---: |
+| float Viénot | 1.652x | 1.695x |
+| float Machado | 1.654x | 1.669x |
+| double Viénot | 1.410x | 1.460x |
+| double Machado | 1.430x | 1.477x |
+
+SLP disabling alone remains essentially neutral. The useful optimization is
+still the loop-vectorized path.
+
+### Generated-code comparison
+
+LDC 1.43 changes some setup/prologue details. In particular, matrix coefficient
+loading is somewhat more compact than in LDC 1.41.
+
+The important float SIMD main loop, however, retains the same fundamental AoS
+load strategy identified by R7.4.7:
+
+- four colors are processed per vector iteration;
+- the twelve RGB scalar components are still reconstructed through twelve
+  individual `movss` loads;
+- unpack/move/shuffle instructions assemble packed R/G/B vectors;
+- packed `mulps/addps` arithmetic follows;
+- results are reinterleaved;
+- three contiguous `movups` stores write the output block.
+
+Thus LLVM 22/LDC 1.43 still vectorizes the operation, but it does not adopt the
+more efficient GCC-style three-contiguous-vector-load AoS deinterleave strategy.
+
+This generated-code continuity explains why the full float performance ratio is
+essentially unchanged despite the newer frontend/backend.
+
+### Final R7.4.11 conclusion
+
+The remaining prepared CVD matrix performance picture is now qualified for the
+current supported optimized compiler generation:
+
+1. LDC 1.43 scalar performance is already at or better than scalar GCC.
+2. LDC 1.43 double is at or better than fully optimized GCC.
+3. LDC 1.43 float remains approximately 1.4x behind fully optimized GCC.
+4. The remaining float gap is attributable to backend AoS
+   vector-load/deinterleave scheduling, not scalar arithmetic, CVD model
+   preparation, public API structure, or a missing simple source rewrite.
+5. LDC 1.43 does not materially change the R7.4.7 attribution established with
+   LDC 1.41.
+6. R7.4.8 rejected explicit manual SIMD.
+7. R7.4.9 rejected simple call/value-flow rewrites.
+8. R7.4.10 rejected portable scalar unrolling/SLP-oriented block forms.
+
+Therefore matrix-kernel source-shape optimization work is complete for the
+current `LinearSRgb[]` AoS API and supported compiler generation.
+
+No production code change is justified by R7.4.11.
+
+Future work in this area should be reopened only if one of the following
+changes materially:
+
+- LDC/LLVM vectorizer behavior;
+- the public/internal data layout requirement;
+- a real consumer demonstrates that this remaining float gap is material in
+  application-level workloads;
+- a new compiler/runtime SIMD mechanism can preserve all current contracts with
+  a substantially lower maintenance cost.
