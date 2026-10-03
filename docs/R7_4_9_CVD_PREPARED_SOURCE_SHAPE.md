@@ -89,4 +89,13 @@ in one controlled binary.
 
 ## Status
 
-Implementation complete; CI/toolchain smoke and XPS evidence pending.
+Implementation and cross-compiler CI/toolchain smoke are complete.
+
+GitHub Actions run 37111606255 passes under DMD 2.113.0 and LDC 1.43.0,
+including the exact pinned production source, all six source-shape variants,
+semantic/special-value/in-place equivalence, GCC checksum pairing, result
+aggregation, and disassembly capture.
+
+Shared-runner timings remain non-selection evidence.
+
+Controlled XPS evidence is pending.
