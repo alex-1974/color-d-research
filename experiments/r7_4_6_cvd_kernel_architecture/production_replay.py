@@ -115,6 +115,12 @@ def parse_args():
     )
 
     parser.add_argument(
+        "--production-revision",
+        default=PRODUCTION_REVISION,
+        help="exact color-d commit to snapshot (default: qualified baseline)",
+    )
+
+    parser.add_argument(
         "--compilers",
         nargs="+",
         default=["dmd", "ldc2"],
@@ -273,12 +279,12 @@ def main():
             args.color_d,
             "rev-parse",
             "--verify",
-            PRODUCTION_REVISION + "^{commit}",
+            args.production_revision + "^{commit}",
         ],
         research_repo,
     ).decode().strip()
 
-    if production_resolved != PRODUCTION_REVISION:
+    if production_resolved != args.production_revision:
         raise SystemExit(
             "production revision mismatch: " +
             production_resolved
@@ -314,7 +320,7 @@ def main():
                 "-C",
                 args.color_d,
                 "show",
-                PRODUCTION_REVISION + ":" + str(path),
+                args.production_revision + ":" + str(path),
             ],
             research_repo,
         )
@@ -407,7 +413,7 @@ def main():
     metadata = {
         "research_revision": research_revision,
         "production_repository": str(args.color_d),
-        "production_revision": PRODUCTION_REVISION,
+        "production_revision": args.production_revision,
         "cpu": args.cpu,
         "sizes": args.sizes,
         "blocks": args.blocks,
