@@ -84,6 +84,39 @@ jobs:
         run: |
           objdump -d --no-show-raw-insn -M intel scalar-probe > codegen.txt
 
+      - name: Scalar qualification replay smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 experiments/r7_4_12_cvd_scalar_source_shape/replay.py \
+            --color-d "$GITHUB_WORKSPACE/external/color-d" \
+            --compilers "$DC" \
+            --sizes 256 \
+            --blocks 1 \
+            --output "$RUNNER_TEMP/cvd-scalar-source" \
+            --notes "CI correctness/toolchain smoke only"
+
+          python3 - "$RUNNER_TEMP/cvd-scalar-source" <<'PY'
+          import csv
+          import json
+          import pathlib
+          import sys
+
+          root = pathlib.Path(sys.argv[1])
+          metadata = json.loads((root / "metadata.json").read_text())
+          assert metadata["status"] == "passed"
+          assert metadata["production_revision"] == "bed36eee31fc35d0a8843ba12e55dfd7b12042e7"
+
+          attribution = list(csv.DictReader((root / "attribution.csv").open()))
+          assert len(attribution) == 72
+
+          summary = list(csv.DictReader((root / "summary.csv").open()))
+          assert len(summary) == 72
+          assert all(int(row["samples"]) == 10 for row in summary)
+
+          print("R7.4.12 scalar source-shape replay smoke: PASS")
+          PY
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -91,4 +124,6 @@ jobs:
           path: |
             experiments/r7_4_12_cvd_scalar_source_shape/smoke.csv
             experiments/r7_4_12_cvd_scalar_source_shape/codegen.txt
+            ${{ runner.temp }}/cvd-scalar-source/**
+            ${{ runner.temp }}/cvd-scalar-source.tar.gz
           if-no-files-found: warn
