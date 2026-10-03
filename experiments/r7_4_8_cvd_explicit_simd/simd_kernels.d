@@ -4,7 +4,20 @@ import kernels :
     Matrix3,
     Rgb;
 
-version (D_SIMD)
+version (LDC)
+{
+    import core.simd :
+        float4,
+        double2,
+        loadUnaligned,
+        storeUnaligned;
+
+    import ldc.simd :
+        shufflevector;
+
+    private enum bool hasExplicitSimd = true;
+}
+else static if (hasExplicitSimd)
 {
     import core.simd :
         XMM,
@@ -12,6 +25,12 @@ version (D_SIMD)
         float4,
         double2,
         loadUnaligned;
+
+    private enum bool hasExplicitSimd = true;
+}
+else
+{
+    private enum bool hasExplicitSimd = false;
 }
 
 
@@ -51,12 +70,40 @@ version (D_SIMD)
     )
     @safe pure nothrow @nogc
     {
-        return cast(float4)__simd(
-            XMM.SHUFPS,
-            lhs,
-            rhs,
-            imm
-        );
+        version (LDC)
+        {
+            enum int lane0 =
+                imm & 0x3;
+
+            enum int lane1 =
+                (imm >> 2) & 0x3;
+
+            enum int lane2 =
+                4 + ((imm >> 4) & 0x3);
+
+            enum int lane3 =
+                4 + ((imm >> 6) & 0x3);
+
+            return shufflevector!(
+                float4,
+                lane0,
+                lane1,
+                lane2,
+                lane3
+            )(
+                lhs,
+                rhs
+            );
+        }
+        else
+        {
+            return cast(float4)__simd(
+                XMM.SHUFPS,
+                lhs,
+                rhs,
+                imm
+            );
+        }
     }
 
 
@@ -67,11 +114,27 @@ version (D_SIMD)
     )
     @safe pure nothrow @nogc
     {
-        return cast(float4)__simd(
-            XMM.UNPCKLPS,
-            lhs,
-            rhs
-        );
+        version (LDC)
+        {
+            return shufflevector!(
+                float4,
+                0,
+                4,
+                1,
+                5
+            )(
+                lhs,
+                rhs
+            );
+        }
+        else
+        {
+            return cast(float4)__simd(
+                XMM.UNPCKLPS,
+                lhs,
+                rhs
+            );
+        }
     }
 
 
@@ -82,11 +145,27 @@ version (D_SIMD)
     )
     @safe pure nothrow @nogc
     {
-        return cast(float4)__simd(
-            XMM.UNPCKHPS,
-            lhs,
-            rhs
-        );
+        version (LDC)
+        {
+            return shufflevector!(
+                float4,
+                2,
+                6,
+                3,
+                7
+            )(
+                lhs,
+                rhs
+            );
+        }
+        else
+        {
+            return cast(float4)__simd(
+                XMM.UNPCKHPS,
+                lhs,
+                rhs
+            );
+        }
     }
 
 
@@ -97,12 +176,32 @@ version (D_SIMD)
     )
     @safe pure nothrow @nogc
     {
-        return cast(double2)__simd(
-            XMM.SHUFPD,
-            lhs,
-            rhs,
-            imm
-        );
+        version (LDC)
+        {
+            enum int lane0 =
+                imm & 0x1;
+
+            enum int lane1 =
+                2 + ((imm >> 1) & 0x1);
+
+            return shufflevector!(
+                double2,
+                lane0,
+                lane1
+            )(
+                lhs,
+                rhs
+            );
+        }
+        else
+        {
+            return cast(double2)__simd(
+                XMM.SHUFPD,
+                lhs,
+                rhs,
+                imm
+            );
+        }
     }
 
 
@@ -230,9 +329,19 @@ version (D_SIMD)
             colorIndex * 3 +
             vectorIndex * 4;
 
-        *cast(float[4]*)(
-            base + scalarOffset
-        ) = value.array;
+        version (LDC)
+        {
+            storeUnaligned!float4(
+                value,
+                base + scalarOffset
+            );
+        }
+        else
+        {
+            *cast(float[4]*)(
+                base + scalarOffset
+            ) = value.array;
+        }
     }
 
 
@@ -252,9 +361,19 @@ version (D_SIMD)
             colorIndex * 3 +
             vectorIndex * 2;
 
-        *cast(double[2]*)(
-            base + scalarOffset
-        ) = value.array;
+        version (LDC)
+        {
+            storeUnaligned!double2(
+                value,
+                base + scalarOffset
+            );
+        }
+        else
+        {
+            *cast(double[2]*)(
+                base + scalarOffset
+            ) = value.array;
+        }
     }
 
 
