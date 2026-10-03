@@ -1,0 +1,94 @@
+name: R7.4.12 CVD scalar source shape
+
+on:
+  push:
+    branches:
+      - research/16-cvd-scalar-source-shape
+    paths:
+      - experiments/r7_4_12_cvd_scalar_source_shape/**
+      - docs/R7_4_12_CVD_SCALAR_SOURCE_SHAPE.md
+      - .github/workflows/r7-4-12-scalar-source-shape.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Scalar source-shape smoke / ${{ matrix.compiler }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - dmd-2.113.0
+          - ldc-1.43.0
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Checkout exact color-d production commit
+        uses: actions/checkout@v7
+        with:
+          repository: alex-1974/color-d
+          ref: bed36eee31fc35d0a8843ba12e55dfd7b12042e7
+          path: external/color-d
+
+      - name: Install D toolchain
+        uses: dlang-community/setup-dlang@v2
+        with:
+          compiler: ${{ matrix.compiler }}
+
+      - name: Toolchain versions
+        run: |
+          "$DC" --version
+
+      - name: Build scalar source-shape probe
+        working-directory: experiments/r7_4_12_cvd_scalar_source_shape
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "$DC" == *ldc2* ]]; then
+            OPT=(-O3 -fp-contract=off)
+          else
+            OPT=(-O -inline)
+          fi
+
+          "$DC" \
+            "${OPT[@]}" \
+            -release \
+            -boundscheck=on \
+            -I"$GITHUB_WORKSPACE/external/color-d/source" \
+            -of=scalar-probe \
+            bench.d \
+            replicas.d \
+            "$GITHUB_WORKSPACE/external/color-d/source/color/cvd.d" \
+            "$GITHUB_WORKSPACE/external/color-d/source/color/rgb.d"
+
+      - name: Semantic CTFE and attribute preflight
+        working-directory: experiments/r7_4_12_cvd_scalar_source_shape
+        run: ./scalar-probe preflight
+
+      - name: Small scalar benchmark smoke
+        working-directory: experiments/r7_4_12_cvd_scalar_source_shape
+        run: |
+          set -euo pipefail
+          ./scalar-probe 256 > smoke.csv
+          test "$(grep -c '^sample,' smoke.csv)" -eq 504
+
+      - name: Capture codegen
+        working-directory: experiments/r7_4_12_cvd_scalar_source_shape
+        run: |
+          objdump -d --no-show-raw-insn -M intel scalar-probe > codegen.txt
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r7-4-12-scalar-source-shape-${{ matrix.compiler }}
+          path: |
+            experiments/r7_4_12_cvd_scalar_source_shape/smoke.csv
+            experiments/r7_4_12_cvd_scalar_source_shape/codegen.txt
+          if-no-files-found: warn
