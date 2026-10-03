@@ -421,3 +421,76 @@ This is a data-materialization optimization, not a second CVD algorithm.
 The exact color-d candidate must still pass the normal production workflow,
 supported compiler matrix and an independent exact-candidate replay before
 R7.4.12 is closed.
+
+
+## First exact production-candidate replay — partial transfer, rejected
+
+The first exact color-d candidate was replayed at production revision
+`e4a354247cbd8cd4c3c2b264a25e317d9e659333`.
+
+Archive SHA-256:
+
+`c4c9d83e1ce00e363403e9b7d3877952f8caf3d88b2b0f23d24946ac43b46aa6`
+
+Qualification gates passed:
+
+- exact candidate source pin: PASS;
+- all recorded file hashes: PASS;
+- all binary hashes: PASS;
+- DMD 2.112.1 / 2.113.0 preflight: PASS;
+- LDC 1.42 / 1.43 preflight: PASS;
+- semantic/IEEE/invalid-severity/CTFE checks: PASS;
+- cross-variant/matched-C++ observable checksums: PASS.
+
+However, the performance transfer gate did **not** pass.
+
+The first candidate moved target-scalar immutable Machado tables into production,
+but retained the scalar convenience chain:
+
+`machado2009 -> tryPrepareMachado2009 -> PreparedMachado2009.apply`.
+
+Within the same exact-candidate binary, the direct `typed-static` replica
+remained materially faster under LDC:
+
+| compiler | scalar | workload | typed-static speedup vs candidate production |
+| --- | --- | --- | ---: |
+| LDC 1.42 | float | fixed | 1.458x |
+| LDC 1.42 | float | dynamic | 1.097x |
+| LDC 1.42 | double | fixed | 1.516x |
+| LDC 1.42 | double | dynamic | 1.180x |
+| LDC 1.43 | float | fixed | 1.466x |
+| LDC 1.43 | float | dynamic | 1.108x |
+| LDC 1.43 | double | fixed | 1.489x |
+| LDC 1.43 | double | dynamic | 1.174x |
+
+Thus the data representation transferred only part of the research gain.
+The remaining carrier/preparation call chain is still observable in scalar
+codegen.
+
+DMD timings in this exact-candidate binary again show strong placement-sensitive
+behavior, including cases where candidate production appears faster than the
+standalone replica. Because R7.4.5/R7.4.9 already proved instruction-identical
+DMD hot paths can differ materially by text placement, those values are not
+used to override the LDC transfer failure.
+
+### Revised production shape
+
+The corrected production candidate still uses one mathematical matrix-selection
+path:
+
+1. private `machadoMatrixAtSeverity` performs the deficiency selection and
+   severity interpolation;
+2. `tryPrepareMachado2009` wraps that matrix in
+   `PreparedMachado2009` for repeated use;
+3. scalar `machado2009` applies that same matrix directly, avoiding the
+   temporary Prepared carrier.
+
+This is not a second CVD algorithm. Matrix selection/interpolation remains
+shared; only the scalar carrier is removed.
+
+Revised color-d candidate head:
+
+`241e0f893040baa9bda8669c0299c9ffd9d25b5b`
+
+The revised candidate must pass normal CI and a second exact-candidate replay
+before merge.
