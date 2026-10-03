@@ -17,7 +17,7 @@ version (LDC)
 
     private enum bool hasExplicitSimd = true;
 }
-else static if (hasExplicitSimd)
+else version (D_SIMD)
 {
     import core.simd :
         XMM,
@@ -61,7 +61,7 @@ private void scalarWrite(T)(
 }
 
 
-version (D_SIMD)
+static if (hasExplicitSimd)
 {
     pragma(inline, true)
     private float4 shufps(ubyte imm)(
