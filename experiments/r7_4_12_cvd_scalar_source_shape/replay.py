@@ -83,6 +83,7 @@ def observe(cpu):
 def parse_args():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--revision",default="HEAD")
+    p.add_argument("--production-revision",default=PRODUCTION_REVISION)
     p.add_argument("--color-d",type=Path,required=True)
     p.add_argument("--compilers",nargs="+",default=["dmd","ldc2"])
     p.add_argument("--sizes",nargs="+",type=int,default=[1024,8191,65536])
@@ -184,11 +185,9 @@ def main():
         repo,
     ).decode().strip()
     production=capture(
-        ["git","-C",a.color_d,"rev-parse","--verify",PRODUCTION_REVISION+"^{commit}"],
+        ["git","-C",a.color_d,"rev-parse","--verify",a.production_revision+"^{commit}"],
         repo,
     ).decode().strip()
-    if production!=PRODUCTION_REVISION:
-        raise SystemExit("production revision mismatch")
 
     rsnap={
         str(p):capture(["git","show",revision+":"+str(p)],repo)
@@ -199,7 +198,7 @@ def main():
 
     psnap={
         str(p):capture(
-            ["git","-C",a.color_d,"show",PRODUCTION_REVISION+":"+str(p)],
+            ["git","-C",a.color_d,"show",production+":"+str(p)],
             repo,
         )
         for p in PRODUCTION_FILES
@@ -249,7 +248,7 @@ def main():
 
     metadata={
         "research_revision":revision,
-        "production_revision":PRODUCTION_REVISION,
+        "production_revision":production,
         "cpu":a.cpu,
         "sizes":a.sizes,
         "blocks":a.blocks,
