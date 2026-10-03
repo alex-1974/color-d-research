@@ -18,7 +18,8 @@ enum Variant
     directReturn,
     outKernel,
     inlineChain,
-    typedTable
+    typedTable,
+    typedStatic
 }
 
 
@@ -938,6 +939,364 @@ private template TypedConstants(T)
 }
 
 
+private immutable Matrix3!float staticVienotProtanFloat =
+    castMatrix!float(
+        vienotProtan
+    );
+
+private immutable Matrix3!float staticVienotDeutanFloat =
+    castMatrix!float(
+        vienotDeutan
+    );
+
+private immutable Matrix3!double staticVienotProtanDouble =
+    vienotProtan;
+
+private immutable Matrix3!double staticVienotDeutanDouble =
+    vienotDeutan;
+
+
+private immutable BrettelPlan!float staticBrettelProtanFloat =
+    BrettelPlan!float(
+        castMatrix!float(brettelProtan1),
+        castMatrix!float(brettelProtan2),
+        cast(float)0.00048,
+        cast(float)0.00393,
+        cast(float)-0.00441
+    );
+
+private immutable BrettelPlan!float staticBrettelDeutanFloat =
+    BrettelPlan!float(
+        castMatrix!float(brettelDeutan1),
+        castMatrix!float(brettelDeutan2),
+        cast(float)-0.00281,
+        cast(float)-0.00611,
+        cast(float)0.00892
+    );
+
+private immutable BrettelPlan!float staticBrettelTritanFloat =
+    BrettelPlan!float(
+        castMatrix!float(brettelTritan1),
+        castMatrix!float(brettelTritan2),
+        cast(float)0.03901,
+        cast(float)-0.02788,
+        cast(float)-0.01113
+    );
+
+private immutable BrettelPlan!double staticBrettelProtanDouble =
+    BrettelPlan!double(
+        brettelProtan1,
+        brettelProtan2,
+        0.00048,
+        0.00393,
+        -0.00441
+    );
+
+private immutable BrettelPlan!double staticBrettelDeutanDouble =
+    BrettelPlan!double(
+        brettelDeutan1,
+        brettelDeutan2,
+        -0.00281,
+        -0.00611,
+        0.00892
+    );
+
+private immutable BrettelPlan!double staticBrettelTritanDouble =
+    BrettelPlan!double(
+        brettelTritan1,
+        brettelTritan2,
+        0.03901,
+        -0.02788,
+        -0.01113
+    );
+
+
+private immutable Matrix3!float[11] staticMachadoProtanFloat =
+    castTable!float(
+        machadoProtanTable
+    );
+
+private immutable Matrix3!float[11] staticMachadoDeutanFloat =
+    castTable!float(
+        machadoDeutanTable
+    );
+
+private immutable Matrix3!double[11] staticMachadoProtanDouble =
+    machadoProtanTable;
+
+private immutable Matrix3!double[11] staticMachadoDeutanDouble =
+    machadoDeutanTable;
+
+
+private LinearSRgb!T applyMatrixRef(T)(
+    const ref Matrix3!T matrix,
+    LinearSRgb!T color
+)
+@safe pure nothrow @nogc
+{
+    return LinearSRgb!T(
+        matrix.m00 * color.r +
+        matrix.m01 * color.g +
+        matrix.m02 * color.b,
+
+        matrix.m10 * color.r +
+        matrix.m11 * color.g +
+        matrix.m12 * color.b,
+
+        matrix.m20 * color.r +
+        matrix.m21 * color.g +
+        matrix.m22 * color.b
+    );
+}
+
+
+private LinearSRgb!T applyBrettelPlanRef(T)(
+    const ref BrettelPlan!T plan,
+    LinearSRgb!T color
+)
+@safe pure nothrow @nogc
+{
+    const ref matrix =
+        color.r * plan.nr +
+        color.g * plan.ng +
+        color.b * plan.nb >= cast(T)0
+            ? plan.first
+            : plan.second;
+
+    return applyMatrixRef(
+        matrix,
+        color
+    );
+}
+
+
+private LinearSRgb!T typedStaticVienotRuntime(T)(
+    LinearSRgb!T color,
+    uint deficiency
+)
+@safe pure nothrow @nogc
+{
+    static if (is(T == float))
+    {
+        return
+            deficiency == 0
+                ? applyMatrixRef(
+                    staticVienotProtanFloat,
+                    color
+                )
+                : applyMatrixRef(
+                    staticVienotDeutanFloat,
+                    color
+                );
+    }
+    else
+    {
+        return
+            deficiency == 0
+                ? applyMatrixRef(
+                    staticVienotProtanDouble,
+                    color
+                )
+                : applyMatrixRef(
+                    staticVienotDeutanDouble,
+                    color
+                );
+    }
+}
+
+
+private LinearSRgb!T typedStaticBrettelRuntime(T)(
+    LinearSRgb!T color,
+    uint deficiency
+)
+@safe pure nothrow @nogc
+{
+    static if (is(T == float))
+    {
+        final switch (deficiency)
+        {
+            case 0:
+                return applyBrettelPlanRef(
+                    staticBrettelProtanFloat,
+                    color
+                );
+
+            case 1:
+                return applyBrettelPlanRef(
+                    staticBrettelDeutanFloat,
+                    color
+                );
+
+            case 2:
+                return applyBrettelPlanRef(
+                    staticBrettelTritanFloat,
+                    color
+                );
+        }
+    }
+    else
+    {
+        final switch (deficiency)
+        {
+            case 0:
+                return applyBrettelPlanRef(
+                    staticBrettelProtanDouble,
+                    color
+                );
+
+            case 1:
+                return applyBrettelPlanRef(
+                    staticBrettelDeutanDouble,
+                    color
+                );
+
+            case 2:
+                return applyBrettelPlanRef(
+                    staticBrettelTritanDouble,
+                    color
+                );
+        }
+    }
+}
+
+
+private Matrix3!T typedStaticMachadoMatrixRuntime(T)(
+    uint deficiency,
+    T severity
+)
+@safe pure nothrow @nogc
+{
+    const T scaled =
+        severity * cast(T)10;
+
+    const size_t lower =
+        cast(size_t)scaled;
+
+    const T alpha =
+        lower >= 10
+            ? cast(T)0
+            : scaled - cast(T)lower;
+
+    static if (is(T == float))
+    {
+        if (deficiency == 0)
+        {
+            if (lower >= 10)
+                return staticMachadoProtanFloat[10];
+
+            return interpolateMatrix(
+                staticMachadoProtanFloat[lower],
+                staticMachadoProtanFloat[lower + 1],
+                alpha
+            );
+        }
+
+        assert(deficiency == 1);
+
+        if (lower >= 10)
+            return staticMachadoDeutanFloat[10];
+
+        return interpolateMatrix(
+            staticMachadoDeutanFloat[lower],
+            staticMachadoDeutanFloat[lower + 1],
+            alpha
+        );
+    }
+    else
+    {
+        if (deficiency == 0)
+        {
+            if (lower >= 10)
+                return staticMachadoProtanDouble[10];
+
+            return interpolateMatrix(
+                staticMachadoProtanDouble[lower],
+                staticMachadoProtanDouble[lower + 1],
+                alpha
+            );
+        }
+
+        assert(deficiency == 1);
+
+        if (lower >= 10)
+            return staticMachadoDeutanDouble[10];
+
+        return interpolateMatrix(
+            staticMachadoDeutanDouble[lower],
+            staticMachadoDeutanDouble[lower + 1],
+            alpha
+        );
+    }
+}
+
+
+LinearSRgb!T typedStaticVienot(T)(
+    LinearSRgb!T color,
+    uint deficiency
+)
+@safe pure nothrow @nogc
+{
+    if (__ctfe)
+        return typedTableVienot!T(
+            color,
+            deficiency
+        );
+
+    return typedStaticVienotRuntime!T(
+        color,
+        deficiency
+    );
+}
+
+
+LinearSRgb!T typedStaticBrettel(T)(
+    LinearSRgb!T color,
+    uint deficiency
+)
+@safe pure nothrow @nogc
+{
+    if (__ctfe)
+        return typedTableBrettel!T(
+            color,
+            deficiency
+        );
+
+    return typedStaticBrettelRuntime!T(
+        color,
+        deficiency
+    );
+}
+
+
+LinearSRgb!T typedStaticMachado(T)(
+    LinearSRgb!T color,
+    uint deficiency,
+    T severity
+)
+@safe pure nothrow @nogc
+{
+    if (!validSeverity(severity))
+        return LinearSRgb!T.init;
+
+    if (__ctfe)
+        return typedTableMachado!T(
+            color,
+            deficiency,
+            severity
+        );
+
+    return applyMatrix(
+        typedStaticMachadoMatrixRuntime!(
+            T
+        )(
+            deficiency,
+            severity
+        ),
+        color
+    );
+}
+
+
 private Matrix3!T typedMachadoMatrix(T)(
     uint deficiency,
     T severity
@@ -1068,8 +1427,10 @@ LinearSRgb!T runReplica(
             return outKernelVienot!T(color, deficiency);
         else static if (variant == Variant.inlineChain)
             return inlineChainVienot!T(color, deficiency);
-        else
+        else static if (variant == Variant.typedTable)
             return typedTableVienot!T(color, deficiency);
+        else
+            return typedStaticVienot!T(color, deficiency);
     }
     else static if (model == Model.machado)
     {
@@ -1081,8 +1442,10 @@ LinearSRgb!T runReplica(
             return outKernelMachado!T(color, deficiency, severity);
         else static if (variant == Variant.inlineChain)
             return inlineChainMachado!T(color, deficiency, severity);
-        else
+        else static if (variant == Variant.typedTable)
             return typedTableMachado!T(color, deficiency, severity);
+        else
+            return typedStaticMachado!T(color, deficiency, severity);
     }
     else
     {
@@ -1094,7 +1457,9 @@ LinearSRgb!T runReplica(
             return outKernelBrettel!T(color, deficiency);
         else static if (variant == Variant.inlineChain)
             return inlineChainBrettel!T(color, deficiency);
-        else
+        else static if (variant == Variant.typedTable)
             return typedTableBrettel!T(color, deficiency);
+        else
+            return typedStaticBrettel!T(color, deficiency);
     }
 }
