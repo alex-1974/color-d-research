@@ -633,3 +633,62 @@ scalar source shape separately.
 
 A final exact-production XPS replay is required after that split because DMD
 code placement can change when the scalar bodies are reverted.
+
+
+## Final unconditional-snapshot candidate rejected; compiler-family gate justified
+
+The exact-production replay of color-d commit
+`44918bac87a25dc31bacd7de60e0383dc98bbb88` passed all integrity and
+semantic/checksum gates but failed the DMD performance acceptance criterion.
+
+The candidate contained only prepared local snapshots; scalar convenience
+functions were identical to the production baseline.
+
+### LDC
+
+The expected improvement reproduced:
+
+- Viénot float: about 0.72x baseline prepared time;
+- Machado float: about 0.73x;
+- Viénot double: about 0.72x;
+- Machado double: about 0.73x;
+- Brettel improved materially as well.
+
+### DMD
+
+The same source change was not performance-neutral after the scalar rewrite was
+removed and text placement changed:
+
+- Viénot float regressed approximately 22-27% across every tested
+  size/deficiency combination;
+- Machado double regressed approximately 15-22%;
+- other prepared paths were smaller/mixed.
+
+Generated-code comparison is decisive: the previous mixed candidate and the
+final unconditional-snapshot candidate have instruction-identical DMD
+`tryApplyInto` bodies for the affected prepared types, but at different text
+addresses/phases. Example Viénot float is the same 276-byte instruction body
+with different placement. The 64-byte benchmark wrapper is likewise
+instruction-identical and moved.
+
+Therefore the regression is another DMD text-layout/front-end phase effect, not
+a change in CVD arithmetic or safety semantics.
+
+### Engineering decision
+
+Workspace DLANG_PRACTICES 15.5 explicitly permits an internal compiler-specific
+optimized implementation when semantics are identical, material gain is
+reproducible, the supported compiler matrix is covered, the gate is centralized
+and testable, and a portable/reference path remains.
+
+The production candidate is consequently revised to one centralized
+compiler-family capability decision:
+
+- LDC: local prepared-state snapshot before batch hot loops;
+- DMD/non-LDC: retain the established member-backed prepared path.
+
+This is preferable to an alignment or padding workaround and does not introduce
+per-release compiler version forks.
+
+The revised exact production commit still requires a final XPS replay before
+merge.
