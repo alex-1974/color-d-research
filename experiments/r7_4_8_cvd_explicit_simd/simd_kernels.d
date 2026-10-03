@@ -119,6 +119,48 @@ version (D_SIMD)
 
 
     pragma(inline, true)
+    private float4 packFloat4(
+        float a,
+        float b,
+        float c,
+        float d
+    )
+    @trusted pure nothrow @nogc
+    {
+        float[4] values =
+        [
+            a,
+            b,
+            c,
+            d
+        ];
+
+        return loadUnaligned(
+            cast(const float4*)values.ptr
+        );
+    }
+
+
+    pragma(inline, true)
+    private double2 packDouble2(
+        double a,
+        double b
+    )
+    @trusted pure nothrow @nogc
+    {
+        double[2] values =
+        [
+            a,
+            b
+        ];
+
+        return loadUnaligned(
+            cast(const double2*)values.ptr
+        );
+    }
+
+
+    pragma(inline, true)
     private float4 loadFloatBlock(
         const Rgb!float[] input,
         size_t colorIndex,
@@ -367,28 +409,28 @@ version (D_SIMD)
         )
         {
             const float4 r =
-            [
-                input[i].r,
-                input[i + 1].r,
-                input[i + 2].r,
-                input[i + 3].r
-            ];
+                packFloat4(
+                    input[i].r,
+                    input[i + 1].r,
+                    input[i + 2].r,
+                    input[i + 3].r
+                );
 
             const float4 g =
-            [
-                input[i].g,
-                input[i + 1].g,
-                input[i + 2].g,
-                input[i + 3].g
-            ];
+                packFloat4(
+                    input[i].g,
+                    input[i + 1].g,
+                    input[i + 2].g,
+                    input[i + 3].g
+                );
 
             const float4 b =
-            [
-                input[i].b,
-                input[i + 1].b,
-                input[i + 2].b,
-                input[i + 3].b
-            ];
+                packFloat4(
+                    input[i].b,
+                    input[i + 1].b,
+                    input[i + 2].b,
+                    input[i + 3].b
+                );
 
             const float4 outR =
                 m00 * r +
@@ -589,22 +631,22 @@ version (D_SIMD)
         )
         {
             const double2 r =
-            [
-                input[i].r,
-                input[i + 1].r
-            ];
+                packDouble2(
+                    input[i].r,
+                    input[i + 1].r
+                );
 
             const double2 g =
-            [
-                input[i].g,
-                input[i + 1].g
-            ];
+                packDouble2(
+                    input[i].g,
+                    input[i + 1].g
+                );
 
             const double2 b =
-            [
-                input[i].b,
-                input[i + 1].b
-            ];
+                packDouble2(
+                    input[i].b,
+                    input[i + 1].b
+                );
 
             const double2 outR =
                 m00 * r +
