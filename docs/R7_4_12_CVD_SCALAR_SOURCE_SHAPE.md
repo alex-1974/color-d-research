@@ -289,3 +289,135 @@ storage. CTFE remains routed through the already validated manifest constants.
 
 This `typed-static` representation must be qualified before any production
 promotion.
+
+
+## Second controlled XPS result — static typed runtime tables
+
+The second controlled replay completed at research revision
+`723e6dcffde8866394bc176357ccaeb9d0584c4c`.
+
+Archive SHA-256:
+
+`1f3ddd17fe6f617117195cfb048c67279f96319cdc6460979632ded0ff25edbe`
+
+Integrity and qualification gates passed:
+
+- replay status: PASS;
+- 316 recorded file hashes: PASS;
+- 7 binary hashes: PASS;
+- all six compiler preflights: PASS;
+- exact production source pin: PASS;
+- cross-variant/matched-C++ observable checksum equality: PASS;
+- DMD 2.111.0 / 2.112.1 / 2.113.0;
+- LDC 1.41.0 / 1.42.0 / 1.43.0;
+- GCC 15.2.0;
+- sizes 1024/8191/65536;
+- three balanced blocks;
+- CPU 0 affinity;
+- bounds checks enabled.
+
+The hottest recorded thermal zone reached about 100 C. Small percentage
+differences remain approximate, but the Machado effects are large and
+directionally stable across every compiler and workload size.
+
+### Machado typed-static result
+
+`typed-static` is the first scalar candidate that improves Machado across the
+entire current supported compiler matrix and also across the older diagnostic
+compiler pair.
+
+Median speedup versus exact production:
+
+| compiler | float fixed | float dynamic | double fixed | double dynamic |
+| --- | ---: | ---: | ---: | ---: |
+| DMD 2.111 | 2.120x | 1.366x | 4.606x | 4.530x |
+| DMD 2.112.1 | **2.189x** | **1.608x** | **5.076x** | **4.772x** |
+| DMD 2.113 | **2.214x** | **1.375x** | **4.817x** | **4.556x** |
+| LDC 1.41 | 1.536x | 1.178x | 1.486x | 1.138x |
+| LDC 1.42 | **1.499x** | **1.233x** | **1.568x** | **1.171x** |
+| LDC 1.43 | **1.515x** | **1.233x** | **1.444x** | **1.173x** |
+
+The current supported matrix is DMD 2.112.1/2.113.0 and LDC 1.42/1.43.
+Every supported combination improves materially.
+
+The dynamic workload is the key production signal:
+
+- DMD 2.112.1 float: about +61%;
+- DMD 2.113 float: about +38%;
+- DMD 2.112.1 double: about 4.77x;
+- DMD 2.113 double: about 4.56x;
+- LDC 1.42/1.43 float: about +23%;
+- LDC 1.42/1.43 double: about +17%.
+
+All three workload sizes preserve the improvement direction.
+
+### Code-size result
+
+The static runtime representation also solves the code-shape problem exposed by
+the first manifest-table experiment.
+
+Under DMD 2.113:
+
+- production float `matrixAtSeverity`: about 0x1399 bytes per table
+  specialization;
+- manifest typed `typedMachadoMatrix!float`: about 0x21f1 bytes;
+- static typed `typedStaticMachadoMatrixRuntime!float`: about **0x51e bytes**.
+
+For double, the static typed helper is about 0x550 bytes instead of the
+manifest typed helper's approximately 0x239c bytes.
+
+Under LDC 1.42/1.43 both typed forms are already compact; the static runtime
+helper remains approximately 0xfa bytes for float and 0x15b bytes for double.
+
+Thus `typed-static` both improves performance and removes the DMD manifest
+table code-size pathology.
+
+### Viénot remains rejected as a shared static-table change
+
+The static representation is not a general license to convert every CVD model.
+
+Important counterexamples:
+
+- DMD 2.112.1 float Viénot `typed-static` regresses to only about
+  0.56-0.58x production throughput;
+- LDC 1.42 double dynamic Viénot regresses to about 0.42x;
+- LDC 1.43 double dynamic Viénot regresses to about 0.65x.
+
+The manifest typed-table shape remains extremely fast on DMD Viénot, but it is
+not compiler-neutral and the static-data representation does not preserve that
+benefit across the supported matrix.
+
+Viénot therefore stays unchanged in production.
+
+### Brettel remains rejected as a shared static-table change
+
+Brettel also remains compiler/workload sensitive.
+
+Although LDC and some DMD double/fixed cases improve, DMD float dynamic remains
+a severe regression:
+
+- DMD 2.112.1 float dynamic: about 0.38x production throughput;
+- DMD 2.113 float dynamic: about 0.24x.
+
+Brettel therefore stays unchanged in production.
+
+### R7.4.12 selection decision
+
+Only Machado satisfies the production selection gate.
+
+The recommended production shape is:
+
+1. retain the existing public `machado2009` -> preparation ->
+   `PreparedMachado2009.apply` semantic path;
+2. retain the existing prepared/batch API and interpolation arithmetic;
+3. add target-scalar runtime Machado tables in immutable read-only storage;
+4. at runtime, index/interpolate those target-scalar tables directly;
+5. at CTFE, continue using the existing manifest double tables and the already
+   qualified conversion path;
+6. do not change Viénot or Brettel.
+
+This is a data-materialization optimization, not a second CVD algorithm.
+
+The exact color-d candidate must still pass the normal production workflow,
+supported compiler matrix and an independent exact-candidate replay before
+R7.4.12 is closed.
